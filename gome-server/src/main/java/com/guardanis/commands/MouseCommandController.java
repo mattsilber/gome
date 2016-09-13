@@ -4,6 +4,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 import com.guardanis.gtools.Logger;
 import com.guardanis.gtools.net.JsonHelper;
@@ -41,6 +42,14 @@ public class MouseCommandController implements CommandController {
 			int value = JsonHelper.getInt("wheel_value", command.getData());			
 			
 			robot.mouseWheel(value);
+		}
+		else if(type.equals("drag_start")){
+			robot.keyPress(KeyEvent.VK_SHIFT);
+			robot.mousePress(InputEvent.BUTTON3_MASK);
+		}
+		else if(type.equals("drag_end")){
+			robot.mouseRelease(InputEvent.BUTTON3_MASK);
+			robot.keyRelease(KeyEvent.VK_SHIFT);
 		}
 	}
 	

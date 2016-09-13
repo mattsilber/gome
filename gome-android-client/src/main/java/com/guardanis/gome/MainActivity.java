@@ -80,6 +80,14 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
                 .setOnClickListener(v ->
                         onCalled(new MouseClickCommand("right_single_click")));
 
+        findViewById(R.id.main__mouse_action_drag_start)
+                .setOnClickListener(v ->
+                        onCalled(new MouseClickCommand("drag_start")));
+
+        findViewById(R.id.main__mouse_action_drag_stop)
+                .setOnClickListener(v ->
+                        onCalled(new MouseClickCommand("drag_stop")));
+
         final TextView ipTextView = (TextView) findViewById(R.id.main__ip);
         ipTextView.setText(getIpAddress());
 
@@ -92,7 +100,6 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
     public void onCalled(Command command) {
         if(socketClient != null)
             socketClient.send(command);
-        else Log.d("gome", "Messed up");
     }
 
     protected void connectSocketClient(String ipAddress){
@@ -143,6 +150,8 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
                 .setView(cheating)
                 .show();
 
-        ViewHelper.openSoftInputKeyboard(cheating);
+        cheating.postDelayed(() ->
+                    ViewHelper.openSoftInputKeyboard(cheating),
+                350);
     }
 }

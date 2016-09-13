@@ -67,9 +67,9 @@ public class Server implements ConnectionEvents {
 	@Override
 	public void onCommandReceived(ClientHelper client, Command command) {
 		try{
-			Logger.info("Received action [%1$s] with: %2$s", 
-					command.getAction(), 
-					command.getData().toString());
+//			Logger.info("Received action [%1$s] with: %2$s", 
+//					command.getAction(), 
+//					command.getData().toString());
 			
 			if(commandControllers.containsKey(command.getAction()))
 				commandControllers.get(command.getAction())
