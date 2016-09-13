@@ -1,0 +1,23 @@
+<resources>
+
+    <string name="app_name">gome</string>
+
+
+    <string name="alert_action_ok">Ok</string>
+    <string name="alert_action_cancel">Cancel</string>
+    <string name="alert_action_leave">Leave</string>
+
+    <string name="ip__action_set">Update</string>
+    <string name="ip__hint">IP Address</string>
+
+    <string name="mouse__action_left_single_click">Left Click</string>
+    <string name="mouse__action_left_double_click">Double Click</string>
+
+    <string name="mouse__action_right_click">Right Click</string>
+
+    <string-array name="fu__font_family_resources">
+        <item>roboto--normal=fonts/roboto.ttf,bold=fonts/roboto_bold.ttf</item>
+    </string-array>
+
+
+</resources>

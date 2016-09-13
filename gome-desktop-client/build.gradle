@@ -1,0 +1,34 @@
+apply plugin: 'application'
+//apply plugin: 'java-library-distribution'
+
+mainClassName = MAIN_CLASS
+
+dependencies {
+    compile fileTree(dir: 'lib', include: ['*.jar'])
+    
+    compile(project(':gome-lib'))
+
+    testCompile 'junit:junit:4.12'
+}
+
+jar {
+    archiveName = JAR_NAME
+    
+    from {
+        configurations.runtime.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    
+    manifest {
+        attributes 'Main-Class': MAIN_CLASS,
+                   'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')
+    }
+
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+}
+
+//distZip.dependsOn('jar')
+//distZip.duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+

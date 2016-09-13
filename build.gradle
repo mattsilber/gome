@@ -1,0 +1,34 @@
+apply plugin: 'java'
+apply plugin: 'me.tatarka.retrolambda'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
+    }
+
+    configurations.classpath.exclude group: 'com.android.tools.external.lombok'
+}
+
+allprojects {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    
+    repositories {
+    	jcenter()
+    }
+}
+
+retrolambda {
+    javaVersion JavaVersion.VERSION_1_7
+}
+
+
+
+
+

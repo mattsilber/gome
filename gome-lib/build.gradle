@@ -1,0 +1,86 @@
+buildscript {
+	repositories {
+    	jcenter()
+	}
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.1"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.artifactory'
+
+allprojects {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    
+    repositories {
+    	jcenter()
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'org.slf4j:slf4j-log4j12:1.7.5'
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+    compile 'com.owtelse.codec:base64:1.0.6'
+
+    testCompile 'junit:junit:4.12'
+}
+
+def libraryGroupId = 'com.guardanis'
+def libraryArtifactId = 'gtools'
+def libraryVersion = '1.0.6'
+
+jar {
+    archiveName = JAR_NAME
+    
+    from {
+        configurations.runtime.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    
+    manifest {
+        attributes 'Main-Class': MAIN_CLASS,
+                   'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')
+    }
+
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+}
+
+publishing {
+    publications {
+        create('distModule', MavenPublication) {
+         	artifact jar
+         	
+            groupId libraryGroupId
+            version libraryVersion
+            artifactId libraryArtifactId
+            
+            from components.java
+        }
+    }
+}
+
+artifactory {
+    contextUrl = 'http://buildbox:8081/artifactory'
+    publish {
+        repository {
+            repoKey = 'libs-release-local'
+
+            username = artifactory_username
+            password = artifactory_password
+        }
+        defaults {
+            publications('distModule')
+            publishArtifacts = true
+
+            properties = ['qa.level': 'basic', 'q.os': 'java', 'dev.team': 'core']
+            publishPom = true
+        }
+    }
+}

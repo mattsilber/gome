@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base__primary"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/base__toolbar"
+        style="@style/Base.Toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.guardanis.fontutils.EditText
+            android:id="@+id/main__ip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/ip__hint"
+            android:padding="@dimen/base__padding_0"
+            android:textColor="@color/base__text_white"
+            android:textColorHint="@color/base__text_white_1"
+            android:textSize="@dimen/base__text_0"/>
+
+        <TextView
+            android:id="@+id/main__ip_action_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/base__button_transparent"
+            android:gravity="center"
+            android:padding="@dimen/base__padding_1"
+            android:text="@string/ip__action_set"
+            android:textColor="@color/base__text_white"
+            android:textSize="@dimen/base__text_2"/>
+
+    </LinearLayout>
+
+    <com.guardanis.gome.MoveView
+        android:id="@+id/main__move_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="#11FFFFFF"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/main__mouse_action_left_single_click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/base__button_transparent"
+                android:gravity="center"
+                android:padding="@dimen/base__padding_1"
+                android:text="@string/mouse__action_left_single_click"
+                android:textColor="@color/base__text_white"
+                android:textSize="@dimen/base__text_2"/>
+
+            <TextView
+                android:id="@+id/main__mouse_action_left_double_click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/base__button_transparent"
+                android:gravity="center"
+                android:padding="@dimen/base__padding_1"
+                android:text="@string/mouse__action_left_double_click"
+                android:textColor="@color/base__text_white"
+                android:textSize="@dimen/base__text_2"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/main__mouse_action_right_click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/base__button_transparent"
+                android:gravity="center"
+                android:padding="@dimen/base__padding_1"
+                android:text="@string/mouse__action_right_click"
+                android:textColor="@color/base__text_white"
+                android:textSize="@dimen/base__text_2"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
