@@ -28,7 +28,7 @@ public class MouseCommandController implements CommandController {
 			int mouseX = currentMousePos.x + JsonHelper.getInt("mouse_x", command.getData());
 			int mouseY = currentMousePos.y + JsonHelper.getInt("mouse_y", command.getData());
 			
-			Logger.info("Moving to: " + mouseX + ", " + mouseY);
+//			Logger.info("Moving to: " + mouseX + ", " + mouseY);
 			
 			robot.mouseMove(mouseX, mouseY);
 		}
@@ -36,8 +36,10 @@ public class MouseCommandController implements CommandController {
 			click(InputEvent.BUTTON1_MASK);
 		else if(type.equals("left_double_click"))
 			doubleClick(InputEvent.BUTTON1_MASK);
+		else if(type.equals("wheel_click"))
+			click(InputEvent.BUTTON2_DOWN_MASK);
 		else if(type.equals("right_single_click"))
-			click(InputEvent.BUTTON2_MASK);
+			click(InputEvent.BUTTON3_DOWN_MASK);
 		else if(type.equals("wheel_move")){
 			int value = JsonHelper.getInt("wheel_value", command.getData());			
 			
@@ -45,17 +47,17 @@ public class MouseCommandController implements CommandController {
 		}
 		else if(type.equals("drag_start")){
 			robot.keyPress(KeyEvent.VK_SHIFT);
-			robot.mousePress(InputEvent.BUTTON3_MASK);
+			robot.mousePress(InputEvent.BUTTON1_MASK);
 		}
 		else if(type.equals("drag_end")){
-			robot.mouseRelease(InputEvent.BUTTON3_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);
 			robot.keyRelease(KeyEvent.VK_SHIFT);
 		}
 	}
 	
 	protected void click(int mask){
 		robot.mousePress(mask);
-		robot.mouseRelease(InputEvent.BUTTON1_MASK);
+		robot.mouseRelease(mask);
 	}
 	
 	protected void doubleClick(int mask) throws Exception {

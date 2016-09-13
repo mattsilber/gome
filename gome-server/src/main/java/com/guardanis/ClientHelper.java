@@ -74,7 +74,7 @@ public class ClientHelper extends Thread {
 	}
 	
 	private void process(String data) throws Exception {		
-		Logger.info("Data received: " + data);
+//		Logger.info("Data received: " + data);
 		
 		int delimiter = data.indexOf(":");
 		

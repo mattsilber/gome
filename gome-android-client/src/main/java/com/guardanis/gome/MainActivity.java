@@ -76,6 +76,10 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
                 .setOnClickListener(v ->
                         onCalled(new MouseClickCommand("left_double_click")));
 
+        findViewById(R.id.main__mouse_action_wheel_click)
+                .setOnClickListener(v ->
+                        onCalled(new MouseClickCommand("wheel_click")));
+
         findViewById(R.id.main__mouse_action_right_click)
                 .setOnClickListener(v ->
                         onCalled(new MouseClickCommand("right_single_click")));

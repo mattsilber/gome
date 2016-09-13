@@ -58,16 +58,17 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:orientation="vertical"
-        android:paddingTop="75dip">
+        android:paddingTop="75dip"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/main__mouse_action_drag_start"
-            android:text="@string/mouse__action_left_single_click"
+            android:text="@string/mouse__action_drag_start"
             style="@style/main__action_item"/>
 
         <TextView
             android:id="@+id/main__mouse_action_drag_stop"
-            android:text="@string/mouse__action_left_double_click"
+            android:text="@string/mouse__action_drag_stop"
             style="@style/main__action_item"/>
 
     </LinearLayout>
@@ -88,6 +89,11 @@
         <TextView
             android:id="@+id/main__mouse_action_left_double_click"
             android:text="@string/mouse__action_left_double_click"
+            style="@style/main__action_item"/>
+
+        <TextView
+            android:id="@+id/main__mouse_action_wheel_click"
+            android:text="@string/mouse__action_wheel_click"
             style="@style/main__action_item"/>
 
         <TextView

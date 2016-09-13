@@ -13,6 +13,8 @@
     <string name="mouse__action_left_single_click">Left Click</string>
     <string name="mouse__action_left_double_click">Double Click</string>
 
+    <string name="mouse__action_wheel_click">Wheel Click</string>
+
     <string name="mouse__action_drag_start">Drag Start</string>
     <string name="mouse__action_drag_stop">Drag Stop</string>
 
