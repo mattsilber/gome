@@ -30,6 +30,7 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
     private static final String PREF__IP = "gome__ip_adress";
 
     private SocketClient socketClient;
+    private boolean connected = false;
 
     @Override
     public void onCreate(Bundle savedInstance){
@@ -59,7 +60,8 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
     public void onResume(){
         super.onResume();
 
-        connectSocketClient(getIpAddress());
+        if(connected)
+            connectSocketClient(getIpAddress());
     }
 
     private void setup(){
@@ -94,6 +96,8 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
     }
 
     protected void connectSocketClient(String ipAddress){
+        connected = true;
+
         setIpAddress(ipAddress);
 
         if(socketClient != null)
