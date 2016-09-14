@@ -30,8 +30,8 @@ public class PreventTextWatcher implements TextWatcher {
 
     public static void attachTo(TextView textView, Callback<String> textAddedListener){
         textView.addTextChangedListener(new PreventTextWatcher(text -> {
-            textAddedListener.onCalled(text);
             textView.setText("");
+            textAddedListener.onCalled(text);
         }));
     }
 

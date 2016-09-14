@@ -145,7 +145,7 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
         cheating.setOnKeyListener((v, keyCode, event) -> {
             if(event.getAction() == KeyEvent.ACTION_DOWN
                     && (keyCode == KeyEvent.KEYCODE_DEL || keyCode == KeyEvent.KEYCODE_BACK))
-                onCalled(new KeyboardEventCommand(keyCode, true));
+                onCalled(new KeyboardCommand("\b"));
 
             return false;
         });
