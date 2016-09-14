@@ -58,17 +58,11 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:orientation="vertical"
-        android:paddingTop="75dip"
-        android:visibility="gone">
+        android:paddingTop="75dip">
 
         <TextView
-            android:id="@+id/main__mouse_action_drag_start"
+            android:id="@+id/main__mouse_action_drag"
             android:text="@string/mouse__action_drag_start"
-            style="@style/main__action_item"/>
-
-        <TextView
-            android:id="@+id/main__mouse_action_drag_stop"
-            android:text="@string/mouse__action_drag_stop"
             style="@style/main__action_item"/>
 
     </LinearLayout>

@@ -49,7 +49,7 @@ public class MouseCommandController implements CommandController {
 			robot.keyPress(KeyEvent.VK_SHIFT);
 			robot.mousePress(InputEvent.BUTTON1_MASK);
 		}
-		else if(type.equals("drag_end")){
+		else if(type.equals("drag_stop")){
 			robot.mouseRelease(InputEvent.BUTTON1_MASK);
 			robot.keyRelease(KeyEvent.VK_SHIFT);
 		}

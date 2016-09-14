@@ -32,6 +32,8 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
     private SocketClient socketClient;
     private boolean connected = false;
 
+    private boolean dragEnabled = false;
+
     @Override
     public void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
@@ -68,6 +70,12 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
         ((MoveView) findViewById(R.id.main__move_view))
                 .setCommandCallback(this);
 
+        setupMouseActionViews();
+        setupDragView();
+        setupIpAddressViews();
+    }
+
+    private void setupMouseActionViews(){
         findViewById(R.id.main__mouse_action_left_single_click)
                 .setOnClickListener(v ->
                         onCalled(new MouseClickCommand("left_single_click")));
@@ -83,15 +91,27 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
         findViewById(R.id.main__mouse_action_right_click)
                 .setOnClickListener(v ->
                         onCalled(new MouseClickCommand("right_single_click")));
+    }
 
-        findViewById(R.id.main__mouse_action_drag_start)
-                .setOnClickListener(v ->
-                        onCalled(new MouseClickCommand("drag_start")));
+    private void setupDragView(){
+        TextView dragView = (TextView) findViewById(R.id.main__mouse_action_drag);
 
-        findViewById(R.id.main__mouse_action_drag_stop)
-                .setOnClickListener(v ->
-                        onCalled(new MouseClickCommand("drag_stop")));
+        dragView.setText(getString(dragEnabled
+                ? R.string.mouse__action_drag_stop
+                : R.string.mouse__action_drag_start));
 
+        dragView.setOnClickListener(v -> {
+            onCalled(new MouseClickCommand(dragEnabled
+                    ? "drag_start"
+                    : "drag_stop"));
+
+            dragEnabled = !dragEnabled;
+
+            setupDragView();
+        });
+    }
+
+    private void setupIpAddressViews(){
         final TextView ipTextView = (TextView) findViewById(R.id.main__ip);
         ipTextView.setText(getIpAddress());
 
