@@ -101,11 +101,11 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
                 : R.string.mouse__action_drag_start));
 
         dragView.setOnClickListener(v -> {
+            dragEnabled = !dragEnabled;
+
             onCalled(new MouseClickCommand(dragEnabled
                     ? "drag_start"
                     : "drag_stop"));
-
-            dragEnabled = !dragEnabled;
 
             setupDragView();
         });
