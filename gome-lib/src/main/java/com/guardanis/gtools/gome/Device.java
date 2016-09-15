@@ -115,5 +115,12 @@ public class Device {
 		
 		return device;
 	}
+	
+	@Override
+	public String toString(){
+		return name
+				+ "\n Connected from: " + ip
+				+ "\n Last Ping: " + lastPing;
+	}
 
 }

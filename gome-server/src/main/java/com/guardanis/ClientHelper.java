@@ -55,6 +55,8 @@ public class ClientHelper extends Thread {
 		}
 		catch(Throwable e){ Logger.log(e); }
 		
+		eventsCallback.onClientDisconnected(this);
+		
 		if(finishedCallback != null)
 			finishedCallback.run();
 	}

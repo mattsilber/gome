@@ -10,6 +10,7 @@ import com.guardanis.commands.Command;
 import com.guardanis.commands.CommandController;
 import com.guardanis.commands.KeyboardCommandController;
 import com.guardanis.commands.MouseCommandController;
+import com.guardanis.display.DisplayController;
 import com.guardanis.gtools.GTools;
 import com.guardanis.gtools.Logger;
 import com.guardanis.gtools.general.Callback;
@@ -36,6 +37,8 @@ public class Server implements ConnectionEvents {
     
     private Map<String, CommandController> commandControllers = new HashMap<String, CommandController>();
     
+    private DisplayController displayController;
+    
     protected Server() throws Exception {
     	this.socketManager = new SocketManager(GTools.CONNECTION_PORT, this);
 
@@ -43,6 +46,9 @@ public class Server implements ConnectionEvents {
     	commandControllers.put(ACTION_KEYBOARD, new KeyboardCommandController());
     	
     	socketManager.start();
+    	
+    	displayController = new DisplayController()
+    			.show(connectedDevices);
     }
 
 	@Override
@@ -62,6 +68,8 @@ public class Server implements ConnectionEvents {
 				device.getIpAddress());
 		
 		connectedDevices.add(device);
+		
+		displayController.onDeviceAdded(device);
 	}
 
 	@Override
@@ -80,8 +88,13 @@ public class Server implements ConnectionEvents {
 
 	@Override
 	public void onClientDisconnected(ClientHelper client) {
+		Logger.info("%1$s disconnected", 
+				client.getDevice().getName());
+		
 		withDeviceOrForget(client, device 
 				-> connectedDevices.remove(device));
+
+		displayController.onDeviceRemoved(client.getDevice());
 	}
 	
 	private void withDeviceOrForget(ClientHelper client, Callback<Device> callback){

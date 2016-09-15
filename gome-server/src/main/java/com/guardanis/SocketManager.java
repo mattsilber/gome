@@ -25,7 +25,7 @@ public class SocketManager extends Thread {
 	
 	private ConnectionEvents eventsCallback;
 
-	public SocketManager(int connectionPort, ConnectionEvents eventsCallback){
+	public SocketManager(int connectionPort, final ConnectionEvents eventsCallback){
 		this.connectionPort = connectionPort;
 		this.eventsCallback = new ConnectionEvents(){
 
@@ -91,7 +91,6 @@ public class SocketManager extends Thread {
 					connectionPort);
 			
 			final ClientHelper client = new ClientHelper(socket, eventsCallback);
-			client.setFinishedCallback(() -> attemptConnection());
 			
 			new Thread(client)
 				.start();
