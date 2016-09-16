@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
             activeLoadingDialog = null;
         }
 
-        DiscoveryAgent.getInstance()
+        DiscoveryAgent.getInstance(this)
                 .cancel();
 
         super.onPause();
@@ -230,7 +230,7 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
 
         activeLoadingDialog.show();
 
-        DiscoveryAgent.getInstance()
+        DiscoveryAgent.getInstance(this)
                 .search(values ->
                         showDeviceSelectionDialog(values));
     }

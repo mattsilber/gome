@@ -11,6 +11,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public static final int RC__PERMISSIONS = 100;
 
+    public static final String TAG__BASE = "gome";
+
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);

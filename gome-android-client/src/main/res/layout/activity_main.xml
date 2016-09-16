@@ -25,7 +25,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/ip__hint"
+                android:maxLines="1"
                 android:padding="@dimen/base__padding_0"
+                android:singleLine="true"
                 android:textColor="@color/base__text_white"
                 android:textColorHint="@color/base__text_white_1"
                 android:textSize="@dimen/base__text_0"/>
@@ -78,30 +80,30 @@
 
             <TextView
                 android:id="@+id/main__mouse_action_drag"
-                android:text="@string/mouse__action_drag_start"
-                style="@style/main__action_item"/>
+                style="@style/main__action_item"
+                android:text="@string/mouse__action_drag_start"/>
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/main__mouse_action_left_single_click"
-            android:text="@string/mouse__action_left_single_click"
-            style="@style/main__action_item"/>
+            style="@style/main__action_item"
+            android:text="@string/mouse__action_left_single_click"/>
 
         <TextView
             android:id="@+id/main__mouse_action_left_double_click"
-            android:text="@string/mouse__action_left_double_click"
-            style="@style/main__action_item"/>
+            style="@style/main__action_item"
+            android:text="@string/mouse__action_left_double_click"/>
 
         <TextView
             android:id="@+id/main__mouse_action_wheel_click"
-            android:text="@string/mouse__action_wheel_click"
-            style="@style/main__action_item"/>
+            style="@style/main__action_item"
+            android:text="@string/mouse__action_wheel_click"/>
 
         <TextView
             android:id="@+id/main__mouse_action_right_click"
-            android:text="@string/mouse__action_right_click"
-            style="@style/main__action_item"/>
+            style="@style/main__action_item"
+            android:text="@string/mouse__action_right_click"/>
 
     </LinearLayout>
 </RelativeLayout>
