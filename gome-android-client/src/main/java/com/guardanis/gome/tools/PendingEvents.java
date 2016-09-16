@@ -12,6 +12,8 @@ public class PendingEvents {
         return instance;
     }
 
+    public static final String PE__PERMISSION_RETURN = "permissions_returned";
+
     private HashMap<String, Runnable> pendingEvents = new HashMap<String, Runnable>();
 
     protected PendingEvents() { }

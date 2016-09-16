@@ -41,6 +41,17 @@
                 android:textColor="@color/base__text_white"
                 android:textSize="@dimen/base__text_2"/>
 
+            <TextView
+                android:id="@+id/main__ip_action_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/base__button_transparent"
+                android:gravity="center"
+                android:padding="@dimen/base__padding_1"
+                android:text="@string/ip__action_search"
+                android:textColor="@color/base__text_white"
+                android:textSize="@dimen/base__text_2"/>
+
         </LinearLayout>
 
         <com.guardanis.gome.MoveView
@@ -55,25 +66,22 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:orientation="vertical"
-        android:paddingTop="75dip">
-
-        <TextView
-            android:id="@+id/main__mouse_action_drag"
-            android:text="@string/mouse__action_drag_start"
-            style="@style/main__action_item"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical"
-        android:paddingTop="75dip">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="75dip">
+
+            <TextView
+                android:id="@+id/main__mouse_action_drag"
+                android:text="@string/mouse__action_drag_start"
+                style="@style/main__action_item"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/main__mouse_action_left_single_click"

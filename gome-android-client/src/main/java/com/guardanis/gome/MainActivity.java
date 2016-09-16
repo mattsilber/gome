@@ -1,5 +1,7 @@
 package com.guardanis.gome;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -15,14 +17,18 @@ import com.guardanis.gome.commands.Command;
 import com.guardanis.gome.commands.KeyboardCommand;
 import com.guardanis.gome.commands.KeyboardEventCommand;
 import com.guardanis.gome.commands.MouseClickCommand;
+import com.guardanis.gome.socket.DiscoveryAgent;
 import com.guardanis.gome.socket.SocketClient;
 import com.guardanis.gome.tools.Callback;
+import com.guardanis.gome.tools.PermissionAuthenticator;
 import com.guardanis.gome.tools.PreventTextWatcher;
 import com.guardanis.gome.tools.views.ToolbarLayoutBuilder;
 import com.guardanis.gome.tools.views.ViewHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class MainActivity extends BaseActivity implements Callback<Command> {
 
@@ -33,6 +39,8 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
     private boolean connected = false;
 
     private boolean dragEnabled = false;
+
+    private Dialog activeLoadingDialog;
 
     @Override
     public void onCreate(Bundle savedInstance){
@@ -54,6 +62,14 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
     @Override
     public void onPause(){
         killSocketClient();
+
+        if(activeLoadingDialog != null){
+            activeLoadingDialog.dismiss();
+            activeLoadingDialog = null;
+        }
+
+        DiscoveryAgent.getInstance()
+                .cancel();
 
         super.onPause();
     }
@@ -116,8 +132,14 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
         ipTextView.setText(getIpAddress());
 
         findViewById(R.id.main__ip_action_set)
+                .setOnClickListener(v -> {
+                    ipTextView.setText(R.string.ip__action_update);
+                    connectSocketClient(ipTextView.getText().toString());
+                });
+
+        findViewById(R.id.main__ip_action_search)
                 .setOnClickListener(v ->
-                        connectSocketClient(ipTextView.getText().toString()));
+                        requestDevicesForSelection());
     }
 
     @Override
@@ -134,7 +156,8 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
         if(socketClient != null)
             killSocketClient();
 
-        socketClient = SocketClient.open(ipAddress, 13337);
+        socketClient = SocketClient.open(ipAddress,
+                SocketClient.DEFAULT_PORT);
     }
 
     protected void killSocketClient(){
@@ -164,7 +187,7 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
 
         cheating.setOnKeyListener((v, keyCode, event) -> {
             if(event.getAction() == KeyEvent.ACTION_DOWN
-                    && (keyCode == KeyEvent.KEYCODE_DEL || keyCode == KeyEvent.KEYCODE_BACK))
+                    && keyCode == KeyEvent.KEYCODE_DEL)
                 onCalled(new KeyboardCommand("\b"));
 
             return false;
@@ -177,5 +200,40 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
         cheating.postDelayed(() ->
                     ViewHelper.openSoftInputKeyboard(cheating),
                 350);
+    }
+
+    protected void requestDevicesForSelection(){
+        activeLoadingDialog = new ProgressDialog(this);
+        activeLoadingDialog.setCancelable(false);
+
+        ((ProgressDialog) activeLoadingDialog)
+                .setIndeterminate(true);
+
+        activeLoadingDialog.show();
+
+        DiscoveryAgent.getInstance()
+                .search(values ->
+                        showDeviceSelectionDialog(values));
+    }
+
+    protected void showDeviceSelectionDialog(List<String> availableIps){
+        if(availableIps.size() < 1){
+            new AlertDialog.Builder(this)
+                    .setMessage(R.string.devices__selection_alert_none_found)
+                    .show();
+
+            return;
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.devices__selection_alert_title)
+                .setItems(availableIps.toArray(new String[availableIps.size()]),
+                        (d, which) -> {
+                            setIpAddress(availableIps.get(which));
+                            setupIpAddressViews();
+
+                            connectSocketClient(availableIps.get(which));
+                        })
+                .show();
     }
 }

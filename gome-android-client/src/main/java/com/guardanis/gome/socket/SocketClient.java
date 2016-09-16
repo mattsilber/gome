@@ -32,6 +32,8 @@ import javax.net.ssl.X509TrustManager;
 
 public class SocketClient implements Runnable {
 
+    public static final int DEFAULT_PORT = 13337;
+
     private static final String TAG = "gome-socket";
 
     private String ip;
