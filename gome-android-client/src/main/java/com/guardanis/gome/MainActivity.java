@@ -30,7 +30,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements Callback<Command> {
+public class MainActivity extends BaseActivity implements Callback<Command>, SocketClient.ConnectionCallbacks {
 
     private static final String PREFS = "gome-prefs";
     private static final String PREF__IP = "gome__ip_adress";
@@ -157,7 +157,26 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
             killSocketClient();
 
         socketClient = SocketClient.open(ipAddress,
-                SocketClient.DEFAULT_PORT);
+                SocketClient.DEFAULT_PORT,
+                this);
+    }
+
+    @Override
+    public void onConnected(String ip) {
+        Toast.makeText(this, "Connected to " + ip, Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    @Override
+    public void onConnectionException(Throwable throwable) {
+        Toast.makeText(this, throwable.getMessage(), Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    @Override
+    public void onConnectionClosed() {
+        Toast.makeText(this, "Disconnected from server", Toast.LENGTH_SHORT)
+                .show();
     }
 
     protected void killSocketClient(){

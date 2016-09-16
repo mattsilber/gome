@@ -1,5 +1,7 @@
 package com.guardanis.gome.socket;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.guardanis.gome.commands.Command;
@@ -32,6 +34,12 @@ import javax.net.ssl.X509TrustManager;
 
 public class SocketClient implements Runnable {
 
+    public interface ConnectionCallbacks {
+        public void onConnected(String ip);
+        public void onConnectionException(Throwable throwable);
+        public void onConnectionClosed();
+    }
+
     public static final int DEFAULT_PORT = 13337;
 
     private static final String TAG = "gome-socket";
@@ -39,20 +47,23 @@ public class SocketClient implements Runnable {
     private String ip;
     private int port;
 
+    private ConnectionCallbacks connectionCallbacks;
+
     private BufferedWriter writer;
     private BufferedReader reader;
 
     private boolean canceled = false;
 
-//    private CopyOnWriteArrayList<String> writeData
+    private Handler handler = new Handler(Looper.getMainLooper());
 
-    public static SocketClient open(String ip, int port){
-        return new SocketClient(ip, port);
+    public static SocketClient open(String ip, int port, ConnectionCallbacks connectionCallbacks){
+        return new SocketClient(ip, port, connectionCallbacks);
     }
 
-    private SocketClient(String ip, int port){
+    private SocketClient(String ip, int port, ConnectionCallbacks connectionCallbacks){
         this.ip = ip;
         this.port = port;
+        this.connectionCallbacks = connectionCallbacks;
 
         new Thread(this)
                 .start();
@@ -79,6 +90,9 @@ public class SocketClient implements Runnable {
 
             Log.i(TAG, "Connected to socket write stream...");
 
+            handler.post(() ->
+                    connectionCallbacks.onConnected(ip));
+
             sendDeviceInfo();
 
             Log.i(TAG, "Wrote device info socket...");
@@ -91,9 +105,14 @@ public class SocketClient implements Runnable {
         catch (Throwable e) {
             e.printStackTrace();
 
-            throw new RuntimeException("Couldn't connect to host!!!");
+            handler.post(() ->
+                    connectionCallbacks.onConnectionException(
+                            new RuntimeException("Couldn't connect to host!!!")));
         }
         finally { onDestroyed(); }
+
+        handler.post(() ->
+                connectionCallbacks.onConnectionClosed());
     }
 
     private void sendDeviceInfo() throws Exception {
