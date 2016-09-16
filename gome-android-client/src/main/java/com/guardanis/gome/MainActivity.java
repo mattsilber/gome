@@ -131,11 +131,11 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
         final TextView ipTextView = (TextView) findViewById(R.id.main__ip);
         ipTextView.setText(getIpAddress());
 
-        findViewById(R.id.main__ip_action_set)
-                .setOnClickListener(v -> {
-                    ipTextView.setText(R.string.ip__action_update);
-                    connectSocketClient(ipTextView.getText().toString());
-                });
+        TextView actionSet = (TextView) findViewById(R.id.main__ip_action_set);
+        actionSet.setOnClickListener(v -> {
+            actionSet.setText(R.string.ip__action_update);
+            connectSocketClient(ipTextView.getText().toString());
+        });
 
         findViewById(R.id.main__ip_action_search)
                 .setOnClickListener(v ->
@@ -217,6 +217,8 @@ public class MainActivity extends BaseActivity implements Callback<Command> {
     }
 
     protected void showDeviceSelectionDialog(List<String> availableIps){
+        activeLoadingDialog.dismiss();
+
         if(availableIps.size() < 1){
             new AlertDialog.Builder(this)
                     .setMessage(R.string.devices__selection_alert_none_found)
