@@ -63,11 +63,11 @@ public class DiscoveryAgent implements Runnable {
 
                 String gateway = baseIpAddress.substring(0, baseIpAddress.lastIndexOf(".") + 1);
 
-                for(int i = 0; i < 16; i++){
+                for(int i = 0; i < 32; i++){
                     IpRangeTester tester = new IpRangeTester(gateway,
                             new int[]{
-                                    i * 16,
-                                    (i * 16) + 16
+                                    i * 8,
+                                    (i * 8) + 8
                             },
                             currentRequest,
                             ip ->
