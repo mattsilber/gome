@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/base__dialog_padding">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:orientation="vertical"
+        android:padding="@dimen/base__dialog_padding">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.guardanis.fontutils.TextView
+                android:id="@+id/base__dialog_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:textColor="@color/base__text_dark_0"
+                android:textSize="@dimen/base__dialog_title"/>
+
+            <com.guardanis.imageloader.views.SVGImageView
+                android:id="@+id/base__dialog_title_image2"
+                android:layout_width="@dimen/base__dialog_title_option_image"
+                android:layout_height="@dimen/base__dialog_title_option_image"
+                android:background="@drawable/base__button_transparent_dark"
+                android:padding="@dimen/base__dialog_title_option_image_padding"
+                android:visibility="gone"/>
+
+            <com.guardanis.imageloader.views.SVGImageView
+                android:id="@+id/base__dialog_title_image"
+                android:layout_width="@dimen/base__dialog_title_option_image"
+                android:layout_height="@dimen/base__dialog_title_option_image"
+                android:background="@drawable/base__button_transparent_dark"
+                android:padding="@dimen/base__dialog_title_option_image_padding"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.guardanis.fontutils.TextView
+                    android:id="@+id/base__dialog_message"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingBottom="@dimen/base__dialog_padding"
+                    android:paddingTop="@dimen/base__dialog_padding"
+                    android:textColor="@color/base__text_dark_2"
+                    android:textSize="@dimen/base__dialog_content"
+                    android:visibility="gone"/>
+
+                <LinearLayout
+                    android:id="@+id/base__dialog_scrolling_content_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/base__dialog_content_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <com.guardanis.fontutils.TextView
+                android:id="@+id/base__dialog_action_negative"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/base__button_transparent_dark"
+                android:gravity="center"
+                android:padding="@dimen/base__dialog_action_padding"
+                android:textColor="@color/base__dialog_action_negative"
+                android:textSize="@dimen/base__dialog_action"
+                android:visibility="gone"/>
+
+            <com.guardanis.fontutils.TextView
+                android:id="@+id/base__dialog_action_positive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/base__button_transparent_dark"
+                android:gravity="center"
+                android:padding="@dimen/base__dialog_action_padding"
+                android:textColor="@color/base__dialog_action_positive"
+                android:textSize="@dimen/base__dialog_action"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

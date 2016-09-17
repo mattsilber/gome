@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/base__button_transparent_dark"
+    android:orientation="horizontal"
+    android:padding="@dimen/base__dialog_selection_list_item_padding">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.guardanis.fontutils.TextView
+            android:id="@+id/base__dialog_selection_list_item_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/base__text_dark_1"
+            android:textSize="@dimen/base__dialog_content"/>
+
+        <com.guardanis.fontutils.TextView
+            android:id="@+id/base__dialog_selection_list_item_value_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/base__text_dark_2"
+            android:textSize="@dimen/base__dialog_content_sub"/>
+
+    </LinearLayout>
+
+</LinearLayout>

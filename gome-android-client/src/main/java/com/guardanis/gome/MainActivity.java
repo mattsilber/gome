@@ -4,31 +4,20 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.guardanis.gome.commands.Command;
 import com.guardanis.gome.commands.KeyboardCommand;
-import com.guardanis.gome.commands.KeyboardEventCommand;
 import com.guardanis.gome.commands.MouseClickCommand;
 import com.guardanis.gome.socket.DiscoveryAgent;
 import com.guardanis.gome.socket.SocketClient;
 import com.guardanis.gome.tools.Callback;
-import com.guardanis.gome.tools.PermissionAuthenticator;
 import com.guardanis.gome.tools.PreventTextWatcher;
 import com.guardanis.gome.tools.views.ToolbarLayoutBuilder;
 import com.guardanis.gome.tools.views.ViewHelper;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
 
 public class MainActivity extends BaseActivity implements Callback<Command>, SocketClient.ConnectionCallbacks {
 
@@ -68,8 +57,8 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
             activeLoadingDialog = null;
         }
 
-        DiscoveryAgent.getInstance(this)
-                .cancel();
+        DiscoveryHelper.getInstance()
+                .cancel(this);
 
         super.onPause();
     }
@@ -222,39 +211,13 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
     }
 
     protected void requestDevicesForSelection(){
-        activeLoadingDialog = new ProgressDialog(this);
-        activeLoadingDialog.setCancelable(false);
+        DiscoveryHelper.getInstance()
+                .search(this, ip -> {
+                    setIpAddress(ip);
+                    setupIpAddressViews();
 
-        ((ProgressDialog) activeLoadingDialog)
-                .setIndeterminate(true);
-
-        activeLoadingDialog.show();
-
-        DiscoveryAgent.getInstance(this)
-                .search(values ->
-                        showDeviceSelectionDialog(values));
+                    connectSocketClient(ip);
+                });
     }
 
-    protected void showDeviceSelectionDialog(List<String> availableIps){
-        activeLoadingDialog.dismiss();
-
-        if(availableIps.size() < 1){
-            new AlertDialog.Builder(this)
-                    .setMessage(R.string.devices__selection_alert_none_found)
-                    .show();
-
-            return;
-        }
-
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.devices__selection_alert_title)
-                .setItems(availableIps.toArray(new String[availableIps.size()]),
-                        (d, which) -> {
-                            setIpAddress(availableIps.get(which));
-                            setupIpAddressViews();
-
-                            connectSocketClient(availableIps.get(which));
-                        })
-                .show();
-    }
 }

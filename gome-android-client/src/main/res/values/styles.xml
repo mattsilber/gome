@@ -25,4 +25,22 @@
         <item name="elevation">0dip</item>
     </style>
 
+    <style name="base__category">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">top|left</item>
+        <item name="android:paddingTop">@dimen/base__category_padding_top</item>
+        <item name="android:textColor">@color/base__text_dark_1</item>
+        <item name="android:textSize">@dimen/base__category</item>
+    </style>
+
+    <style name="base__input">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">top|left</item>
+        <item name="android:textColor">@color/base__primary</item>
+        <item name="android:textColorHint">@color/base__text_dark_2</item>
+        <item name="android:textSize">@dimen/base__input</item>
+    </style>
+
 </resources>

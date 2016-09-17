@@ -20,5 +20,17 @@
 
     <color name="base__button_transparent">#00000000</color>
     <color name="base__button_transparent_pressed">#44FFFFFF</color>
+    <color name="base__button_transparent_pressed_dark">#22000000</color>
+
+
+    <color name="base__dialog_bg">#FAFAFA</color>
+    <color name="base__dialog_window_bg">#20000000</color>
+
+    <color name="base__dialog_action_positive">#34495E</color>
+    <color name="base__dialog_action_negative">#42000000</color>
+
+
+    <color name="base__list_item_bg">#FAFAFA</color>
+    <color name="base__list_item_divider">#AADCE0E1</color>
 
 </resources>

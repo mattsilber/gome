@@ -29,4 +29,36 @@
     <dimen name="base__padding_2">10dip</dimen>
     <dimen name="base__padding_3">8dip</dimen>
 
+
+    <dimen name="base__category">16dip</dimen>
+    <dimen name="base__category_padding_top">22dip</dimen>
+
+    <dimen name="base__input">14dip</dimen>
+    <dimen name="base__input_padding">12dip</dimen>
+
+
+    <dimen name="base__dialog_padding">8dip</dimen>
+
+    <dimen name="base__dialog_title">16dip</dimen>
+
+    <dimen name="base__dialog_title_option_image">45dip</dimen>
+    <dimen name="base__dialog_title_option_image_padding">7dip</dimen>
+
+    <dimen name="base__dialog_content">14dip</dimen>
+    <dimen name="base__dialog_content_sub">12dip</dimen>
+
+    <dimen name="base__dialog_action">16dip</dimen>
+    <dimen name="base__dialog_action_padding">12dip</dimen>
+
+    <dimen name="base__dialog_selection_list_item_padding">12dip</dimen>
+
+
+    <dimen name="base__list_item_title">16dip</dimen>
+    <dimen name="base__list_item_title_action_image">45dip</dimen>
+    <dimen name="base__list_item_title_action_image_padding">12dip</dimen>
+    <dimen name="base__list_item_title_sub">12dip</dimen>
+    <dimen name="base__list_item_padding">12dip</dimen>
+    <dimen name="base__list_item_divider">1dip</dimen>
+
+
 </resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.guardanis.fontutils.EditText
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@color/base__text_dark_1"
+    android:textColorHint="@color/base__text_dark_2"
+    android:textSize="@dimen/base__dialog_content"
+    android:padding="@dimen/base__dialog_padding"
+    android:imeOptions="actionDone" />

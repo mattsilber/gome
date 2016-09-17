@@ -34,14 +34,14 @@ public class DiscoveryAgent implements Runnable {
     }
 
     private Context context;
-    private Callback<List<String>> devicesCallback;
+    private Callback<String> devicesCallback;
     private long requestStartMs;
 
     protected DiscoveryAgent(Context context){
         this.context = context.getApplicationContext();
     }
 
-    public DiscoveryAgent search(Callback<List<String>> devicesCallback){
+    public DiscoveryAgent search(Callback<String> devicesCallback){
         this.requestStartMs = System.currentTimeMillis();
         this.devicesCallback = devicesCallback;
 
@@ -54,8 +54,6 @@ public class DiscoveryAgent implements Runnable {
     @Override
     public void run() {
         final long currentRequest = Long.valueOf(requestStartMs);
-
-        List<String> ips = new ArrayList<String>();
 
         String baseIpAddress = getWifiIpAddress();
 
@@ -72,7 +70,10 @@ public class DiscoveryAgent implements Runnable {
                                     (i * 16) + 16
                             },
                             currentRequest,
-                            ip -> ips.add(ip));
+                            ip ->
+                                    new Handler(Looper.getMainLooper())
+                                            .post(() ->
+                                                    devicesCallback.onCalled(ip)));
 
                     new Thread(tester)
                             .start();
@@ -80,11 +81,6 @@ public class DiscoveryAgent implements Runnable {
             }
             catch (Exception e) { e.printStackTrace(); }
         }
-
-        if(currentRequest == requestStartMs)
-            new Handler(Looper.getMainLooper())
-                .post(() ->
-                        devicesCallback.onCalled(ips));
     }
 
     protected String getWifiIpAddress() {
