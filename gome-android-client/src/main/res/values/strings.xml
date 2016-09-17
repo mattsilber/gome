@@ -22,9 +22,11 @@
     <string name="alert_title_confirm">Confirmation</string>
     <string name="alert_title_error">Something went wrong</string>
     <string name="alert_title_loading">Loading</string>
+    <string name="alert_title_oops">Oops</string>
 
     <string name="alert_message_please_wait">Please wait...</string>
     <string name="alert_message_permission_required">You need to grant permissions to do that!</string>
+    <string name="alert_message_connection_required">You need to be connected in order to do that!</string>
 
     <string name="mouse__action_left_single_click">Left Click</string>
     <string name="mouse__action_left_double_click">Double Click</string>

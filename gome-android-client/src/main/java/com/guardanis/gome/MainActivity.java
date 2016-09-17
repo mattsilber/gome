@@ -18,6 +18,7 @@ import com.guardanis.gome.commands.MouseClickCommand;
 import com.guardanis.gome.socket.DiscoveryAgent;
 import com.guardanis.gome.socket.SocketClient;
 import com.guardanis.gome.tools.Callback;
+import com.guardanis.gome.tools.DialogBuilder;
 import com.guardanis.gome.tools.PreventTextWatcher;
 import com.guardanis.gome.tools.views.ToolbarLayoutBuilder;
 import com.guardanis.gome.tools.views.ViewHelper;
@@ -48,7 +49,8 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
         builder.addTitle("gome", v ->
                         finish())
                 .addOptionText("Keyboard", v ->
-                        showKeyboard());
+                        validateConnected(() ->
+                                showKeyboard()));
     }
 
     @Override
@@ -232,6 +234,16 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
 
                     connectSocketClient(ip);
                 });
+    }
+
+    private void validateConnected(Runnable onConnected){
+        if(connected)
+            onConnected.run();
+        else
+            new DialogBuilder(this)
+                    .setTitle(R.string.alert_title_oops)
+                    .setMessage(R.string.alert_message_connection_required)
+                    .show();
     }
 
 }
