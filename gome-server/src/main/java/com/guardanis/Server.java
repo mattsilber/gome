@@ -33,6 +33,8 @@ public class Server implements ConnectionEvents {
     public static final String ACTION_KEYBOARD = "key";
 
 	private SocketManager socketManager;
+	private PingManager pingManager;
+	
     private List<Device> connectedDevices = new CopyOnWriteArrayList<Device>();
     
     private Map<String, CommandController> commandControllers = new HashMap<String, CommandController>();
@@ -41,11 +43,13 @@ public class Server implements ConnectionEvents {
     
     protected Server() throws Exception {
     	this.socketManager = new SocketManager(GTools.CONNECTION_PORT, this);
+    	this.pingManager = new PingManager(GTools.PING_PORT);
 
     	commandControllers.put(ACTION_MOUSE, new MouseCommandController());
     	commandControllers.put(ACTION_KEYBOARD, new KeyboardCommandController());
     	
     	socketManager.start();
+    	pingManager.start();
     	
     	displayController = new DisplayController()
     			.show(connectedDevices);

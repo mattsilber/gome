@@ -65,24 +65,17 @@ public class DiscoveryAgent implements Runnable {
 
                 String gateway = baseIpAddress.substring(0, baseIpAddress.lastIndexOf(".") + 1);
 
-                for (int i = 1; i <= 254; i++) {
-                    if(currentRequest != requestStartMs)
-                        return;
+                for(int i = 0; i < 16; i++){
+                    IpRangeTester tester = new IpRangeTester(gateway,
+                            new int[]{
+                                    i * 16,
+                                    (i * 16) + 16
+                            },
+                            currentRequest,
+                            ip -> ips.add(ip));
 
-                    String ipValue = gateway + i;
-
-                    try {
-                        Socket socket = new Socket(ipValue, SocketClient.DEFAULT_PORT);
-
-                        new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-
-                        Log.i(BaseActivity.TAG__BASE, "Writer connected to: " + ipValue);
-
-                        ips.add(ipValue);
-                    }
-                    catch (Exception e) {
-                        Log.d(BaseActivity.TAG__BASE, ipValue + " failed with " + e.getMessage());
-                    }
+                    new Thread(tester)
+                            .start();
                 }
             }
             catch (Exception e) { e.printStackTrace(); }
@@ -116,5 +109,48 @@ public class DiscoveryAgent implements Runnable {
 
     public void cancel(){
         requestStartMs = -1;
+    }
+
+    private class IpRangeTester implements Runnable {
+        private String gateway;
+        private int[] ipRange;
+        private long currentRequest;
+        private Callback<String> ipCallback;
+
+        protected IpRangeTester(String gateway, int[] ipRange, long currentRequest, Callback<String> ipCallback) {
+            this.gateway = gateway;
+            this.ipRange = ipRange;
+            this.currentRequest = currentRequest;
+            this.ipCallback = ipCallback;
+        }
+
+        @Override
+        public void run() {
+            for (int i = ipRange[0]; i <= ipRange[1]; i++) {
+                if(currentRequest != requestStartMs)
+                    return;
+
+                String ipValue = gateway + i;
+
+                try {
+                    Socket socket = new Socket(ipValue, SocketClient.DEFAULT_PING_PORT);
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+                    if(currentRequest != requestStartMs)
+                        return;
+
+                    if(reader.readLine().equals("1")){
+                        Log.i(BaseActivity.TAG__BASE, "Writer connected to: " + ipValue);
+
+                        ipCallback.onCalled(ipValue);
+                    }
+                }
+                catch (Exception e) {
+                    Log.d(BaseActivity.TAG__BASE, ipValue + " failed with " + e.getMessage());
+                }
+            }
+        }
+
     }
 }

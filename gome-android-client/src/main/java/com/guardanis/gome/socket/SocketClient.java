@@ -41,6 +41,7 @@ public class SocketClient implements Runnable {
     }
 
     public static final int DEFAULT_PORT = 13337;
+    public static final int DEFAULT_PING_PORT = 13338;
 
     private static final String TAG = "gome-socket";
 

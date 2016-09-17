@@ -21,7 +21,7 @@ public class ClientHelper extends Thread {
 	private ConnectionEvents eventsCallback;
 	
     private BufferedReader reader;
-	private BufferedWriter writer;
+	private SocketWriter writer;
 	
 	private Runnable finishedCallback;
 	
@@ -48,8 +48,7 @@ public class ClientHelper extends Thread {
 			
 			eventsCallback.onDeviceIdentified(this, device);
 			
-			writer = new BufferedWriter(
-					new OutputStreamWriter(socket.getOutputStream()));
+			writer = new SocketWriter(socket);
 			
 			readInputStream();
 		}
@@ -90,12 +89,7 @@ public class ClientHelper extends Thread {
 	}
 	
 	public void write(String data){
-		try{
-			writer.write(data);
-			writer.newLine();
-			writer.flush();
-		}
-		catch(Exception e){ Logger.log(e); }
+		writer.write(data);
 	}
 	
 	public void destroy(){
@@ -105,11 +99,7 @@ public class ClientHelper extends Thread {
 		}
 		catch(Exception e){ }
 
-		try{
-			if(writer != null)
-				writer.close();
-		}
-		catch(Exception e){ }
+		writer.onDestroy();
 		
 		try{
 			socket.close();
