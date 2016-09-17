@@ -4,8 +4,11 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -189,6 +192,11 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
 
     protected void showKeyboard(){
         EditText cheating = new EditText(this);
+        cheating.setFocusable(true);
+        cheating.setFocusableInTouchMode(true);
+        cheating.setTextColor(0x00000000);
+        cheating.setHintTextColor(getResources().getColor(R.color.base__text_dark_2));
+        cheating.setHint(getString(R.string.keyboard__input_hint));
 
         PreventTextWatcher.attachTo(cheating, text ->
                 onCalled(new KeyboardCommand(text)));
@@ -197,12 +205,18 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
             if(event.getAction() == KeyEvent.ACTION_DOWN
                     && keyCode == KeyEvent.KEYCODE_DEL)
                 onCalled(new KeyboardCommand("\b"));
+            else if(event.getAction() == KeyEvent.ACTION_DOWN)
+                Log.d(TAG__BASE, "Key code: " + event.getCharacters());
 
             return false;
         });
 
         new AlertDialog.Builder(this)
                 .setView(cheating)
+                .setOnCancelListener(d ->
+                        ViewHelper.closeSoftInputKeyboard(cheating))
+                .setOnDismissListener(d ->
+                        ViewHelper.closeSoftInputKeyboard(cheating))
                 .show();
 
         cheating.postDelayed(() ->

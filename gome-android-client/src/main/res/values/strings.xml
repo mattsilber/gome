@@ -42,6 +42,8 @@
     <string name="devices__selection_alert_title">Select a Device</string>
     <string name="devices__selection_alert_none_found">We couldn\'t find any devices on your network!</string>
 
+    <string name="keyboard__input_hint">Just type....</string>
+
     <string-array name="fu__font_family_resources">
         <item>roboto--normal=fonts/roboto.ttf,bold=fonts/roboto_bold.ttf</item>
     </string-array>

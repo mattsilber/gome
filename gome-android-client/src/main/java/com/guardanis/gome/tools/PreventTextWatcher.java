@@ -4,11 +4,19 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.TextView;
 
-public class PreventTextWatcher implements TextWatcher {
+import com.guardanis.gome.tools.observables.DebouncedEventController;
 
+public class PreventTextWatcher implements TextWatcher, Callback<String> {
+
+    private TextView textView;
     private Callback<String> textAddedListener;
 
-    protected PreventTextWatcher(Callback<String> textAddedListener){
+    private DebouncedEventController clearController = new DebouncedEventController(this, 750);
+
+    private String lastSentText = "";
+
+    protected PreventTextWatcher(TextView textView, Callback<String> textAddedListener){
+        this.textView = textView;
         this.textAddedListener = textAddedListener;
     }
 
@@ -24,15 +32,28 @@ public class PreventTextWatcher implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        if(s != null && 0 < s.length())
-            textAddedListener.onCalled(s.toString());
+        if(s != null){
+            String text = s.toString();
+
+            if(lastSentText.length() < text.length()){
+                String updated = text.substring(lastSentText.length());
+
+                textAddedListener.onCalled(updated);
+            }
+
+            lastSentText = text;
+        }
+
+        clearController.trigger("");
     }
 
     public static void attachTo(TextView textView, Callback<String> textAddedListener){
-        textView.addTextChangedListener(new PreventTextWatcher(text -> {
-            textView.setText("");
-            textAddedListener.onCalled(text);
-        }));
+        textView.addTextChangedListener(new PreventTextWatcher(textView,
+                text -> textAddedListener.onCalled(text)));
     }
 
+    @Override
+    public void onCalled(String value) {
+        textView.setText("");
+    }
 }

@@ -128,18 +128,17 @@ public class ViewHelper {
     }
 
     public static void closeSoftInputKeyboard(View v) {
-        ((InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+        ((InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
     }
 
     public static void closeSoftInputKeyboardOnLayout(final View view) {
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
                 removeOnGlobalLayoutListener(view, this);
-                view.postDelayed(new Runnable() {
-                    public void run() {
-                        closeSoftInputKeyboard(view);
-                    }
-                }, 200);
+
+                view.postDelayed(() ->
+                        closeSoftInputKeyboard(view), 200);
             }
         });
         view.requestLayout();
@@ -148,6 +147,8 @@ public class ViewHelper {
     public static void openSoftInputKeyboard(EditText et) {
         ((InputMethodManager) et.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                 .toggleSoftInputFromWindow(et.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+
+        et.requestFocus();
     }
 
     public static void openSoftInputKeyboardOnLayout(final EditText et) {
