@@ -112,7 +112,10 @@ public class KeyboardController {
     private void setupClickAction(View parent, int id, int keycode, Runnable focusCallback){
         parent.findViewById(id)
                 .setOnClickListener(v -> {
-                    commandCallback.onCalled(new KeycodeCommand(keycode, false));
+                    commandCallback.onCalled(new KeycodeCommand(keycode, wrappedActions));
+
+                    if(0 < wrappedActions.size())
+                        setupActionViews(parent, focusCallback);
 
                     focusCallback.run();
                 });

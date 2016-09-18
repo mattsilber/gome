@@ -54,16 +54,27 @@ public class KeyboardCommandController implements CommandController {
 		else if(type.equals("action")){
 			int value = JsonHelper.getInt("value", command.getData());
 			
-			if(JsonHelper.getBoolean("shift", command.getData())){
-				robot.keyPress(KeyEvent.VK_SHIFT);
+			Object wrappedKeys = command.getData()
+					.getOrDefault("wrapped", null);
+			
+			if(wrappedKeys == null){
 				robot.keyPress(value);
-		        robot.keyRelease(value);	
-				robot.keyRelease(KeyEvent.VK_SHIFT);
+		        robot.keyRelease(value);
 			}
-			else{
+			else {
+				JSONArray wrapped = (JSONArray) wrappedKeys;
+				
+				for(Object key : wrapped)
+					if(WRAPPED_KEYS.get((String) key) != null)
+						robot.keyPress(WRAPPED_KEYS.get((String) key));
+
 				robot.keyPress(value);
-		        robot.keyRelease(value);					
-			}		
+		        robot.keyRelease(value);
+				
+				for(Object key : wrapped)
+					if(WRAPPED_KEYS.get((String) key) != null)
+						robot.keyRelease(WRAPPED_KEYS.get((String) key));
+			}	
 		}
 	}
 	

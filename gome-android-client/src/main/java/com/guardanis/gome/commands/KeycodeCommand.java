@@ -1,7 +1,10 @@
 package com.guardanis.gome.commands;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class KeycodeCommand implements Command {
 
@@ -10,11 +13,11 @@ public class KeycodeCommand implements Command {
     public static final int VK_END = 35;
 
     private int value;
-    private boolean shiftEnabled;
+    private List<String> wrappedValues;
 
-    public KeycodeCommand(int value, boolean shiftEnabled){
+    public KeycodeCommand(int value, List<String> wrappedValues){
         this.value = value;
-        this.shiftEnabled = shiftEnabled;
+        this.wrappedValues = wrappedValues;
     }
 
     @Override
@@ -24,10 +27,20 @@ public class KeycodeCommand implements Command {
 
     @Override
     public JSONObject toJson() throws JSONException {
-        return new JSONObject()
+        JSONObject json = new JSONObject()
                 .put("type", "action")
-                .put("value", value)
-                .put("shift", shiftEnabled);
+                .put("value", value);
+
+        if(wrappedValues != null){
+            JSONArray wrapped = new JSONArray();
+
+            for(String s : wrappedValues)
+                wrapped.put(s);
+
+            json.put("wrapped", wrapped);
+        }
+
+        return json;
     }
 
 }
