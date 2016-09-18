@@ -41,8 +41,10 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
         builder.addTitle("gome", v ->
                         finish())
                 .addOptionText("Keyboard", v ->
-                        validateConnected(() ->
-                                keyboardController.show(this)));
+                        validateConnected(() -> {
+                            mouseController.stopProtectedActions();
+                            keyboardController.show(this);
+                        }));
     }
 
     @Override
@@ -71,30 +73,9 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
     }
 
     private void setup(){
-        mouseController.attach((TrackpadView) findViewById(R.id.main__move_view))
-                .attachDragAction((TextView) findViewById(R.id.main__mouse_action_drag))
-                .attachScrollAction((TextView) findViewById(R.id.main__mouse_action_scroll));
+        mouseController.attach(this);
 
-        setupMouseActionViews();
         setupIpAddressViews();
-    }
-
-    private void setupMouseActionViews(){
-        findViewById(R.id.main__mouse_action_left_single_click)
-                .setOnClickListener(v ->
-                        onCalled(new MouseClickCommand("left_single_click")));
-
-        findViewById(R.id.main__mouse_action_left_double_click)
-                .setOnClickListener(v ->
-                        onCalled(new MouseClickCommand("left_double_click")));
-
-        findViewById(R.id.main__mouse_action_wheel_click)
-                .setOnClickListener(v ->
-                        onCalled(new MouseClickCommand("wheel_click")));
-
-        findViewById(R.id.main__mouse_action_right_click)
-                .setOnClickListener(v ->
-                        onCalled(new MouseClickCommand("right_single_click")));
     }
 
     private void setupIpAddressViews(){
