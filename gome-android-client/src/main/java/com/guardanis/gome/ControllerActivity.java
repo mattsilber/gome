@@ -11,6 +11,7 @@ import com.guardanis.gome.socket.Host;
 import com.guardanis.gome.socket.SocketClient;
 import com.guardanis.gome.tools.Callback;
 import com.guardanis.gome.tools.DialogBuilder;
+import com.guardanis.gome.tools.Svgs;
 import com.guardanis.gome.tools.views.ToolbarLayoutBuilder;
 
 public class ControllerActivity extends BaseActivity implements Callback<Command>, SocketClient.ConnectionCallbacks {
@@ -44,7 +45,7 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
                                 ? host.getName()
                                 : host.getIpAddress()),
                     v -> finish())
-                .addOptionText("Keyboard", v ->
+                .addOptionSvg(Svgs.IC__KEYBOARD, v ->
                         validateConnected(() -> {
                             mouseController.stopProtectedActions();
                             keyboardController.show(this);
@@ -96,8 +97,7 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
 
     @Override
     public void onConnected(String ip) {
-        Toast.makeText(this, "Connected to " + ip, Toast.LENGTH_SHORT)
-                .show();
+
     }
 
     @Override
