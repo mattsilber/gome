@@ -63,6 +63,10 @@
 
     <dimen name="splash__image">75dip</dimen>
 
+
+    <dimen name="connect__progress_size">20dip</dimen>
+
+
     <dimen name="keyboard__action">12dip</dimen>
 
 

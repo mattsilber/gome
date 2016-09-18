@@ -2,11 +2,9 @@ package com.guardanis.gome;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.guardanis.gome.commands.Command;
-import com.guardanis.gome.commands.MouseClickCommand;
 import com.guardanis.gome.keyboard.KeyboardController;
 import com.guardanis.gome.mouse.MouseController;
 import com.guardanis.gome.socket.SocketClient;
@@ -14,10 +12,7 @@ import com.guardanis.gome.tools.Callback;
 import com.guardanis.gome.tools.DialogBuilder;
 import com.guardanis.gome.tools.views.ToolbarLayoutBuilder;
 
-public class MainActivity extends BaseActivity implements Callback<Command>, SocketClient.ConnectionCallbacks {
-
-    private static final String PREFS = "gome-prefs";
-    private static final String PREF__IP = "gome__ip_adress";
+public class ControllerActivity extends BaseActivity implements Callback<Command>, SocketClient.ConnectionCallbacks {
 
     private SocketClient socketClient;
     private boolean connected = false;
@@ -26,6 +21,7 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
     private MouseController mouseController = new MouseController(this);
 
     private Dialog activeLoadingDialog;
+    private boolean paused = false;
 
     @Override
     public void onCreate(Bundle savedInstance){
@@ -33,7 +29,7 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
         setContentView(R.layout.activity_main);
         setupToolbar();
 
-        setup();
+        mouseController.attach(this);
     }
 
     @Override
@@ -49,15 +45,14 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
 
     @Override
     public void onPause(){
+        paused = true;
+
         killSocketClient();
 
         if(activeLoadingDialog != null){
             activeLoadingDialog.dismiss();
             activeLoadingDialog = null;
         }
-
-        DiscoveryHelper.getInstance()
-                .cancel(this);
 
         keyboardController.dismiss();
 
@@ -67,30 +62,9 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
     @Override
     public void onResume(){
         super.onResume();
+        paused = false;
 
-        if(connected)
-            connectSocketClient(getIpAddress());
-    }
-
-    private void setup(){
-        mouseController.attach(this);
-
-        setupIpAddressViews();
-    }
-
-    private void setupIpAddressViews(){
-        final TextView ipTextView = (TextView) findViewById(R.id.main__ip);
-        ipTextView.setText(getIpAddress());
-
-        TextView actionSet = (TextView) findViewById(R.id.main__ip_action_set);
-        actionSet.setOnClickListener(v -> {
-            actionSet.setText(R.string.ip__action_update);
-            connectSocketClient(ipTextView.getText().toString());
-        });
-
-        findViewById(R.id.main__ip_action_search)
-                .setOnClickListener(v ->
-                        requestDevicesForSelection());
+        connectSocketClient(getHostIpAddress());
     }
 
     @Override
@@ -102,7 +76,7 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
     protected void connectSocketClient(String ipAddress){
         connected = true;
 
-        setIpAddress(ipAddress);
+        setHostIpAddress(ipAddress);
 
         if(socketClient != null)
             killSocketClient();
@@ -126,7 +100,16 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
 
     @Override
     public void onConnectionClosed() {
-        Toast.makeText(this, "Disconnected from server", Toast.LENGTH_SHORT)
+        connected = false;
+
+        if(paused)
+            return;
+
+        activeLoadingDialog = new DialogBuilder(this)
+                .setTitle(R.string.alert_title_oops)
+                .setMessage(R.string.alert_message_connection_closed)
+                .setPrimaryButton(R.string.alert_action_ok, (d, v) ->
+                        exit(RESULT_CANCELED, null))
                 .show();
     }
 
@@ -137,33 +120,11 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
         socketClient = null;
     }
 
-    protected String getIpAddress(){
-        return getSharedPreferences(PREFS, 0)
-                .getString(PREF__IP, "192.168.8.101");
-    }
-
-    protected void setIpAddress(String ipAddress){
-        getSharedPreferences(PREFS, 0)
-                .edit()
-                .putString(PREF__IP, ipAddress)
-                .commit();
-    }
-
-    protected void requestDevicesForSelection(){
-        DiscoveryHelper.getInstance()
-                .search(this, ip -> {
-                    setIpAddress(ip);
-                    setupIpAddressViews();
-
-                    connectSocketClient(ip);
-                });
-    }
-
     private void validateConnected(Runnable onConnected){
         if(connected)
             onConnected.run();
         else
-            new DialogBuilder(this)
+            activeLoadingDialog = new DialogBuilder(this)
                     .setTitle(R.string.alert_title_oops)
                     .setMessage(R.string.alert_message_connection_required)
                     .show();

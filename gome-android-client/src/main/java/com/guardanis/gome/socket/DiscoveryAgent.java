@@ -6,22 +6,16 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.guardanis.collections.tools.ListUtils;
 import com.guardanis.gome.BaseActivity;
 import com.guardanis.gome.tools.Callback;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.math.BigInteger;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.ByteOrder;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DiscoveryAgent implements Runnable {
 

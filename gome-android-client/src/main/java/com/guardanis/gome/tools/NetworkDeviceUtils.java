@@ -2,9 +2,14 @@ package com.guardanis.gome.tools;
 
 import android.os.Build;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;   
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 //import org.apache.http.conn.util.InetAddressUtils;
 
 // Written by Whome from http://stackoverflow.com/a/13007325/1426565

@@ -14,48 +14,6 @@
             android:id="@+id/base__toolbar"
             style="@style/Base.Toolbar"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.guardanis.fontutils.EditText
-                android:id="@+id/main__ip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/ip__hint"
-                android:maxLines="1"
-                android:padding="@dimen/base__padding_0"
-                android:singleLine="true"
-                android:textColor="@color/base__text_white"
-                android:textColorHint="@color/base__text_white_1"
-                android:textSize="@dimen/base__text_0"/>
-
-            <TextView
-                android:id="@+id/main__ip_action_set"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/base__button_transparent"
-                android:gravity="center"
-                android:padding="@dimen/base__padding_1"
-                android:text="@string/ip__action_set"
-                android:textColor="@color/base__text_white"
-                android:textSize="@dimen/base__text_2"/>
-
-            <TextView
-                android:id="@+id/main__ip_action_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/base__button_transparent"
-                android:gravity="center"
-                android:padding="@dimen/base__padding_1"
-                android:text="@string/ip__action_search"
-                android:textColor="@color/base__text_white"
-                android:textSize="@dimen/base__text_2"/>
-
-        </LinearLayout>
-
         <com.guardanis.gome.TrackpadView
             android:id="@+id/main__move_view"
             android:layout_width="fill_parent"

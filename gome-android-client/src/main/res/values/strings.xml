@@ -16,8 +16,13 @@
 
     <string name="ip__action_set">Set</string>
     <string name="ip__action_update">Update</string>
-    <string name="ip__action_search">Find</string>
+    <string name="ip__action_search">Search for Host</string>
+    <string name="ip__action_searching">Searching for a host... Please wait...</string>
+    <string name="ip__action_select">Select</string>
     <string name="ip__hint">IP Address</string>
+
+
+    <string name="connect__title">Connect to a Host</string>
 
     <string name="alert_title_success">Success!</string>
     <string name="alert_title_confirm">Confirmation</string>
@@ -28,6 +33,7 @@
     <string name="alert_message_please_wait">Please wait...</string>
     <string name="alert_message_permission_required">You need to grant permissions to do that!</string>
     <string name="alert_message_connection_required">You need to be connected in order to do that!</string>
+    <string name="alert_message_connection_closed">Disconnected from server!</string>
 
     <string name="mouse__action_left_single_click">Left Click</string>
     <string name="mouse__action_left_double_click">Double Click</string>

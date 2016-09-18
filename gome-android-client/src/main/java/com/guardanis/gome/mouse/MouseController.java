@@ -9,7 +9,6 @@ import com.guardanis.gome.commands.Command;
 import com.guardanis.gome.commands.MouseClickCommand;
 import com.guardanis.gome.commands.MouseMoveCommand;
 import com.guardanis.gome.tools.Callback;
-import com.guardanis.gome.tools.DialogBuilder;
 
 public class MouseController {
 

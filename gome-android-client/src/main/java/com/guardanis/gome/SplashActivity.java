@@ -24,7 +24,7 @@ public class SplashActivity extends BaseActivity {
                 .execute(150);
 
         launchHandler.postDelayed(() -> {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, ConnectActivity.class));
             finish();
         }, 2000);
     }
