@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.guardanis.gome.socket.DiscoveryAgent;
 import com.guardanis.gome.socket.Host;
 import com.guardanis.gome.tools.Callback;
+import com.guardanis.gome.tools.DialogBuilder;
 import com.guardanis.gome.tools.Svgs;
 import com.guardanis.gome.tools.adapter.SingleSelectAdapter;
 import com.guardanis.gome.tools.views.ToolbarLayoutBuilder;
@@ -30,11 +31,18 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
         setupToolbar();
         setupIpAddressViews();
 
-        if(getIntent().getData() != null && !getHost().isIpAddressEmpty()){
-            Intent intent = new Intent(this, ControllerActivity.class)
-                    .setData(getIntent().getData());
+        if(getIntent().getData() != null){
+            if(getHost().isIpAddressEmpty())
+                new DialogBuilder(this)
+                        .setTitle(R.string.alert_title_oops)
+                        .setMessage(R.string.alert_message_connection_required)
+                        .show();
+            else {
+                Intent intent = new Intent(this, ControllerActivity.class)
+                        .setData(getIntent().getData());
 
-            startActivityForResult(intent, RC__CONTROLLER);
+                startActivityForResult(intent, RC__CONTROLLER);
+            }
         }
     }
 
