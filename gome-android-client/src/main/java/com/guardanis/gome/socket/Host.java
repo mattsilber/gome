@@ -40,7 +40,7 @@ public class Host {
     }
 
     public boolean isNameKnown(){
-        return !name.equals(HOST__NAME_DEFAULT);
+        return !(name == null || name.equals(HOST__NAME_DEFAULT));
     }
 
     public void save(Context context){

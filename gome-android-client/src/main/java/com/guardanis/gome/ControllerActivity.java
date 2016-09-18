@@ -2,6 +2,7 @@ package com.guardanis.gome;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.guardanis.gome.commands.Command;
@@ -28,6 +29,8 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
     private Dialog activeLoadingDialog;
     private boolean paused = false;
 
+    private TextView titleView;
+
     @Override
     public void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
@@ -41,16 +44,21 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
     protected void setup(ToolbarLayoutBuilder builder) {
         host = getHost();
 
-        builder.addTitle(String.format(getString(R.string.controller__title),
-                        host.isNameKnown()
-                                ? host.getName()
-                                : host.getIpAddress()),
-                    v -> finish())
-                .addOptionSvg(Svgs.IC__KEYBOARD, v ->
+        titleView = builder.inflateTitleText();
+        titleView.setText(host.isNameKnown()
+                ? host.getName()
+                : host.getIpAddress());
+        titleView.setOnClickListener(v ->
+                finish());
+
+        builder.addTitle(titleView);
+        builder.addOptionSvg(Svgs.IC__KEYBOARD,
+                v ->
                         validateConnected(() -> {
                             mouseController.stopProtectedActions();
                             keyboardController.show(this);
                         }));
+
     }
 
     @Override
@@ -105,6 +113,17 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
 
             getIntent().setData(null);
         }
+    }
+
+    @Override
+    public void onIdentified(String ip, String hostName) {
+        host = new Host(ip, hostName);
+
+        setHost(host);
+
+        titleView.setText(host.isNameKnown()
+                ? host.getName()
+                : host.getIpAddress());
     }
 
     @Override

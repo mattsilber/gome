@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 
 import org.json.simple.JSONObject;
@@ -49,6 +50,9 @@ public class ClientHelper extends Thread {
 			eventsCallback.onDeviceIdentified(this, device);
 			
 			writer = new SocketWriter(socket);
+
+			writer.write(InetAddress.getLocalHost()
+					.getHostName());
 			
 			readInputStream();
 		}

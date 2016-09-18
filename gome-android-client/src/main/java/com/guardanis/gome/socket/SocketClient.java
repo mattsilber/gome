@@ -34,6 +34,7 @@ public class SocketClient implements Runnable {
 
     public interface ConnectionCallbacks {
         public void onConnected(String ip);
+        public void onIdentified(String ip, String hostName);
         public void onConnectionException(Throwable throwable);
         public void onConnectionClosed();
     }
@@ -94,9 +95,16 @@ public class SocketClient implements Runnable {
 
             sendDeviceInfo();
 
-            Log.i(TAG, "Wrote device info socket...");
+            Log.i(TAG, "Wrote device info to socket...");
 
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            String hostName = reader.readLine();
+
+            Log.i(TAG, "Received host name: " + hostName);
+
+            handler.post(() ->
+                    connectionCallbacks.onIdentified(ip, hostName));
 
             while(!canceled)
                 Thread.sleep(1000);
