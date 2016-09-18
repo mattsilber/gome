@@ -29,6 +29,13 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
         setContentView(R.layout.activity_connect);
         setupToolbar();
         setupIpAddressViews();
+
+        if(getIntent().getData() != null && !getHost().isIpAddressEmpty()){
+            Intent intent = new Intent(this, ControllerActivity.class)
+                    .setData(getIntent().getData());
+
+            startActivityForResult(intent, RC__CONTROLLER);
+        }
     }
 
     @Override

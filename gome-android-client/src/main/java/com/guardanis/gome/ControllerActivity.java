@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.guardanis.gome.commands.Command;
+import com.guardanis.gome.commands.WebsiteCommand;
 import com.guardanis.gome.keyboard.KeyboardController;
 import com.guardanis.gome.mouse.MouseController;
 import com.guardanis.gome.socket.Host;
@@ -97,7 +98,13 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
 
     @Override
     public void onConnected(String ip) {
+        if(getIntent().getData() != null){
+            onCalled(new WebsiteCommand(getIntent()
+                    .getData()
+                    .toString()));
 
+            getIntent().setData(null);
+        }
     }
 
     @Override

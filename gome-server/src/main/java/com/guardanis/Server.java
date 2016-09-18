@@ -10,6 +10,7 @@ import com.guardanis.commands.Command;
 import com.guardanis.commands.CommandController;
 import com.guardanis.commands.KeyboardCommandController;
 import com.guardanis.commands.MouseCommandController;
+import com.guardanis.commands.WebCommandController;
 import com.guardanis.display.DisplayController;
 import com.guardanis.gtools.GTools;
 import com.guardanis.gtools.Logger;
@@ -31,6 +32,7 @@ public class Server implements ConnectionEvents {
 
     public static final String ACTION_MOUSE = "mouse";
     public static final String ACTION_KEYBOARD = "key";
+    public static final String ACTION_WEBSITE = "web";
 
 	private SocketManager socketManager;
 	private PingManager pingManager;
@@ -47,6 +49,7 @@ public class Server implements ConnectionEvents {
 
     	commandControllers.put(ACTION_MOUSE, new MouseCommandController());
     	commandControllers.put(ACTION_KEYBOARD, new KeyboardCommandController());
+    	commandControllers.put(ACTION_WEBSITE, new WebCommandController());
     	
     	socketManager.start();
     	pingManager.start();

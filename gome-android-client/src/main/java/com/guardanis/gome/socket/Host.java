@@ -23,8 +23,12 @@ public class Host {
     public Host(Context context){
         SharedPreferences prefs = context.getSharedPreferences(BaseActivity.PREFS, 0);
 
-        this.ipAddress = prefs.getString(PREF__IP, "192.168.8.101");
+        this.ipAddress = prefs.getString(PREF__IP, "");
         this.name = prefs.getString(PREF__NAME, HOST__NAME_DEFAULT);
+    }
+
+    public boolean isIpAddressEmpty(){
+        return ipAddress == null || ipAddress.length() < 1;
     }
 
     public String getIpAddress() {
