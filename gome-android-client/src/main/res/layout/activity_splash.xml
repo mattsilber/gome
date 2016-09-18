@@ -6,10 +6,16 @@
     android:gravity="center"
     android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/splash__image"
+        android:layout_width="@dimen/splash__image"
+        android:layout_height="@dimen/splash__image"/>
+
     <com.guardanis.fontutils.TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
+        android:paddingTop="@dimen/base__padding_0"
         android:textColor="@color/base__text_dark_1"
         android:textSize="@dimen/base__toolbar_title"/>
 
