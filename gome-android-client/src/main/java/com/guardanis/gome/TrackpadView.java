@@ -7,25 +7,27 @@ import android.view.View;
 
 import com.guardanis.gome.commands.Command;
 import com.guardanis.gome.commands.MouseMoveCommand;
+import com.guardanis.gome.commands.MouseMoveCommand.MouseMode;
 import com.guardanis.gome.tools.Callback;
 
-public class MoveView extends View implements View.OnTouchListener {
+public class TrackpadView extends View implements View.OnTouchListener {
 
     protected float[] lastTouch = new float[]{ 0, 0 };
 
     protected Callback<Command> commandCallback;
+    protected MouseMode mouseMode = MouseMode.MOVE;
 
-    public MoveView(Context context) {
+    public TrackpadView(Context context) {
         super(context);
         init();
     }
 
-    public MoveView(Context context, AttributeSet attrs) {
+    public TrackpadView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public MoveView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TrackpadView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -33,6 +35,11 @@ public class MoveView extends View implements View.OnTouchListener {
     private void init(){
         setWillNotDraw(false);
         setOnTouchListener(this);
+    }
+
+    public TrackpadView setMouseMode(MouseMode mouseMode) {
+        this.mouseMode = mouseMode;
+        return this;
     }
 
     @Override
@@ -45,7 +52,8 @@ public class MoveView extends View implements View.OnTouchListener {
                 lastTouch = new float[]{ event.getX(), event.getY() };
                 return true;
             case MotionEvent.ACTION_MOVE:
-                commandCallback.onCalled(new MouseMoveCommand(event.getX() - lastTouch[0],
+                commandCallback.onCalled(new MouseMoveCommand(mouseMode,
+                        event.getX() - lastTouch[0],
                         event.getY() - lastTouch[1]));
 
                 lastTouch = new float[]{ event.getX(), event.getY() };
@@ -56,7 +64,7 @@ public class MoveView extends View implements View.OnTouchListener {
         return false;
     }
 
-    public MoveView setCommandCallback(Callback<Command> commandCallback){
+    public TrackpadView setCommandCallback(Callback<Command> commandCallback){
         this.commandCallback = commandCallback;
         return this;
     }

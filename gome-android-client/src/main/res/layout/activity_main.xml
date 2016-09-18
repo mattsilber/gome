@@ -56,7 +56,7 @@
 
         </LinearLayout>
 
-        <com.guardanis.gome.MoveView
+        <com.guardanis.gome.TrackpadView
             android:id="@+id/main__move_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -82,6 +82,11 @@
                 android:id="@+id/main__mouse_action_drag"
                 style="@style/main__action_item"
                 android:text="@string/mouse__action_drag_start"/>
+
+            <TextView
+                android:id="@+id/main__mouse_action_scroll"
+                style="@style/main__action_item"
+                android:text="@string/mouse__action_scroll_start"/>
 
         </LinearLayout>
 

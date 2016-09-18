@@ -32,6 +32,8 @@ public class MouseCommandController implements CommandController {
 			
 			robot.mouseMove(mouseX, mouseY);
 		}
+		else if(type.equals("scroll"))			
+			robot.mouseWheel(JsonHelper.getInt("mouse_y", command.getData()));
 		else if(type.equals("left_single_click"))
 			click(InputEvent.BUTTON1_MASK);
 		else if(type.equals("left_double_click"))
@@ -40,11 +42,6 @@ public class MouseCommandController implements CommandController {
 			click(InputEvent.BUTTON2_DOWN_MASK);
 		else if(type.equals("right_single_click"))
 			click(InputEvent.BUTTON3_DOWN_MASK);
-		else if(type.equals("wheel_move")){
-			int value = JsonHelper.getInt("wheel_value", command.getData());			
-			
-			robot.mouseWheel(value);
-		}
 		else if(type.equals("drag_start")){
 			robot.keyPress(KeyEvent.VK_SHIFT);
 			robot.mousePress(InputEvent.BUTTON1_MASK);

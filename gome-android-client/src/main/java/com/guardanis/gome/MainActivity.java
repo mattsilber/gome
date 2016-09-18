@@ -1,28 +1,18 @@
 package com.guardanis.gome;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.guardanis.gome.commands.Command;
-import com.guardanis.gome.commands.KeyboardCommand;
 import com.guardanis.gome.commands.MouseClickCommand;
 import com.guardanis.gome.keyboard.KeyboardController;
-import com.guardanis.gome.socket.DiscoveryAgent;
+import com.guardanis.gome.mouse.MouseController;
 import com.guardanis.gome.socket.SocketClient;
 import com.guardanis.gome.tools.Callback;
 import com.guardanis.gome.tools.DialogBuilder;
-import com.guardanis.gome.tools.PreventTextWatcher;
 import com.guardanis.gome.tools.views.ToolbarLayoutBuilder;
-import com.guardanis.gome.tools.views.ViewHelper;
 
 public class MainActivity extends BaseActivity implements Callback<Command>, SocketClient.ConnectionCallbacks {
 
@@ -33,8 +23,7 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
     private boolean connected = false;
 
     private KeyboardController keyboardController = new KeyboardController(this);
-
-    private boolean dragEnabled = false;
+    private MouseController mouseController = new MouseController(this);
 
     private Dialog activeLoadingDialog;
 
@@ -82,11 +71,11 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
     }
 
     private void setup(){
-        ((MoveView) findViewById(R.id.main__move_view))
-                .setCommandCallback(this);
+        mouseController.attach((TrackpadView) findViewById(R.id.main__move_view))
+                .attachDragAction((TextView) findViewById(R.id.main__mouse_action_drag))
+                .attachScrollAction((TextView) findViewById(R.id.main__mouse_action_scroll));
 
         setupMouseActionViews();
-        setupDragView();
         setupIpAddressViews();
     }
 
@@ -106,24 +95,6 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
         findViewById(R.id.main__mouse_action_right_click)
                 .setOnClickListener(v ->
                         onCalled(new MouseClickCommand("right_single_click")));
-    }
-
-    private void setupDragView(){
-        TextView dragView = (TextView) findViewById(R.id.main__mouse_action_drag);
-
-        dragView.setText(getString(dragEnabled
-                ? R.string.mouse__action_drag_stop
-                : R.string.mouse__action_drag_start));
-
-        dragView.setOnClickListener(v -> {
-            dragEnabled = !dragEnabled;
-
-            onCalled(new MouseClickCommand(dragEnabled
-                    ? "drag_start"
-                    : "drag_stop"));
-
-            setupDragView();
-        });
     }
 
     private void setupIpAddressViews(){

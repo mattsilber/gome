@@ -37,6 +37,9 @@
     <string name="mouse__action_drag_start">Drag Start</string>
     <string name="mouse__action_drag_stop">Drag Stop</string>
 
+    <string name="mouse__action_scroll_start">Scroll Start</string>
+    <string name="mouse__action_scroll_stop">Scroll Stop</string>
+
     <string name="mouse__action_right_click">Right Click</string>
 
     <string name="base__dialog_input_hint">Enter value here</string>
