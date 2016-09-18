@@ -7,12 +7,15 @@ import android.widget.Toast;
 import com.guardanis.gome.commands.Command;
 import com.guardanis.gome.keyboard.KeyboardController;
 import com.guardanis.gome.mouse.MouseController;
+import com.guardanis.gome.socket.Host;
 import com.guardanis.gome.socket.SocketClient;
 import com.guardanis.gome.tools.Callback;
 import com.guardanis.gome.tools.DialogBuilder;
 import com.guardanis.gome.tools.views.ToolbarLayoutBuilder;
 
 public class ControllerActivity extends BaseActivity implements Callback<Command>, SocketClient.ConnectionCallbacks {
+
+    private Host host;
 
     private SocketClient socketClient;
     private boolean connected = false;
@@ -34,8 +37,13 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
 
     @Override
     protected void setup(ToolbarLayoutBuilder builder) {
-        builder.addTitle("gome", v ->
-                        finish())
+        host = getHost();
+
+        builder.addTitle(String.format(getString(R.string.controller__title),
+                        host.isNameKnown()
+                                ? host.getName()
+                                : host.getIpAddress()),
+                    v -> finish())
                 .addOptionText("Keyboard", v ->
                         validateConnected(() -> {
                             mouseController.stopProtectedActions();
@@ -64,7 +72,7 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
         super.onResume();
         paused = false;
 
-        connectSocketClient(getHostIpAddress());
+        connectSocketClient();
     }
 
     @Override
@@ -73,15 +81,15 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
             socketClient.send(command);
     }
 
-    protected void connectSocketClient(String ipAddress){
+    protected void connectSocketClient(){
         connected = true;
 
-        setHostIpAddress(ipAddress);
+        host = getHost();
 
         if(socketClient != null)
             killSocketClient();
 
-        socketClient = SocketClient.open(ipAddress,
+        socketClient = SocketClient.open(host.getIpAddress(),
                 SocketClient.DEFAULT_PORT,
                 this);
     }

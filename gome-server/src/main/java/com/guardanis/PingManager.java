@@ -1,5 +1,6 @@
 package com.guardanis;
 
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -38,7 +39,10 @@ public class PingManager extends Thread {
 						.toString());
 			
 			SocketWriter writer = new SocketWriter(socket);
-			writer.write("1");
+			
+			writer.write(InetAddress.getLocalHost()
+					.getHostName());
+			
 			writer.onDestroy();
 			
 			attemptConnection();

@@ -49,9 +49,10 @@
 
         <LinearLayout
             android:id="@+id/connect__ip_searching_parent"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/base__padding_0"
+            android:gravity="center"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/base__padding_2"
             android:paddingTop="@dimen/base__padding_0"

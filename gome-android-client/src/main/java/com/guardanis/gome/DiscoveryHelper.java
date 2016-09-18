@@ -6,13 +6,14 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.guardanis.gome.socket.DiscoveryAgent;
+import com.guardanis.gome.socket.Host;
 import com.guardanis.gome.tools.Callback;
 import com.guardanis.gome.tools.DialogBuilder;
 import com.guardanis.gome.tools.adapter.SingleSelectAdapter;
 
 import java.util.ArrayList;
 
-public class DiscoveryHelper implements Callback<String> {
+public class DiscoveryHelper implements Callback<Host> {
 
     private static DiscoveryHelper instance;
     public static DiscoveryHelper getInstance(){
@@ -22,25 +23,25 @@ public class DiscoveryHelper implements Callback<String> {
         return instance;
     }
 
-    private SingleSelectAdapter<String> singleSelectAdapter;
+    private SingleSelectAdapter<Host> singleSelectAdapter;
     private Dialog dialog;
 
     protected DiscoveryHelper(){ }
 
-    public void search(Activity activity, Callback<String> ipSelectionCallback){
-        singleSelectAdapter = new SingleSelectAdapter<String>(activity, new ArrayList<String>()) {
+    public void search(Activity activity, Callback<Host> ipSelectionCallback){
+        singleSelectAdapter = new SingleSelectAdapter<Host>(activity, new ArrayList<Host>()) {
             @Override
-            protected String getValue(String item) {
-                return item;
+            protected String getValue(Host item) {
+                return item.getName();
             }
 
             @Override
-            protected String getSubValue(String item) {
-                return "";
+            protected String getSubValue(Host item) {
+                return item.getIpAddress();
             }
 
             @Override
-            protected boolean isFilterMatched(@NonNull String value, String s) {
+            protected boolean isFilterMatched(@NonNull String value, Host s) {
                 return true;
             }
         };
@@ -57,7 +58,7 @@ public class DiscoveryHelper implements Callback<String> {
     }
 
     @Override
-    public void onCalled(String value) {
+    public void onCalled(Host value) {
         singleSelectAdapter.add(value);
         singleSelectAdapter.notifyDataSetChanged();
     }

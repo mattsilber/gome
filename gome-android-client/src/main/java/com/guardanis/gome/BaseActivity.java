@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.guardanis.gome.socket.Host;
 import com.guardanis.gome.tools.PendingEvents;
 import com.guardanis.gome.tools.views.ToolbarLayoutBuilder;
 
@@ -15,7 +16,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public static final String TAG__BASE = "gome";
 
-    private static final String PREFS = "gome-prefs";
+    public static final String PREFS = "gome-prefs";
     private static final String PREF__HOST_IP = "gome__ip_adress";
 
     @Override
@@ -44,16 +45,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void setup(ToolbarLayoutBuilder builder);
 
-    protected String getHostIpAddress(){
-        return getSharedPreferences(PREFS, 0)
-                .getString(PREF__HOST_IP, "192.168.8.101");
+    protected Host getHost(){
+        return new Host(this);
     }
 
-    protected void setHostIpAddress(String ipAddress){
-        getSharedPreferences(PREFS, 0)
-                .edit()
-                .putString(PREF__HOST_IP, ipAddress)
-                .commit();
+    protected void setHost(Host host){
+        host.save(this);
     }
 
     protected void exit(int resultCode, Intent data){

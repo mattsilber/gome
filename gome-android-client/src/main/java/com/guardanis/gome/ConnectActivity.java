@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.guardanis.gome.socket.DiscoveryAgent;
+import com.guardanis.gome.socket.Host;
 import com.guardanis.gome.tools.Callback;
 import com.guardanis.gome.tools.Svgs;
 import com.guardanis.gome.tools.adapter.SingleSelectAdapter;
@@ -18,10 +19,9 @@ import com.guardanis.gome.tools.views.ToolbarLayoutBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConnectActivity extends BaseActivity implements Callback<String> {
+public class ConnectActivity extends BaseActivity implements Callback<Host> {
 
-
-    private SingleSelectAdapter<String> ipAdapter;
+    private IPSelectionAdapter ipAdapter;
 
     @Override
     public void onCreate(Bundle savedInstance){
@@ -40,16 +40,19 @@ public class ConnectActivity extends BaseActivity implements Callback<String> {
 
     private void setupIpAddressViews(){
         final TextView ipTextView = (TextView) findViewById(R.id.connect__ip);
-        ipTextView.setText(getHostIpAddress());
+        ipTextView.setText(getHost().getIpAddress());
 
         findViewById(R.id.connect__ip_action_set).setOnClickListener(v ->
-                connect(ipTextView.getText().toString()));
+                connect(new Host(ipTextView.getText().toString(), "Unknown")));
     }
 
     @Override
     protected void onPause(){
         DiscoveryAgent.getInstance(this)
                 .cancel();
+
+        findViewById(R.id.connect__ip_searching_parent)
+                .setVisibility(View.GONE);
 
         super.onPause();
     }
@@ -59,9 +62,9 @@ public class ConnectActivity extends BaseActivity implements Callback<String> {
                 .setVisibility(View.VISIBLE);
 
         if(ipAdapter == null){
-            ipAdapter = new IPSelectionAdapter(this, new ArrayList<String>())
-                    .setClickCallback(ip ->
-                            connect(ip));
+            ipAdapter = (IPSelectionAdapter) new IPSelectionAdapter(this, new ArrayList<Host>())
+                    .setClickCallback(host ->
+                            connect(host));
 
             ((ListView) findViewById(R.id.connect__ip_list))
                     .setAdapter(ipAdapter);
@@ -75,36 +78,36 @@ public class ConnectActivity extends BaseActivity implements Callback<String> {
     }
 
     @Override
-    public void onCalled(String value) {
-        ipAdapter.add(value);
+    public void onCalled(Host host) {
+        ipAdapter.add(host);
         ipAdapter.notifyDataSetChanged();
     }
 
-    private void connect(String ip){
-        setHostIpAddress(ip);
+    private void connect(Host host){
+        setHost(host);
 
         startActivityForResult(new Intent(this, ControllerActivity.class),
                 RC__CONTROLLER);
     }
 
-    private static class IPSelectionAdapter extends SingleSelectAdapter<String> {
+    private static class IPSelectionAdapter extends SingleSelectAdapter<Host> {
 
-        public IPSelectionAdapter(Context context, @NonNull List data) {
+        public IPSelectionAdapter(Context context, @NonNull List<Host> data) {
             super(context, data);
         }
 
         @Override
-        protected String getValue(String item) {
-            return item;
+        protected String getValue(Host item) {
+            return item.getName();
         }
 
         @Override
-        protected String getSubValue(String item) {
-            return "";
+        protected String getSubValue(Host item) {
+            return item.getIpAddress();
         }
 
         @Override
-        protected boolean isFilterMatched(@NonNull String value, String s) {
+        protected boolean isFilterMatched(@NonNull String value, Host s) {
             return true;
         }
     }

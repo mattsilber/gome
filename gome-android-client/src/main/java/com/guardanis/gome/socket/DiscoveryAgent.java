@@ -28,14 +28,14 @@ public class DiscoveryAgent implements Runnable {
     }
 
     private Context context;
-    private Callback<String> devicesCallback;
+    private Callback<Host> devicesCallback;
     private long requestStartMs;
 
     protected DiscoveryAgent(Context context){
         this.context = context.getApplicationContext();
     }
 
-    public DiscoveryAgent search(Callback<String> devicesCallback){
+    public DiscoveryAgent search(Callback<Host> devicesCallback){
         this.requestStartMs = System.currentTimeMillis();
         this.devicesCallback = devicesCallback;
 
@@ -64,10 +64,10 @@ public class DiscoveryAgent implements Runnable {
                                     (i * 8) + 8
                             },
                             currentRequest,
-                            ip ->
+                            host ->
                                     new Handler(Looper.getMainLooper())
                                             .post(() ->
-                                                    devicesCallback.onCalled(ip)));
+                                                    devicesCallback.onCalled(host)));
 
                     new Thread(tester)
                             .start();
@@ -105,9 +105,9 @@ public class DiscoveryAgent implements Runnable {
         private String gateway;
         private int[] ipRange;
         private long currentRequest;
-        private Callback<String> ipCallback;
+        private Callback<Host> ipCallback;
 
-        protected IpRangeTester(String gateway, int[] ipRange, long currentRequest, Callback<String> ipCallback) {
+        protected IpRangeTester(String gateway, int[] ipRange, long currentRequest, Callback<Host> ipCallback) {
             this.gateway = gateway;
             this.ipRange = ipRange;
             this.currentRequest = currentRequest;
@@ -130,11 +130,12 @@ public class DiscoveryAgent implements Runnable {
                     if(currentRequest != requestStartMs)
                         return;
 
-                    if(reader.readLine().equals("1")){
-                        Log.i(BaseActivity.TAG__BASE, "Writer connected to: " + ipValue);
+                    String hostName = reader.readLine();
 
-                        ipCallback.onCalled(ipValue);
-                    }
+                    Log.i(BaseActivity.TAG__BASE,
+                            "Writer connected to " + hostName + " [" + ipValue + "]");
+
+                    ipCallback.onCalled(new Host(ipValue, hostName));
                 }
                 catch (Exception e) {
                     Log.d(BaseActivity.TAG__BASE, ipValue + " failed with " + e.getMessage());

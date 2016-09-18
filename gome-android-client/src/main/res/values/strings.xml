@@ -14,16 +14,6 @@
     <string name="alert_action_no">No</string>
     <string name="alert_action_close">Close</string>
 
-    <string name="ip__action_set">Set</string>
-    <string name="ip__action_update">Update</string>
-    <string name="ip__action_search">Search for Host</string>
-    <string name="ip__action_searching">Searching for a host... Please wait...</string>
-    <string name="ip__action_select">Select</string>
-    <string name="ip__hint">IP Address</string>
-
-
-    <string name="connect__title">Connect to a Host</string>
-
     <string name="alert_title_success">Success!</string>
     <string name="alert_title_confirm">Confirmation</string>
     <string name="alert_title_error">Something went wrong</string>
@@ -34,6 +24,24 @@
     <string name="alert_message_permission_required">You need to grant permissions to do that!</string>
     <string name="alert_message_connection_required">You need to be connected in order to do that!</string>
     <string name="alert_message_connection_closed">Disconnected from server!</string>
+
+
+    <string name="base__dialog_input_hint">Enter value here</string>
+
+
+    <string name="ip__action_set">Set</string>
+    <string name="ip__action_update">Update</string>
+    <string name="ip__action_search">Search for Host</string>
+    <string name="ip__action_searching">Searching for a host... Please wait...</string>
+    <string name="ip__action_select">Select</string>
+    <string name="ip__hint">IP Address</string>
+
+
+    <string name="connect__title">Connect to a Host</string>
+
+
+    <string name="controller__title">Connected to %1$s</string>
+
 
     <string name="mouse__action_left_single_click">Left Click</string>
     <string name="mouse__action_left_double_click">Double Click</string>
@@ -48,11 +56,11 @@
 
     <string name="mouse__action_right_click">Right Click</string>
 
-    <string name="base__dialog_input_hint">Enter value here</string>
 
     <string name="devices__searching_alert_title">Searching for Devices</string>
     <string name="devices__selection_alert_title">Select a Device</string>
     <string name="devices__selection_alert_none_found">We couldn\'t find any devices on your network!</string>
+
 
     <string name="keyboard__input_hint">Just type....</string>
 
@@ -60,6 +68,7 @@
     <string name="keyboard__action_alt">ALT</string>
     <string name="keyboard__action_shift">SHIFT</string>
     <string name="keyboard__action_tab">TAB</string>
+
 
     <string-array name="fu__font_family_resources">
         <item>roboto--normal=fonts/roboto.ttf,bold=fonts/roboto_bold.ttf</item>
