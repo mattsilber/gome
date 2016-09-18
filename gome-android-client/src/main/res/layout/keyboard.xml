@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/base__padding_1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/keyboard__action_bg"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.guardanis.fontutils.TextView
+                android:id="@+id/keyboard__action_alt"
+                style="@style/keyboard__action_item"
+                android:text="@string/keyboard__action_alt"/>
+
+            <com.guardanis.fontutils.TextView
+                android:id="@+id/keyboard__action_control"
+                style="@style/keyboard__action_item"
+                android:text="@string/keyboard__action_control"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.guardanis.fontutils.TextView
+                android:id="@+id/keyboard__action_shift"
+                style="@style/keyboard__action_item"
+                android:text="@string/keyboard__action_shift"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="vertical">
+
+            <com.guardanis.fontutils.TextView
+                android:id="@+id/keyboard__action_tab"
+                style="@style/keyboard__action_item"
+                android:background="@drawable/base__button_transparent"
+                android:text="@string/keyboard__action_tab"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/keyboard__input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/base__padding_1"
+        android:textColor="#00000000"
+        android:textColorHint="@color/base__text_dark_2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal">
+
+        <com.guardanis.fontutils.TextView
+            android:id="@+id/keyboard__dialog_action_close"
+            style="@style/keyboard__dialog_action_item"
+            android:text="@string/alert_action_close"/>
+
+    </LinearLayout>
+
+</LinearLayout>

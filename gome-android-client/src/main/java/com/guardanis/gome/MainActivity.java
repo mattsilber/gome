@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.guardanis.gome.commands.Command;
 import com.guardanis.gome.commands.KeyboardCommand;
 import com.guardanis.gome.commands.MouseClickCommand;
+import com.guardanis.gome.keyboard.KeyboardController;
 import com.guardanis.gome.socket.DiscoveryAgent;
 import com.guardanis.gome.socket.SocketClient;
 import com.guardanis.gome.tools.Callback;
@@ -30,6 +31,8 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
 
     private SocketClient socketClient;
     private boolean connected = false;
+
+    private KeyboardController keyboardController = new KeyboardController(this);
 
     private boolean dragEnabled = false;
 
@@ -50,7 +53,7 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
                         finish())
                 .addOptionText("Keyboard", v ->
                         validateConnected(() ->
-                                showKeyboard()));
+                                keyboardController.show(this)));
     }
 
     @Override
@@ -64,6 +67,8 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
 
         DiscoveryHelper.getInstance()
                 .cancel(this);
+
+        keyboardController.dismiss();
 
         super.onPause();
     }
@@ -190,40 +195,6 @@ public class MainActivity extends BaseActivity implements Callback<Command>, Soc
                 .edit()
                 .putString(PREF__IP, ipAddress)
                 .commit();
-    }
-
-    protected void showKeyboard(){
-        EditText cheating = new EditText(this);
-        cheating.setFocusable(true);
-        cheating.setFocusableInTouchMode(true);
-        cheating.setTextColor(0x00000000);
-        cheating.setHintTextColor(getResources().getColor(R.color.base__text_dark_2));
-        cheating.setHint(getString(R.string.keyboard__input_hint));
-
-        PreventTextWatcher.attachTo(cheating, text ->
-                onCalled(new KeyboardCommand(text)));
-
-        cheating.setOnKeyListener((v, keyCode, event) -> {
-            if(event.getAction() == KeyEvent.ACTION_DOWN
-                    && keyCode == KeyEvent.KEYCODE_DEL)
-                onCalled(new KeyboardCommand("\b"));
-            else if(event.getAction() == KeyEvent.ACTION_DOWN)
-                Log.d(TAG__BASE, "Key code: " + event.getCharacters());
-
-            return false;
-        });
-
-        new AlertDialog.Builder(this)
-                .setView(cheating)
-                .setOnCancelListener(d ->
-                        ViewHelper.closeSoftInputKeyboard(cheating))
-                .setOnDismissListener(d ->
-                        ViewHelper.closeSoftInputKeyboard(cheating))
-                .show();
-
-        cheating.postDelayed(() ->
-                    ViewHelper.openSoftInputKeyboard(cheating),
-                350);
     }
 
     protected void requestDevicesForSelection(){

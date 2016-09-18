@@ -61,4 +61,7 @@
     <dimen name="base__list_item_divider">1dip</dimen>
 
 
+    <dimen name="keyboard__action">12dip</dimen>
+
+
 </resources>

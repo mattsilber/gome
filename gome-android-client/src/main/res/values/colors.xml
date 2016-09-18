@@ -33,4 +33,8 @@
     <color name="base__list_item_bg">#FAFAFA</color>
     <color name="base__list_item_divider">#AADCE0E1</color>
 
+
+    <color name="keyboard__action_bg">#34495E</color>
+    <color name="keyboard__action_bg_enabled">#22FFFFFF</color>
+
 </resources>

@@ -12,6 +12,7 @@
     <string name="alert_action_save">Save</string>
     <string name="alert_action_yes">Yes</string>
     <string name="alert_action_no">No</string>
+    <string name="alert_action_close">Close</string>
 
     <string name="ip__action_set">Set</string>
     <string name="ip__action_update">Update</string>
@@ -45,6 +46,11 @@
     <string name="devices__selection_alert_none_found">We couldn\'t find any devices on your network!</string>
 
     <string name="keyboard__input_hint">Just type....</string>
+
+    <string name="keyboard__action_control">CTRL</string>
+    <string name="keyboard__action_alt">ALT</string>
+    <string name="keyboard__action_shift">SHIFT</string>
+    <string name="keyboard__action_tab">TAB</string>
 
     <string-array name="fu__font_family_resources">
         <item>roboto--normal=fonts/roboto.ttf,bold=fonts/roboto_bold.ttf</item>

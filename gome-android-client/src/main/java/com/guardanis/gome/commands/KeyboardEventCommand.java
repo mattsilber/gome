@@ -5,11 +5,11 @@ import org.json.JSONObject;
 
 public class KeyboardEventCommand implements Command {
 
-    private int values;
+    private int value;
     private boolean shiftEnabled;
 
-    public KeyboardEventCommand(int values, boolean shiftEnabled){
-        this.values = values;
+    public KeyboardEventCommand(int value, boolean shiftEnabled){
+        this.value = value;
         this.shiftEnabled = shiftEnabled;
     }
 
@@ -22,7 +22,7 @@ public class KeyboardEventCommand implements Command {
     public JSONObject toJson() throws JSONException {
         return new JSONObject()
                 .put("type", "number")
-                .put("value", values)
+                .put("value", value)
                 .put("shift", shiftEnabled);
     }
 
