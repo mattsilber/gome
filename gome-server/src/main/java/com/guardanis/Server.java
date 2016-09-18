@@ -1,5 +1,12 @@
 package com.guardanis;
 
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +41,8 @@ public class Server implements ConnectionEvents {
     public static final String ACTION_KEYBOARD = "key";
     public static final String ACTION_WEBSITE = "web";
 
+    private List<String> ipAddresses;
+    
 	private SocketManager socketManager;
 	private PingManager pingManager;
 	
@@ -46,16 +55,17 @@ public class Server implements ConnectionEvents {
     protected Server() throws Exception {
     	this.socketManager = new SocketManager(GTools.CONNECTION_PORT, this);
     	this.pingManager = new PingManager(GTools.PING_PORT);
+    	this.ipAddresses = getIpAddresses();
 
     	commandControllers.put(ACTION_MOUSE, new MouseCommandController());
     	commandControllers.put(ACTION_KEYBOARD, new KeyboardCommandController());
     	commandControllers.put(ACTION_WEBSITE, new WebCommandController());
+
+    	displayController = new DisplayController(ipAddresses)
+    			.show(connectedDevices);
     	
     	socketManager.start();
     	pingManager.start();
-    	
-    	displayController = new DisplayController()
-    			.show(connectedDevices);
     }
 
 	@Override
@@ -112,6 +122,32 @@ public class Server implements ConnectionEvents {
 				return;
 			}
 		}
+	}
+	
+	private List<String> getIpAddresses() {
+		List<String> ipAddresses = new ArrayList<String>();
+		
+	    Enumeration en = null;
+		try {
+			en = NetworkInterface.getNetworkInterfaces();
+		} 
+		catch (SocketException e) { e.printStackTrace(); }
+		
+		if(en == null)
+			return ipAddresses;
+		
+	    while (en.hasMoreElements()) {
+	        NetworkInterface i = (NetworkInterface) en.nextElement();
+	        for (Enumeration en2 = i.getInetAddresses(); en2.hasMoreElements();) {
+	            InetAddress address = (InetAddress) en2.nextElement();
+	            if (!address.isLoopbackAddress()) {	            	
+	                if (address instanceof Inet4Address) 
+	                	ipAddresses.add(address.getHostAddress());
+	            }
+	        }
+	    }
+	    
+	    return ipAddresses;
 	}
 
 }

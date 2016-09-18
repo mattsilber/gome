@@ -58,7 +58,6 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
                             mouseController.stopProtectedActions();
                             keyboardController.show(this);
                         }));
-
     }
 
     @Override
@@ -67,10 +66,7 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
 
         killSocketClient();
 
-        if(activeLoadingDialog != null){
-            activeLoadingDialog.dismiss();
-            activeLoadingDialog = null;
-        }
+        dismissActiveDialog();
 
         keyboardController.dismiss();
 
@@ -92,12 +88,22 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
     }
 
     protected void connectSocketClient(){
+        if(connected)
+            return;
+
         connected = true;
 
         host = getHost();
 
         if(socketClient != null)
             killSocketClient();
+
+        activeLoadingDialog = new DialogBuilder(this)
+                .setMessage(String.format(getString(R.string.controller__alert_connecting),
+                        host.getIpAddress()))
+                .setPrimaryButton(R.string.alert_action_cancel, (d, v) ->
+                        exit(RESULT_CANCELED, null))
+                .show();
 
         socketClient = SocketClient.open(host.getIpAddress(),
                 SocketClient.DEFAULT_PORT,
@@ -106,6 +112,8 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
 
     @Override
     public void onConnected(String ip) {
+        dismissActiveDialog();
+
         if(getIntent().getData() != null){
             onCalled(new WebsiteCommand(getIntent()
                     .getData()
@@ -128,7 +136,18 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
 
     @Override
     public void onConnectionException(Throwable throwable) {
-        Toast.makeText(this, throwable.getMessage(), Toast.LENGTH_SHORT)
+        if(paused)
+            return;
+
+        paused = true;
+
+        dismissActiveDialog();
+
+        activeLoadingDialog = new DialogBuilder(this)
+                .setTitle(R.string.alert_title_oops)
+                .setMessage(throwable.getMessage())
+                .setPrimaryButton(R.string.alert_action_ok, (d, v) ->
+                        exit(RESULT_CANCELED, null))
                 .show();
     }
 
@@ -138,6 +157,8 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
 
         if(paused)
             return;
+
+        dismissActiveDialog();
 
         activeLoadingDialog = new DialogBuilder(this)
                 .setTitle(R.string.alert_title_oops)
@@ -162,6 +183,13 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
                     .setTitle(R.string.alert_title_oops)
                     .setMessage(R.string.alert_message_connection_required)
                     .show();
+    }
+
+    private void dismissActiveDialog(){
+        if(activeLoadingDialog != null){
+            activeLoadingDialog.dismiss();
+            activeLoadingDialog = null;
+        }
     }
 
 }

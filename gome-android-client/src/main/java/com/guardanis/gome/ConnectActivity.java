@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -57,8 +58,12 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
         final TextView ipTextView = (TextView) findViewById(R.id.connect__ip);
         ipTextView.setText(getHost().getIpAddress());
 
-        findViewById(R.id.connect__ip_action_set).setOnClickListener(v ->
-                connect(new Host(ipTextView.getText().toString(), "Unknown")));
+        findViewById(R.id.connect__ip_action_set)
+                .setOnClickListener(v ->
+                        connect(new Host(ipTextView.getText()
+                                    .toString()
+                                    .trim(),
+                                "Unknown")));
     }
 
     @Override
@@ -78,8 +83,12 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
 
         if(ipAdapter == null){
             ipAdapter = (IPSelectionAdapter) new IPSelectionAdapter(this, new ArrayList<Host>())
-                    .setClickCallback(host ->
-                            connect(host));
+                    .setClickCallback(host -> {
+                        ((TextView) findViewById(R.id.connect__ip))
+                                .setText(host.getIpAddress());
+
+                        connect(host);
+                    });
 
             ((ListView) findViewById(R.id.connect__ip_list))
                     .setAdapter(ipAdapter);
@@ -99,6 +108,8 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
     }
 
     private void connect(Host host){
+        Log.i(TAG__BASE, "Connecting to: " + host.getIpAddress());
+
         setHost(host);
 
         startActivityForResult(new Intent(this, ControllerActivity.class),

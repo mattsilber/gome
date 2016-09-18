@@ -44,6 +44,8 @@
 
     <string name="controller__title">Connected to %1$s</string>
 
+    <string name="controller__alert_connecting">Connecting to %1$s, please wait one moment...</string>
+
 
     <string name="mouse__action_left_single_click">Left Click</string>
     <string name="mouse__action_left_double_click">Double Click</string>

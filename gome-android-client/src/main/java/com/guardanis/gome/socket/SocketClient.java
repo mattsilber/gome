@@ -85,6 +85,7 @@ public class SocketClient implements Runnable {
 ////            socket.setEnabledProtocols(new String[] { "TLSv1" });
 
             Socket socket = new Socket(ip, port);
+            socket.setSoTimeout(10000);
 
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
@@ -149,6 +150,8 @@ public class SocketClient implements Runnable {
     }
 
     public void onDestroyed(){
+        Log.i(TAG, "Socket Client Destroyed...");
+
         canceled = true;
 
         try{
@@ -161,8 +164,6 @@ public class SocketClient implements Runnable {
         }
         catch(Exception e){ e.printStackTrace(); }
     }
-
-
 
 
     public class v3SocketFactory extends SSLSocketFactory {
