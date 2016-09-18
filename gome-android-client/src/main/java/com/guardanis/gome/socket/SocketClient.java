@@ -127,7 +127,7 @@ public class SocketClient implements Runnable {
         try{
             String commandData = command.getActionIdentifier() + ":" + command.toJson().toString();
 
-            Log.i(TAG, "Writing command: " + commandData);
+//            Log.i(TAG, "Writing command: " + commandData);
 
             write(commandData);
         }
