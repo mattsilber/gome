@@ -29,11 +29,13 @@
     <string name="base__dialog_input_hint">Enter value here</string>
 
 
+    <string name="ip__input_info">Enter the IP Address of your host, or use the search button to find computers on your local WiFi network.</string>
+
     <string name="ip__action_set">Set</string>
     <string name="ip__action_update">Update</string>
     <string name="ip__action_search">Search for Host</string>
     <string name="ip__action_searching">Searching for a host... Please wait...</string>
-    <string name="ip__action_select">Select</string>
+    <string name="ip__action_select">Connect</string>
     <string name="ip__hint">IP Address</string>
 
 

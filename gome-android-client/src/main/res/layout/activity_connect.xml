@@ -15,11 +15,20 @@
         android:orientation="vertical"
         android:padding="@dimen/base__padding_0">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/base__padding_0"
+            android:paddingBottom="@dimen/base__padding_0"
+            android:paddingTop="@dimen/base__padding_0"
+            android:text="@string/ip__input_info"
+            android:textColor="@color/base__text_dark_2"
+            android:textSize="@dimen/base__text_2"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/base__padding_0">
+            android:orientation="horizontal">
 
             <com.guardanis.fontutils.EditText
                 android:id="@+id/connect__ip"
