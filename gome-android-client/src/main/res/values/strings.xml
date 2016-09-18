@@ -70,6 +70,10 @@
     <string name="keyboard__action_alt">ALT</string>
     <string name="keyboard__action_shift">SHIFT</string>
     <string name="keyboard__action_tab">TAB</string>
+    <string name="keyboard__action_home">HOME</string>
+    <string name="keyboard__action_end">END</string>
+    <string name="keyboard__action_insert">INSERT</string>
+    <string name="keyboard__action_delete">DEL</string>
 
 
     <string-array name="fu__font_family_resources">

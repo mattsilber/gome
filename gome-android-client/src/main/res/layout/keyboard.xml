@@ -53,10 +53,36 @@
             android:orientation="vertical">
 
             <com.guardanis.fontutils.TextView
+                android:id="@+id/keyboard__action_home"
+                style="@style/keyboard__action_item"
+                android:background="@drawable/base__button_transparent"
+                android:text="@string/keyboard__action_home"/>
+
+            <com.guardanis.fontutils.TextView
+                android:id="@+id/keyboard__action_end"
+                style="@style/keyboard__action_item"
+                android:background="@drawable/base__button_transparent"
+                android:text="@string/keyboard__action_end"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="vertical">
+
+            <com.guardanis.fontutils.TextView
                 android:id="@+id/keyboard__action_tab"
                 style="@style/keyboard__action_item"
                 android:background="@drawable/base__button_transparent"
                 android:text="@string/keyboard__action_tab"/>
+
+            <com.guardanis.fontutils.TextView
+                android:id="@+id/keyboard__action_insert"
+                style="@style/keyboard__action_item"
+                android:background="@drawable/base__button_transparent"
+                android:text="@string/keyboard__action_insert"/>
 
         </LinearLayout>
 

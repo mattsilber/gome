@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.guardanis.gome.R;
 import com.guardanis.gome.commands.Command;
 import com.guardanis.gome.commands.KeyboardCommand;
+import com.guardanis.gome.commands.KeycodeCommand;
 import com.guardanis.gome.tools.Callback;
 import com.guardanis.gome.tools.PreventTextWatcher;
 import com.guardanis.gome.tools.views.ViewHelper;
@@ -64,11 +65,11 @@ public class KeyboardController {
                 350);
     }
 
-    private void sendCommand(String command, View parent, Runnable focusRunnable){
+    private void sendCommand(String command, View parent, Runnable focusCallback){
         commandCallback.onCalled(new KeyboardCommand(command, wrappedActions));
 
         if(0 < wrappedActions.size())
-            setupActionViews(parent, focusRunnable);
+            setupActionViews(parent, focusCallback);
     }
 
     private void setupActionViews(View parent, Runnable focusCallback){
@@ -81,6 +82,10 @@ public class KeyboardController {
         parent.findViewById(R.id.keyboard__action_tab)
                 .setOnClickListener(v ->
                         sendCommand(KeyboardCommand.KEY__TAB, parent, focusCallback));
+
+        setupClickAction(parent, R.id.keyboard__action_insert, KeycodeCommand.VK_INSERT, focusCallback);
+        setupClickAction(parent, R.id.keyboard__action_home, KeycodeCommand.VK_HOME, focusCallback);
+        setupClickAction(parent, R.id.keyboard__action_end, KeycodeCommand.VK_END, focusCallback);
     }
 
     private void setupWrappedAction(View parent, int id, String keyValue, Runnable focusCallback){
@@ -102,6 +107,15 @@ public class KeyboardController {
 
             focusCallback.run();
         });
+    }
+
+    private void setupClickAction(View parent, int id, int keycode, Runnable focusCallback){
+        parent.findViewById(id)
+                .setOnClickListener(v -> {
+                    commandCallback.onCalled(new KeycodeCommand(keycode, false));
+
+                    focusCallback.run();
+                });
     }
 
     public void dismiss(){

@@ -3,12 +3,16 @@ package com.guardanis.gome.commands;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class KeyboardEventCommand implements Command {
+public class KeycodeCommand implements Command {
+
+    public static final int VK_INSERT = 155;
+    public static final int VK_HOME = 36;
+    public static final int VK_END = 35;
 
     private int value;
     private boolean shiftEnabled;
 
-    public KeyboardEventCommand(int value, boolean shiftEnabled){
+    public KeycodeCommand(int value, boolean shiftEnabled){
         this.value = value;
         this.shiftEnabled = shiftEnabled;
     }
@@ -21,7 +25,7 @@ public class KeyboardEventCommand implements Command {
     @Override
     public JSONObject toJson() throws JSONException {
         return new JSONObject()
-                .put("type", "number")
+                .put("type", "action")
                 .put("value", value)
                 .put("shift", shiftEnabled);
     }
