@@ -32,6 +32,18 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
         setupToolbar();
         setupIpAddressViews();
 
+        handleSharing();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+
+        handleSharing();
+    }
+
+    private void handleSharing(){
         if(getIntent().getData() != null){
             if(getHost().isIpAddressEmpty())
                 new DialogBuilder(this)
@@ -40,6 +52,7 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
                         .show();
             else {
                 Intent intent = new Intent(this, ControllerActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         .setData(getIntent().getData());
 
                 startActivityForResult(intent, RC__CONTROLLER);
@@ -112,8 +125,10 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
 
         setHost(host);
 
-        startActivityForResult(new Intent(this, ControllerActivity.class),
-                RC__CONTROLLER);
+        Intent intent = new Intent(this, ControllerActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        startActivityForResult(intent, RC__CONTROLLER);
     }
 
     private static class IPSelectionAdapter extends SingleSelectAdapter<Host> {

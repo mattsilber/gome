@@ -1,6 +1,7 @@
 package com.guardanis.gome;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,12 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
         setupToolbar();
 
         mouseController.attach(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 
     @Override
