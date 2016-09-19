@@ -11,6 +11,7 @@ public class KeycodeCommand implements Command {
     public static final int VK_INSERT = 155;
     public static final int VK_HOME = 36;
     public static final int VK_END = 35;
+    public static final int VK_ESCAPE = 27;
 
     private int value;
     private List<String> wrappedValues;

@@ -76,6 +76,7 @@
     <string name="keyboard__action_end">END</string>
     <string name="keyboard__action_insert">INSERT</string>
     <string name="keyboard__action_delete">DEL</string>
+    <string name="keyboard__action_escape">ESC</string>
 
 
     <string-array name="fu__font_family_resources">

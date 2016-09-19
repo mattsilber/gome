@@ -141,6 +141,7 @@ public class ViewHelper {
                         closeSoftInputKeyboard(view), 200);
             }
         });
+
         view.requestLayout();
     }
 
@@ -152,16 +153,16 @@ public class ViewHelper {
     }
 
     public static void openSoftInputKeyboardOnLayout(final EditText et) {
-        et.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
-                removeOnGlobalLayoutListener(et, this);
-                et.postDelayed(new Runnable() {
-                    public void run() {
-                        openSoftInputKeyboard(et);
+        et.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    public void onGlobalLayout() {
+                        removeOnGlobalLayoutListener(et, this);
+
+                        et.postDelayed(() ->
+                                openSoftInputKeyboard(et), 200);
                     }
-                }, 200);
-            }
-        });
+                });
+
         et.requestLayout();
     }
 

@@ -86,6 +86,7 @@ public class KeyboardController {
         setupClickAction(parent, R.id.keyboard__action_insert, KeycodeCommand.VK_INSERT, focusCallback);
         setupClickAction(parent, R.id.keyboard__action_home, KeycodeCommand.VK_HOME, focusCallback);
         setupClickAction(parent, R.id.keyboard__action_end, KeycodeCommand.VK_END, focusCallback);
+        setupClickAction(parent, R.id.keyboard__action_escape, KeycodeCommand.VK_ESCAPE, focusCallback);
     }
 
     private void setupWrappedAction(View parent, int id, String keyValue, Runnable focusCallback){
