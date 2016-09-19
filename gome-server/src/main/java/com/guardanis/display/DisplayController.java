@@ -23,6 +23,7 @@ import com.guardanis.gtools.Logger;
 import com.guardanis.gtools.ListUtils.Converter;
 import com.guardanis.gtools.general.Callback;
 import com.guardanis.gtools.gome.Device;
+import com.guardanis.gtools.views.fonts.FontHelper;
 
 public class DisplayController implements Callback<String> {
 	
@@ -49,11 +50,13 @@ public class DisplayController implements Callback<String> {
 		this.frame = buildFrame();
 		this.deviceListView = buildListView();
 		
-		ipAddressesView = new JTextArea("IP Addresses: \n" 
+		ipAddressesView = new JTextArea("IP Addresses: \n    " 
 				+ ListUtils.from(ipAddresses)
-				.join("\n"));
+				.join("\n    "));
 		
 		ipAddressesView.setMargin(new Insets(10, 12, 10, 12));
+		ipAddressesView.setFont(FontHelper.getInstance()
+		    	.get(FontHelper.FONT_ROBOTO, 14));
 		
 		frame.add(ipAddressesView, BorderLayout.PAGE_START);
 		
@@ -68,6 +71,8 @@ public class DisplayController implements Callback<String> {
 		logView = new JTextArea("Log starting...");
 		logView.setPreferredSize(new Dimension((frame.getWidth() / 2) - 5, frame.getHeight()));
 		logView.setMargin(new Insets(10, 12, 10, 12));
+		logView.setFont(FontHelper.getInstance()
+		    	.get(FontHelper.FONT_ROBOTO, 10));
 		
 		frame.add(logView, BorderLayout.LINE_END);
 		
@@ -116,6 +121,7 @@ public class DisplayController implements Callback<String> {
 		JList list = new JList(deviceListModel);
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
+		list.setCellRenderer(new DeviceRenderer());
 		
 		return list;
 	}
@@ -125,7 +131,7 @@ public class DisplayController implements Callback<String> {
 		java.awt.EventQueue.invokeLater(() -> {
 			logData.add(value);
 			
-			while(10 < logData.size())
+			while(18 < logData.size())
 				logData.remove(logData.size() - 1);
 			
 			logView.setText(ListUtils.from(logData)
