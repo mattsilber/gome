@@ -9,9 +9,6 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.artifactory'
 
 allprojects {
     sourceCompatibility = 1.8
@@ -50,37 +47,4 @@ jar {
     }
 
     exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
-}
-
-publishing {
-    publications {
-        create('distModule', MavenPublication) {
-         	artifact jar
-         	
-            groupId libraryGroupId
-            version libraryVersion
-            artifactId libraryArtifactId
-            
-            from components.java
-        }
-    }
-}
-
-artifactory {
-    contextUrl = 'http://buildbox:8081/artifactory'
-    publish {
-        repository {
-            repoKey = 'libs-release-local'
-
-            username = artifactory_username
-            password = artifactory_password
-        }
-        defaults {
-            publications('distModule')
-            publishArtifacts = true
-
-            properties = ['qa.level': 'basic', 'q.os': 'java', 'dev.team': 'core']
-            publishPom = true
-        }
-    }
 }
