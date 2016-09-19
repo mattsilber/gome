@@ -33,7 +33,6 @@ import javax.net.ssl.X509TrustManager;
 public class SocketClient implements Runnable {
 
     public interface ConnectionCallbacks {
-        public void onConnected(String ip);
         public void onIdentified(String ip, String hostName);
         public void onConnectionException(Throwable throwable);
         public void onConnectionClosed();
@@ -85,14 +84,10 @@ public class SocketClient implements Runnable {
 ////            socket.setEnabledProtocols(new String[] { "TLSv1" });
 
             Socket socket = new Socket(ip, port);
-            socket.setSoTimeout(10000);
 
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
             Log.i(TAG, "Connected to socket write stream...");
-
-            handler.post(() ->
-                    connectionCallbacks.onConnected(ip));
 
             sendDeviceInfo();
 

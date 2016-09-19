@@ -118,7 +118,15 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
     }
 
     @Override
-    public void onConnected(String ip) {
+    public void onIdentified(String ip, String hostName) {
+        host = new Host(ip, hostName);
+
+        setHost(host);
+
+        titleView.setText(host.isNameKnown()
+                ? host.getName()
+                : host.getIpAddress());
+
         dismissActiveDialog();
 
         if(getIntent().getData() != null){
@@ -128,17 +136,6 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
 
             getIntent().setData(null);
         }
-    }
-
-    @Override
-    public void onIdentified(String ip, String hostName) {
-        host = new Host(ip, hostName);
-
-        setHost(host);
-
-        titleView.setText(host.isNameKnown()
-                ? host.getName()
-                : host.getIpAddress());
     }
 
     @Override
