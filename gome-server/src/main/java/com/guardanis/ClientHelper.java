@@ -50,9 +50,8 @@ public class ClientHelper extends Thread {
 			eventsCallback.onDeviceIdentified(this, device);
 			
 			writer = new SocketWriter(socket);
-
-			writer.write(InetAddress.getLocalHost()
-					.getHostName());
+			
+			writeHostName();
 			
 			readInputStream();
 		}
@@ -69,6 +68,18 @@ public class ClientHelper extends Thread {
 				.parse(reader.readLine());
 		
 		return new Device(deviceData);	
+	}
+	
+	private void writeHostName(){
+		String hostName = "gome-server";
+		
+		try{
+			hostName = InetAddress.getLocalHost()
+					.getHostName();
+		}
+		catch(Exception e){ e.printStackTrace(); }
+
+		writer.write(hostName);
 	}
 	
 	private void readInputStream() throws Throwable {		
