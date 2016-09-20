@@ -3,6 +3,7 @@ import { Router, Scene } from 'react-native-router-flux';
 
 import { 
   View, 
+  Navigator,
   Text,
   StyleSheet } from 'react-native';
 
@@ -36,6 +37,6 @@ const styles = StyleSheet.create ({
     color: 'white'
   },
   routerScene: {
-    paddingTop: Navigator.NavigationBar.Styles.General.NavBarHeight,
+    paddingTop: Navigator.NavigationBar.Styles.General.NavBarHeight
   }
 })

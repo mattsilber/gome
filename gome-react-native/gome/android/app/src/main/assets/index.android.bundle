@@ -80994,6 +80994,7 @@ var _reactNative=require(12 /* react-native */);
 
 
 
+
 var _Splash=require(694 /* ./app/screens/Splash */);var _Splash2=babelHelpers.interopRequireDefault(_Splash);
 var _Connect=require(695 /* ./app/screens/Connect */);var _Connect2=babelHelpers.interopRequireDefault(_Connect);
 var _Controller=require(696 /* ./app/screens/Controller */);var _Controller2=babelHelpers.interopRequireDefault(_Controller);var
@@ -81024,7 +81025,7 @@ navTitle:{
 color:'white'},
 
 routerScene:{
-paddingTop:Navigator.NavigationBar.Styles.General.NavBarHeight}});
+paddingTop:_reactNative.Navigator.NavigationBar.Styles.General.NavBarHeight}});
 }, "gome/gome.js");
 __d(647 /* react-native-router-flux/index.js */, function(global, require, module, exports) {Object.defineProperty(exports,"__esModule",{value:true});exports.Util=exports.getInitialState=exports.TabBar=exports.Switch=exports.Scene=exports.Router=exports.Reducer=exports.NavBar=exports.Modal=exports.DefaultRenderer=exports.ActionConst=exports.Actions=undefined;var _Actions=require(648 /* ./src/Actions */);var _Actions2=babelHelpers.interopRequireDefault(_Actions);
 var _ActionConst=require(651 /* ./src/ActionConst */);var ActionConst=babelHelpers.interopRequireWildcard(_ActionConst);
@@ -86539,7 +86540,8 @@ onChangeText:this.props.updateHostIpAddress}),
 _react2.default.createElement(_reactNative.TouchableHighlight,{
 style:styles.submit,
 onPress:openController},
-_react2.default.createElement(_reactNative.Text,null,'Connect'))));
+_react2.default.createElement(_reactNative.Text,{
+style:styles.submitText},'Connect'))));
 
 
 
@@ -86568,23 +86570,108 @@ alignSelf:'stretch'},
 submit:{
 backgroundColor:'#A6A6A6',
 padding:16,
-color:'0000008A',
-alignSelf:'stretch'}});
+justifyContent:'center',
+alignSelf:'stretch'},
+
+submitText:{
+color:'#FFFFFF',
+alignSelf:'center'}});
 }, "gome/app/screens/Connect.js");
 __d(696 /* gome/app/screens/Controller.js */, function(global, require, module, exports) {Object.defineProperty(exports,"__esModule",{value:true});var _react=require(407 /* react */);var _react2=babelHelpers.interopRequireDefault(_react);
 var _reactNativeRouterFlux=require(647 /* react-native-router-flux */);
 
-var _reactNative=require(12 /* react-native */);var
+var _reactNative=require(12 /* react-native */);
 
 
 
 
-Controller=function(_Component){babelHelpers.inherits(Controller,_Component);function Controller(){babelHelpers.classCallCheck(this,Controller);return babelHelpers.possibleConstructorReturn(this,(Controller.__proto__||Object.getPrototypeOf(Controller)).apply(this,arguments));}babelHelpers.createClass(Controller,[{key:'render',value:function render()
+var net=require(697 /* net */);var
+
+Controller=function(_Component){babelHelpers.inherits(Controller,_Component);
+
+function Controller(props){babelHelpers.classCallCheck(this,Controller);var _this=babelHelpers.possibleConstructorReturn(this,(Controller.__proto__||Object.getPrototypeOf(Controller)).call(this,
+props));_this.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+onMouseDragAction=function(){
+var action=_this.state.dragging?"drag_end":"drag_start";
+
+onMouseAction(action);
+
+_this.setState({
+dragging:!_this.state.dragging});
+
+};_this.
+
+onMouseScrollAction=function(){
+var action=_this.state.scrolling?"scroll_end":"scroll_start";
+
+onMouseAction(action);
+
+_this.setState({
+scrolling:!_this.state.scrolling});
+
+};_this.state={connected:false,dragging:false,scrolling:false};return _this;}babelHelpers.createClass(Controller,[{key:'componentDidMount',value:function componentDidMount(){var _this2=this;this.client=net.createConnection(13337,this.props.hostIpAddress);this.client.on('connect',function(data){_this2.client.write('{\"name\": \"Test Name\" }');_this2.setState({connected:true});});this.client.on('data',function(data){});this.client.on('close',function(){_this2.setState({connected:false});});}},{key:'componentWillUnmount',value:function componentWillUnmount(){this.client=null;}},{key:'onMouseAction',value:function onMouseAction(action){}},{key:'render',value:function render()
+
 {
 return(
 _react2.default.createElement(_reactNative.View,{style:styles.container},
 _react2.default.createElement(_reactNative.Text,null,
-this.props.hostIpAddress)));
+this.props.hostIpAddress),
+
+_react2.default.createElement(_reactNative.View,{style:styles.mouseActionsParent},
+_react2.default.createElement(_reactNative.Text,{
+style:styles.mouseAction,
+onPress:this.onMouseDragAction.bind()},'Drag'),
+
+
+_react2.default.createElement(_reactNative.Text,{
+style:styles.mouseAction,
+onPress:this.onMouseScrollAction.bind()},'Scroll'),
+
+
+_react2.default.createElement(_reactNative.View,{style:styles.mouseSplitter}),
+_react2.default.createElement(_reactNative.Text,{
+style:styles.mouseAction,
+onPress:this.onMouseAction.bind("left_single_click")},'Left Click'))));
+
+
 
 
 
@@ -86594,10 +86681,50 @@ this.props.hostIpAddress)));
 var styles=_reactNative.StyleSheet.create({
 container:{
 flex:1,
+backgroundColor:'#ECF0F1',
 alignItems:'center',
 justifyContent:'center',
-paddingTop:23}});
+paddingTop:23},
+
+mouseActionsParent:{
+alignSelf:'flex-end'},
+
+mouseAction:{
+backgroundColor:'#34495E',
+padding:16,
+color:'#FFFFFF'},
+
+mouseSplitter:{
+paddingTop:25}});
 }, "gome/app/screens/Controller.js");
+__d(697 /* net/index.js */, function(global, require, module, exports) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var net=require(697 /* net */);
+for(k in net){
+global[k]=net[k];}
+}, "net/index.js");
 ;require(188);
 ;require(0);
 //# sourceMappingURL=/index.android.map?platform=android

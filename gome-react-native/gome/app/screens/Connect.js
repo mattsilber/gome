@@ -19,15 +19,16 @@ export default class Connect extends Component {
           Enter the IP Address of your host, or use the search button to find computers on your local WiFi network.
         </Text>
         <TextInput
-          style = {styles.input}
+          style = { styles.input }
           placeholder = 'IP Address'
           autoCapitalize = 'none'
-          onChangeText = {this.props.updateHostIpAddress}
+          onChangeText = { this.props.updateHostIpAddress }
         />
         <TouchableHighlight
           style = { styles.submit }
           onPress = { openController }>
-          <Text>
+          <Text 
+            style = { styles.submitText }>
             Connect
           </Text>
         </TouchableHighlight>
@@ -56,7 +57,11 @@ const styles = StyleSheet.create ({
   submit: {
     backgroundColor: '#A6A6A6',
     padding: 16,
-    color: '0000008A',
+    justifyContent:'center',
     alignSelf: 'stretch'
+  },
+  submitText: {
+    color: '#FFFFFF',
+    alignSelf: 'center'
   }
 })
