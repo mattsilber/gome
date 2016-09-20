@@ -9,8 +9,17 @@ import {
   StyleSheet } from 'react-native';
 
 export default class Connect extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = { 
+      hostIpAddress: ''
+    };
+  }
+
   render() {
-  	const openController = () => Actions.controller({ hostIpAddress: this.props.hostIpAddress }); 
+  	const openController = () => Actions.controller({ hostIpAddress: this.state.hostIpAddress }); 
 
     return (
       <View style = { styles.container }>
@@ -22,7 +31,12 @@ export default class Connect extends Component {
           style = { styles.input }
           placeholder = 'IP Address'
           autoCapitalize = 'none'
-          onChangeText = { this.props.updateHostIpAddress }
+          onChangeText = { (updatedValue) => 
+            this.setState({
+              hostIpAddress: updatedValue
+            })
+          }
+          value = { this.state.hostIpAddress }
         />
         <TouchableHighlight
           style = { styles.submit }

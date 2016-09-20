@@ -6,12 +6,16 @@ import {
   Text,
   StyleSheet } from 'react-native';
 
-var net = require('net');
+var net = require('react-native-tcp');
 
 export default class Controller extends Component {
 
   constructor(props) {
     super(props);
+
+    this.onMouseAction = this.onMouseAction.bind(this);
+    this.onMouseDragAction = this.onMouseDragAction.bind(this);
+    this.onMouseScrollAction = this.onMouseScrollAction.bind(this);
 
     this.state = { 
       connected: false,
@@ -21,21 +25,30 @@ export default class Controller extends Component {
   }
 
   componentDidMount() {
-    this.client = net.createConnection(13337, this.props.hostIpAddress);
+    this.client = new net.Socket();
 
-    this.client.on('connect', (data) => {
+    let options = {
+      host: this.props.hostIpAddress,
+      port: 13337
+    };
+
+    this.client.connect(options, () => {
+      console.log('Connected to server at ' + this.props.hostIpAddress);  
+
       this.client.write('{\"name\": \"Test Name\" }');
 
       this.setState({
         connected: true
       });
-    });
+    })
 
     this.client.on('data', (data) => {
-      
+      console.log('Received: ' + data);      
     });
 
     this.client.on('close', () => {
+      console.log('Connection closed');  
+      
       this.setState({
         connected: false
       });
@@ -50,20 +63,20 @@ export default class Controller extends Component {
     // this.client.write('mouse:{"type":"' + action + '"}');
   }
 
-  onMouseDragAction = () => { 
+  onMouseDragAction(){ 
     let action = this.state.dragging ? "drag_end" : "drag_start"; 
 
-    onMouseAction(action); 
+    this.onMouseAction(action); 
         
     this.setState({
       dragging: !this.state.dragging
     });
   }
 
-  onMouseScrollAction = () => { 
+  onMouseScrollAction() { 
     let action = this.state.scrolling ? "scroll_end" : "scroll_start"; 
 
-    onMouseAction(action); 
+    this.onMouseAction(action); 
         
     this.setState({
       scrolling: !this.state.scrolling
@@ -79,18 +92,18 @@ export default class Controller extends Component {
         <View style = { styles.mouseActionsParent }>
           <Text
             style = { styles.mouseAction } 
-            onPress = { this.onMouseDragAction.bind() } >
+            onPress = { () => this.onMouseDragAction() } >
             Drag
           </Text>
           <Text
             style = { styles.mouseAction } 
-            onPress = { this.onMouseScrollAction.bind() } >
+            onPress = { () => this.onMouseScrollAction() } >
             Scroll
           </Text>
           <View style = { styles.mouseSplitter } />
           <Text
             style = { styles.mouseAction } 
-            onPress = { this.onMouseAction.bind("left_single_click") } >
+            onPress = { () => this.onMouseAction("left_single_click") } >
             Left Click
           </Text>
         </View>
