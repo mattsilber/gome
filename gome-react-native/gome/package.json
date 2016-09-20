@@ -1,0 +1,22 @@
+{
+  "name": "gome",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "(cd android/ && ./gradlew assembleDebug)",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "bundle-android": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --sourcemap-output android/app/src/main/assets/index.android.map --assets-dest android/app/src/main/res/"
+  },
+  "dependencies": {
+    "babel": "^6.5.2",
+    "babel-polyfill": "^6.13.0",
+    "react": "^15.3.2",
+    "react-native": "0.33.0",
+    "react-native-router-flux": "^3.35.0",
+    "react-native-web": "0.0.45"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.4.1",
+    "babel-core": "^6.14.0"
+  }
+}
