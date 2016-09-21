@@ -6,10 +6,11 @@ import {
   Text,
   StyleSheet } from 'react-native';
 
+import MouseAction from '../components/MouseAction';
+
 var net = require('react-native-tcp');
 
 const ACTION__DRAG = 1;
-const ACTION__SCROLL = 2;
 
 export default class Controller extends Component {
 
@@ -19,13 +20,15 @@ export default class Controller extends Component {
     this.onMouseAction = this.onMouseAction.bind(this);
     this.onMouseDragAction = this.onMouseDragAction.bind(this);
     this.onMouseScrollAction = this.onMouseScrollAction.bind(this);
-    this.closeProtectedActions = this.closeProtectedActions.bind(this);
+    this.onMouseMove = this.onMouseMove.bind(this);
+    this.writeMouseAction = this.writeMouseAction.bind(this);
 
     this.client = null;
 
     this.state = { 
       connected: false,
-      protectedAction: 0
+      protectedAction: 0,
+      scrolling: false
     };
   }
 
@@ -66,39 +69,38 @@ export default class Controller extends Component {
 
   onMouseAction(action) {
     if(this.state.protectedAction == ACTION__DRAG)
-      this.client.write("drag_end");
-    else if(this.state.protectedAction == ACTION__SCROLL)
-      this.client.write("scroll_end");
+      this.writeMouseAction("drag");
 
-    this.client.write('mouse:{"type":"' + action + '"}');
+    this.writeMouseAction(action);
 
     this.setState({
-      protectedAction: 0
+      protectedAction: 0,
+      scrolling: false
     });
   }
 
+  writeMouseAction(action){
+    this.client.write('mouse:{"type":"' + action + '"}');
+  }
+
   onMouseDragAction(){ 
-    if(this.state.protectedAction == ACTION__DRAG)
-      this.closeProtectedActions("imcheating");
-    else {
-      this.onMouseAction("drag_start"); 
+    this.onMouseAction(this.state.protectedAction == "drag"); 
         
-      this.setState({
-        protectedAction: this.state.protectedAction = ACTION__DRAG
-      });
-    }
+    this.setState({
+      protectedAction: this.state.protectedAction == ACTION__DRAG ? 0 : ACTION__DRAG
+    });
   }
 
   onMouseScrollAction() { 
-    if(this.state.protectedAction == ACTION__SCROLL)
-      this.closeProtectedActions("imcheating");
-    else {
-      this.onMouseAction("scroll_start"); 
-        
-      this.setState({
-        protectedAction: this.state.protectedAction = ACTION__SCROLL
-      });
-    }
+    this.setState({
+      scrolling: !this.state.scrolling
+    });
+  }
+
+  onMouseMove(x, y){
+    var action = this.state.scrolling ? "scroll" : "move";
+
+    this.client.write('mouse:{"type":"' + action + '", "mouse_x": ' + x + '", "mouse_y": ' + y + ' }');
   }
 
   render() {
@@ -108,22 +110,19 @@ export default class Controller extends Component {
           { this.props.hostIpAddress }
         </Text>
         <View style = { styles.mouseActionsParent }>
-          <Text
+          <MouseAction
             style = { styles.mouseAction } 
-            onPress = { () => this.onMouseDragAction() } >
-            Drag
-          </Text>
-          <Text
+            onPress = { () => this.onMouseDragAction() }
+            text='Drag' />
+          <MouseAction
             style = { styles.mouseAction } 
-            onPress = { () => this.onMouseScrollAction() } >
-            Scroll
-          </Text>
+            onPress = { () => this.onMouseScrollAction() }
+            text='Scroll' />
           <View style = { styles.mouseSplitter } />
-          <Text
+          <MouseAction
             style = { styles.mouseAction } 
-            onPress = { () => this.onMouseAction("left_single_click") } >
-            Left Click
-          </Text>
+            onPress = { () => this.onMouseAction("left_single_click") }
+            text='Left Click' />
         </View>
       </View>
     )
@@ -140,11 +139,6 @@ const styles = StyleSheet.create ({
   },
   mouseActionsParent: {
     alignSelf: 'flex-end'
-  },
-  mouseAction: {
-    backgroundColor: '#34495E',
-    padding: 16,
-    color: '#FFFFFF'  
   },
   mouseSplitter: {
     paddingTop: 25
