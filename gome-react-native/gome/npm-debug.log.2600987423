@@ -1,0 +1,28 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'run', 'images' ]
+2 info using npm@3.10.3
+3 info using node@v6.6.0
+4 verbose run-script [ 'preimages', 'images', 'postimages' ]
+5 info lifecycle gome@0.0.1~preimages: gome@0.0.1
+6 silly lifecycle gome@0.0.1~preimages: no script for preimages, continuing
+7 info lifecycle gome@0.0.1~images: gome@0.0.1
+8 verbose lifecycle gome@0.0.1~images: unsafe-perm in lifecycle true
+9 verbose lifecycle gome@0.0.1~images: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/home/mattsilber/workspace/gome/gome-react-native/gome/node_modules/.bin:/usr/local/bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/home/mattsilber/workspace/gome/gome-react-native/gome/node_modules/.bin:/usr/local/bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/home/mattsilber/workspace/gome/gome-react-native/gome/node_modules/.bin:/usr/local/bin:/usr/local/heroku/bin:/home/mattsilber/.nvm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/mattsilber/workspace/gome/gome-react-native/gome/node_modules/npm-watch/node_modules/.bin
+10 verbose lifecycle gome@0.0.1~images: CWD: /home/mattsilber/workspace/gome/gome-react-native/gome
+11 silly lifecycle gome@0.0.1~images: Args: [ '-c',
+11 silly lifecycle   'node node_modules/.bin/copyfiles -u 1 ./App/**/*.gif ./App/**/*.png ./App/**/*.svg ./App/**/*.jpg ./App/**/*.jpeg ./artifacts' ]
+12 verbose stack Error: write EPIPE
+12 verbose stack     at exports._errnoException (util.js:1036:11)
+12 verbose stack     at WriteWrap.afterWrite (net.js:794:14)
+13 verbose cwd /home/mattsilber/workspace/gome/gome-react-native/gome
+14 error Linux 3.16.0-38-generic
+15 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "images"
+16 error node v6.6.0
+17 error npm  v3.10.3
+18 error code EPIPE
+19 error errno EPIPE
+20 error syscall write
+21 error write EPIPE
+22 error If you need help, you may report this error at:
+22 error     <https://github.com/npm/npm/issues>
+23 verbose exit [ 1, true ]

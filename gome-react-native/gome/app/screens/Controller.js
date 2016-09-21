@@ -43,7 +43,7 @@ export default class Controller extends Component {
     this.client.connect(options, () => {
       console.log('Connected to server at ' + this.props.hostIpAddress);  
 
-      this.client.write('{"name": "Test Name" }');
+      this.client.write('{"name": "Test Name" }\n');
 
       this.setState({
         connected: true
@@ -64,6 +64,9 @@ export default class Controller extends Component {
   }
 
   componentWillUnmount() {
+    if(this.client != null)
+      this.client.close();
+
     this.client = null;
   }
 
@@ -80,7 +83,7 @@ export default class Controller extends Component {
   }
 
   writeMouseAction(action){
-    this.client.write('mouse:{"type":"' + action + '"}');
+    this.client.write('mouse:{"type":"' + action + '"}\n');
   }
 
   onMouseDragAction(){ 
