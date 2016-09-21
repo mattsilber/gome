@@ -13,7 +13,7 @@ import com.guardanis.gtools.net.JsonHelper;
 public class KeyboardCommandController implements CommandController {
 	
 	protected Robot robot;
-	
+
 	private static Map<String, Integer> WRAPPED_KEYS = new HashMap<String, Integer>();
 	
 	public KeyboardCommandController() throws Exception {

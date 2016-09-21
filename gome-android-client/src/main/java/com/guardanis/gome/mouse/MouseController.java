@@ -86,9 +86,7 @@ public class MouseController {
                 ? ACTION__DRAG
                 : 0;
 
-        commandCallback.onCalled(new MouseClickCommand(protectedAction == ACTION__DRAG
-                ? "drag_start"
-                : "drag_stop"));
+        commandCallback.onCalled(new MouseClickCommand("drag"));
 
         setupDragActionView();
     }

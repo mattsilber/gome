@@ -8,6 +8,9 @@ import {
 
 var net = require('react-native-tcp');
 
+const ACTION__DRAG = 1;
+const ACTION__SCROLL = 2;
+
 export default class Controller extends Component {
 
   constructor(props) {
@@ -16,11 +19,13 @@ export default class Controller extends Component {
     this.onMouseAction = this.onMouseAction.bind(this);
     this.onMouseDragAction = this.onMouseDragAction.bind(this);
     this.onMouseScrollAction = this.onMouseScrollAction.bind(this);
+    this.closeProtectedActions = this.closeProtectedActions.bind(this);
+
+    this.client = null;
 
     this.state = { 
       connected: false,
-      dragging: false,
-      scrolling: false 
+      protectedAction: 0
     };
   }
 
@@ -35,7 +40,7 @@ export default class Controller extends Component {
     this.client.connect(options, () => {
       console.log('Connected to server at ' + this.props.hostIpAddress);  
 
-      this.client.write('{\"name\": \"Test Name\" }');
+      this.client.write('{"name": "Test Name" }');
 
       this.setState({
         connected: true
@@ -60,27 +65,40 @@ export default class Controller extends Component {
   }
 
   onMouseAction(action) {
-    // this.client.write('mouse:{"type":"' + action + '"}');
+    if(this.state.protectedAction == ACTION__DRAG)
+      this.client.write("drag_end");
+    else if(this.state.protectedAction == ACTION__SCROLL)
+      this.client.write("scroll_end");
+
+    this.client.write('mouse:{"type":"' + action + '"}');
+
+    this.setState({
+      protectedAction: 0
+    });
   }
 
   onMouseDragAction(){ 
-    let action = this.state.dragging ? "drag_end" : "drag_start"; 
-
-    this.onMouseAction(action); 
+    if(this.state.protectedAction == ACTION__DRAG)
+      this.closeProtectedActions("imcheating");
+    else {
+      this.onMouseAction("drag_start"); 
         
-    this.setState({
-      dragging: !this.state.dragging
-    });
+      this.setState({
+        protectedAction: this.state.protectedAction = ACTION__DRAG
+      });
+    }
   }
 
   onMouseScrollAction() { 
-    let action = this.state.scrolling ? "scroll_end" : "scroll_start"; 
-
-    this.onMouseAction(action); 
+    if(this.state.protectedAction == ACTION__SCROLL)
+      this.closeProtectedActions("imcheating");
+    else {
+      this.onMouseAction("scroll_start"); 
         
-    this.setState({
-      scrolling: !this.state.scrolling
-    });
+      this.setState({
+        protectedAction: this.state.protectedAction = ACTION__SCROLL
+      });
+    }
   }
 
   render() {

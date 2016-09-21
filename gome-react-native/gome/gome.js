@@ -14,11 +14,26 @@ import Controller from './app/screens/Controller';
 export default class gome extends Component {
   render() {
     return (
-      <Router navigationBarStyle={styles.navBar} titleStyle={styles.navTitle} sceneStyle={styles.routerScene} >
-        <Scene key="root">
-          <Scene key="splash" hideNavBar={true} component={Splash} title="Splash" initial={true} />
-          <Scene key="connect" component={Connect} title="Connect to Host" />
-          <Scene key="controller" component={Controller} title="Controller" />
+      <Router 
+        navigationBarStyle={styles.navBar} 
+        titleStyle={styles.navTitle} 
+        sceneStyle={styles.routerScene} >
+        <Scene 
+          key="root">
+          <Scene 
+            key="splash" 
+            hideNavBar={true} 
+            component={Splash} 
+            title="Splash" 
+            initial={true} />
+          <Scene 
+            key="connect" 
+            component={Connect} 
+            title="Connect to Host" />
+          <Scene 
+            key="controller" 
+            component={Controller} 
+            title="Controller" />
         </Scene>
       </Router>
     )
