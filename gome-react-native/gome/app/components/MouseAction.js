@@ -5,6 +5,7 @@ import {
   PropTypes,
   View,
   Text,
+  Button,
   TouchableHighlight,
 } from 'react-native';
 
@@ -17,32 +18,35 @@ export default class MouseAction extends Component {
 
   render(){
     return (
-      <TouchableHighlight
-        activeOpacity={1}
-        style={ this.state.pressStatus ? styles.buttonPress : styles.button }
-        onHideUnderlay={() => this.setState({ pressStatus: false })}
-        onShowUnderlay={() => this.setState({ pressStatus: true })} >
-        <Text style={ styles.text }>
-          {this.props.text}
-        </Text>
-      </TouchableHighlight>
+      <View style={styles.container}>
+        <TouchableHighlight
+          activeOpacity={1}
+          style={ this.state.pressStatus ? styles.buttonPress : styles.button }
+          onHideUnderlay={() => this.setState({ pressStatus: false })}
+          onShowUnderlay={() => this.setState({ pressStatus: true })} >
+          <Text style={ styles.text }>
+            {this.props.text}
+          </Text>
+        </TouchableHighlight>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center'
+  },
   text: {
     fontSize: 14,
     textAlign: 'center',
     color: '#FFFFFF'  
   },
   button: {
-    justifyContent: 'center',
     backgroundColor: '#34495E',
     padding: 10
   },
   buttonPress: {
-    justifyContent: 'center',
     backgroundColor: '#34495E66',
     padding: 10
   }
