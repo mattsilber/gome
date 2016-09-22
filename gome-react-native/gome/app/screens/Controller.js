@@ -4,7 +4,8 @@ import { Actions } from 'react-native-router-flux';
 import { 
   View, 
   Text,
-  StyleSheet } from 'react-native';
+  StyleSheet 
+} from 'react-native';
 
 import MouseAction from '../components/MouseAction';
 
@@ -61,11 +62,15 @@ export default class Controller extends Component {
         connected: false
       });
     });
+
+    this.client.on('error', error => {
+      console.log('Connection error: ' + error);        
+    });
   }
 
   componentWillUnmount() {
-    if(this.client != null)
-      this.client.close();
+    if(this.client)
+      this.client.destroy();
 
     this.client = null;
   }
@@ -103,7 +108,7 @@ export default class Controller extends Component {
   onMouseMove(x, y){
     var action = this.state.scrolling ? "scroll" : "move";
 
-    this.client.write('mouse:{"type":"' + action + '", "mouse_x": ' + x + '", "mouse_y": ' + y + ' }');
+    this.client.write('mouse:{"type":"' + action + '", "mouse_x": ' + x + '", "mouse_y": ' + y + ' }\n');
   }
 
   render() {

@@ -6,7 +6,13 @@ import {
   Text,
   TextInput,
   TouchableHighlight,
-  StyleSheet } from 'react-native';
+  StyleSheet,
+  AsyncStorage
+} from 'react-native';
+
+import MouseAction from '../components/MouseAction';
+
+const HOST_IP_KEY = "hostIpAddress";
 
 export default class Connect extends Component {
 
@@ -16,10 +22,31 @@ export default class Connect extends Component {
     this.state = { 
       hostIpAddress: ''
     };
+
+    this.getStoredIpAddress = this.getStoredIpAddress.bind(this);
+    this.saveHostIp = this.saveHostIp.bind(this);
+
+    this.getStoredIpAddress();
+  }
+
+  async getStoredIpAddress() {
+    let startingAddress = await AsyncStorage.getItem(HOST_IP_KEY);
+
+    this.setState({
+      hostIpAddress: startingAddress
+    });
+  };
+
+  async saveHostIp(ipAddress) {
+    await AsyncStorage.setItem(HOST_IP_KEY, ipAddress);
   }
 
   render() {
-  	const openController = () => Actions.controller({ hostIpAddress: this.state.hostIpAddress }); 
+  	const openController = () => {
+      this.saveHostIp(this.state.hostIpAddress);
+
+      Actions.controller({ hostIpAddress: this.state.hostIpAddress }); 
+    };
 
     return (
       <View style = { styles.container }>
@@ -31,11 +58,11 @@ export default class Connect extends Component {
           style = { styles.input }
           placeholder = 'IP Address'
           autoCapitalize = 'none'
-          onChangeText = { (updatedValue) => 
+          onChangeText = { (updatedValue) => {
             this.setState({
               hostIpAddress: updatedValue
-            })
-          }
+            });
+          }}
           value = { this.state.hostIpAddress }
         />
         <TouchableHighlight
@@ -70,6 +97,7 @@ const styles = StyleSheet.create ({
   },
   submit: {
     backgroundColor: '#A6A6A6',
+    underlayColor: '#8A8A8A',
     padding: 16,
     justifyContent:'center',
     alignSelf: 'stretch'
