@@ -27,13 +27,16 @@ export default class Controller extends Component {
     this.writeMouseAction = this.writeMouseAction.bind(this);
     this.onViewTouched = this.onViewTouched.bind(this);
     this.destroySocketClient = this.destroySocketClient.bind(this);
+    this.onMouseRelease = this.onMouseRelease.bind(this);
 
     this.client = null;
 
     this.state = { 
       connected: false,
       dragging: false,
-      scrolling: false
+      scrolling: false,
+      lastX: -1,
+      lastY: -1
     };
   }
 
@@ -99,8 +102,15 @@ export default class Controller extends Component {
   }
 
   writeMouseAction(action){
-    if(this.state.connected)
-      this.client.write('mouse:{"type":"' + action + '"}\n');
+    if(this.state.connected){
+      var command = {
+        type: action
+      };
+
+      this.client.write('mouse:' + JSON.stringify(command) + '\n');
+
+      console.log('Wrote mouse action: ' + JSON.stringify(command));
+    }
   }
 
   onMouseDragAction(){ 
@@ -138,23 +148,42 @@ export default class Controller extends Component {
   onMouseMove(x, y){
     var action = this.state.scrolling ? "scroll" : "move";
 
+    var command = {
+      type: action,
+      mouse_x: x,
+      mouse_y: y
+    };
+
     if(this.state.connected)
-      this.client.write('mouse:{"type":"' + action + '", "mouse_x": ' + x + '", "mouse_y": ' + y + ' }\n');
+      this.client.write('mouse:' + JSON.stringify(command) + '\n');
+
+    console.log('Wrote mouse move: ' + JSON.stringify(command));
+  }
+
+  onMouseRelease(event){
+    this.setState({
+      lastX: -1,
+      lastY: -1
+    });
   }
 
   render() {
     return (
-      <View style = { styles.container }>
+      <View 
+        style = { styles.container }>
         <TouchableOpacity 
           style = { styles.full }
-          onTouch={ (evt) => this.onViewTouched(evt) } >
-        </TouchableOpacity>
-        <View
-          style = { styles.full }>
+          onStartShouldSetResponder='true'
+          onResponderMove={ (event) => this.onViewTouched(event) }
+          onResponderRelease={ (event) => this.onMouseRelease(event) } >
           <Text>
             { this.props.hostIpAddress }
           </Text>
-          <View style = { styles.mouseActionsParent }>
+        </TouchableOpacity>
+        <View
+          style = { styles.full }>
+          <View 
+            style = { styles.mouseActionsParent }>
             <MouseAction
               style = { styles.mouseAction } 
               onPress = { () => this.onMouseDragAction() }
