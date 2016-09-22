@@ -84,6 +84,8 @@ public class Server implements ConnectionEvents {
 				device.getName(), 
 				ipAddress);
 		
+		device.setIpAddress(ipAddress); // Weird...
+		
 		connectedDevices.add(device);
 		
 		displayController.onDeviceAdded(device);
