@@ -79,10 +79,10 @@ public class Server implements ConnectionEvents {
 	}
 
 	@Override
-	public void onDeviceIdentified(ClientHelper client, Device device) {
+	public void onDeviceIdentified(ClientHelper client, Device device, String ipAddress) {
 		Logger.info("%1$s connected from %2$s", 
 				device.getName(), 
-				device.getIpAddress());
+				ipAddress);
 		
 		connectedDevices.add(device);
 		

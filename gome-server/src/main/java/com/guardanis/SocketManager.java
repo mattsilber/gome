@@ -16,7 +16,7 @@ public class SocketManager extends Thread {
 	public interface ConnectionEvents {
 		public void onAwaitingNextConnection();
 		public void onConnected(String ip, int port);
-		public void onDeviceIdentified(ClientHelper client, Device device);
+		public void onDeviceIdentified(ClientHelper client, Device device, String ipAddress);
 		public void onCommandReceived(ClientHelper client, Command command);
 		public void onClientDisconnected(ClientHelper client);
 	}
@@ -55,9 +55,9 @@ public class SocketManager extends Thread {
 			}
 
 			@Override
-			public void onDeviceIdentified(ClientHelper client, Device device) {
+			public void onDeviceIdentified(ClientHelper client, Device device, String ipAddress) {
 				java.awt.EventQueue.invokeLater(() ->
-					eventsCallback.onDeviceIdentified(client, device));					
+					eventsCallback.onDeviceIdentified(client, device, ipAddress));					
 			} };
 	}
 	

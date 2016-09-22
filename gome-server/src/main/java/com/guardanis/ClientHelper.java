@@ -47,7 +47,10 @@ public class ClientHelper extends Thread {
 			
 			this.device = readDevice();
 			
-			eventsCallback.onDeviceIdentified(this, device);
+			eventsCallback.onDeviceIdentified(this, 
+					device, 
+					socket.getInetAddress()
+						.getHostAddress());
 			
 			writer = new SocketWriter(socket);
 			
