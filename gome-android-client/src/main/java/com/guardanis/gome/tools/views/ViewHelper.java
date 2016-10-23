@@ -149,6 +149,7 @@ public class ViewHelper {
         ((InputMethodManager) et.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                 .toggleSoftInputFromWindow(et.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
 
+        et.performClick();
         et.requestFocus();
     }
 

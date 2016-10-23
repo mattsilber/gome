@@ -107,7 +107,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/base__padding_1"
-        android:textColor="#00000000"
+        android:inputType="text"
+        android:textColor="@color/base__text_dark_1"
         android:textColorHint="@color/base__text_dark_2"/>
 
     <LinearLayout

@@ -60,9 +60,7 @@ public class KeyboardController {
                 .setCancelable(false)
                 .show();
 
-        cheating.postDelayed(() ->
-                        ViewHelper.openSoftInputKeyboard(cheating),
-                350);
+        ViewHelper.openSoftInputKeyboardOnLayout(cheating);
     }
 
     private void sendCommand(String command, View parent, Runnable focusCallback){
