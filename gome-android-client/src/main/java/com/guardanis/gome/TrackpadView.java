@@ -6,16 +6,22 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.guardanis.gome.commands.Command;
+import com.guardanis.gome.commands.MouseClickCommand;
 import com.guardanis.gome.commands.MouseMoveCommand;
 import com.guardanis.gome.commands.MouseMoveCommand.MouseMode;
 import com.guardanis.gome.tools.Callback;
 
 public class TrackpadView extends View implements View.OnTouchListener {
 
+    private static final long CLICK_TIMEOUT = 155;
+
     protected float[] lastTouch = new float[]{ 0, 0 };
+    protected long touchDownMs = 0;
 
     protected Callback<Command> commandCallback;
     protected MouseMode mouseMode = MouseMode.MOVE;
+
+    protected Runnable clickCallback;
 
     public TrackpadView(Context context) {
         super(context);
@@ -42,6 +48,11 @@ public class TrackpadView extends View implements View.OnTouchListener {
         return this;
     }
 
+    public TrackpadView setClickCallback(Runnable clickCallback){
+        this.clickCallback = clickCallback;
+        return this;
+    }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if(commandCallback == null)
@@ -50,6 +61,7 @@ public class TrackpadView extends View implements View.OnTouchListener {
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 lastTouch = new float[]{ event.getX(), event.getY() };
+                touchDownMs = System.currentTimeMillis();
                 return true;
             case MotionEvent.ACTION_MOVE:
                 String key = mouseMode == MouseMode.MOVE
@@ -64,6 +76,11 @@ public class TrackpadView extends View implements View.OnTouchListener {
                         (event.getY() - lastTouch[1]) / mouseSpeed));
 
                 lastTouch = new float[]{ event.getX(), event.getY() };
+
+                return true;
+            case MotionEvent.ACTION_UP:
+                if (clickCallback != null && System.currentTimeMillis() - touchDownMs < CLICK_TIMEOUT)
+                    clickCallback.run();
 
                 return true;
         }

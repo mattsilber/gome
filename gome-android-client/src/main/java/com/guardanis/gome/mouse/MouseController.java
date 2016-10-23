@@ -15,6 +15,12 @@ public class MouseController {
     private static final int ACTION__SCROLL = 1;
     private static final int ACTION__DRAG = 2;
 
+    public static final String ACTION_LEFT_SINGLE_CLICK = "left_single_click";
+    public static final String ACTION_LEFT_DOUBLE_CLICK = "left_double_click";
+    public static final String ACTION_WHEEL_CLICK = "wheel_click";
+    public static final String ACTION_RIGHT_CLICK = "right_single_click";
+    public static final String ACTION_DRAG = "drag";
+
     private Callback<Command> commandCallback;
 
     private TrackpadView trackpad;
@@ -35,19 +41,19 @@ public class MouseController {
 
         activity.findViewById(R.id.main__mouse_action_left_single_click)
                 .setOnClickListener(v ->
-                        protectAction("left_single_click"));
+                        protectAction(ACTION_LEFT_SINGLE_CLICK));
 
         activity.findViewById(R.id.main__mouse_action_left_double_click)
                 .setOnClickListener(v ->
-                        protectAction("left_double_click"));
+                        protectAction(ACTION_LEFT_DOUBLE_CLICK));
 
         activity.findViewById(R.id.main__mouse_action_wheel_click)
                 .setOnClickListener(v ->
-                        protectAction("wheel_click"));
+                        protectAction(ACTION_WHEEL_CLICK));
 
         activity.findViewById(R.id.main__mouse_action_right_click)
                 .setOnClickListener(v ->
-                        protectAction("right_single_click"));
+                        protectAction(ACTION_RIGHT_CLICK));
 
         return this;
     }
@@ -55,7 +61,9 @@ public class MouseController {
     public MouseController attach(TrackpadView trackpad){
         this.trackpad = trackpad;
 
-        trackpad.setCommandCallback(commandCallback);
+        trackpad.setCommandCallback(commandCallback)
+                .setClickCallback(() ->
+                        protectAction(ACTION_LEFT_SINGLE_CLICK));
 
         return this;
     }
@@ -86,7 +94,7 @@ public class MouseController {
                 ? ACTION__DRAG
                 : 0;
 
-        commandCallback.onCalled(new MouseClickCommand("drag"));
+        commandCallback.onCalled(new MouseClickCommand(ACTION_DRAG));
 
         setupDragActionView();
     }
