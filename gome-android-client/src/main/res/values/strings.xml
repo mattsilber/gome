@@ -79,6 +79,11 @@
     <string name="keyboard__action_escape">ESC</string>
 
 
+    <string name="settings__title">Settings</string>
+    <string name="settings__category_move_speed">Move Speed (Low to High)</string>
+    <string name="settings__category_scroll_speed">Scroll Speed (Low to High)</string>
+
+
     <string-array name="fu__font_family_resources">
         <item>roboto--normal=fonts/roboto.ttf,bold=fonts/roboto_bold.ttf</item>
     </string-array>

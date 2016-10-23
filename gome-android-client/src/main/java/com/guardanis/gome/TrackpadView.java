@@ -52,9 +52,16 @@ public class TrackpadView extends View implements View.OnTouchListener {
                 lastTouch = new float[]{ event.getX(), event.getY() };
                 return true;
             case MotionEvent.ACTION_MOVE:
+                String key = mouseMode == MouseMode.MOVE
+                        ? Settings.KEY__MOVE_SPEED
+                        : Settings.KEY__SCROLL_SPEED;
+
+                float mouseSpeed = 11f - Settings.getInstance(getContext())
+                        .get(key, 5);
+
                 commandCallback.onCalled(new MouseMoveCommand(mouseMode,
-                        event.getX() - lastTouch[0],
-                        event.getY() - lastTouch[1]));
+                        (event.getX() - lastTouch[0]) / mouseSpeed,
+                        (event.getY() - lastTouch[1]) / mouseSpeed));
 
                 lastTouch = new float[]{ event.getX(), event.getY() };
 

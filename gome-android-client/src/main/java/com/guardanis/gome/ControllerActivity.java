@@ -59,6 +59,15 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
                 finish());
 
         builder.addTitle(titleView);
+
+        builder.addOptionSvg(Svgs.IC__SETTINGS,
+                v ->
+                        validateConnected(() -> {
+                            mouseController.stopProtectedActions();
+
+                            startActivity(new Intent(this, SettingsActivity.class));
+                        }));
+
         builder.addOptionSvg(Svgs.IC__KEYBOARD,
                 v ->
                         validateConnected(() -> {

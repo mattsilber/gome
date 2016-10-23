@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/base__toolbar"
+        style="@style/Base.Toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/base__padding_0"
+            android:paddingRight="@dimen/base__padding_0">
+
+            <com.guardanis.fontutils.TextView
+                style="@style/base__category"
+                android:text="@string/settings__category_move_speed"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatSeekBar
+                    android:id="@+id/settings__move_speed_seekbar"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <com.guardanis.fontutils.TextView
+                    android:id="@+id/settings__move_speed_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/base__padding_0"
+                    android:textColor="@color/base__text_dark_1"
+                    android:textSize="@dimen/base__text_2"/>
+
+            </LinearLayout>
+
+            <com.guardanis.fontutils.TextView
+                style="@style/base__category"
+                android:text="@string/settings__category_scroll_speed"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatSeekBar
+                    android:id="@+id/settings__scroll_speed_seekbar"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <com.guardanis.fontutils.TextView
+                    android:id="@+id/settings__scroll_speed_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/base__padding_0"
+                    android:textColor="@color/base__text_dark_1"
+                    android:textSize="@dimen/base__text_2"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
