@@ -58,6 +58,12 @@
                 android:background="@drawable/base__button_transparent"
                 android:text="@string/keyboard__action_tab"/>
 
+            <com.guardanis.fontutils.TextView
+                android:id="@+id/keyboard__action_insert"
+                style="@style/keyboard__action_item"
+                android:background="@drawable/base__button_transparent"
+                android:text="@string/keyboard__action_insert"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -93,10 +99,10 @@
                 android:text="@string/keyboard__action_escape"/>
 
             <com.guardanis.fontutils.TextView
-                android:id="@+id/keyboard__action_insert"
+                android:id="@+id/keyboard__action_enter"
                 style="@style/keyboard__action_item"
                 android:background="@drawable/base__button_transparent"
-                android:text="@string/keyboard__action_insert"/>
+                android:text="@string/keyboard__action_enter"/>
 
         </LinearLayout>
 
@@ -107,7 +113,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/base__padding_1"
-        android:inputType="text"
+        android:inputType="textNoSuggestions"
+        android:singleLine="false"
         android:textColor="@color/base__text_dark_1"
         android:textColorHint="@color/base__text_dark_2"/>
 

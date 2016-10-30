@@ -77,6 +77,7 @@
     <string name="keyboard__action_insert">INSERT</string>
     <string name="keyboard__action_delete">DEL</string>
     <string name="keyboard__action_escape">ESC</string>
+    <string name="keyboard__action_enter">ENTER</string>
 
 
     <string name="settings__title">Settings</string>

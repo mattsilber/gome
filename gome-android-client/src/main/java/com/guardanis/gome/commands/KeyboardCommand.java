@@ -10,6 +10,7 @@ public class KeyboardCommand implements Command {
 
     public static final String KEY__DELETE = "\b";
     public static final String KEY__TAB = "\t";
+    public static final String KEY__ENTER = "\n";
 
     public static final String ACTION__ALT = "ALT";
     public static final String ACTION__CONTROL = "CTRL";

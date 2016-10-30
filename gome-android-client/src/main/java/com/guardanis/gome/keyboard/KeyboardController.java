@@ -63,13 +63,6 @@ public class KeyboardController {
         ViewHelper.openSoftInputKeyboardOnLayout(cheating);
     }
 
-    private void sendCommand(String command, View parent, Runnable focusCallback){
-        commandCallback.onCalled(new KeyboardCommand(command, wrappedActions));
-
-        if(0 < wrappedActions.size())
-            setupActionViews(parent, focusCallback);
-    }
-
     private void setupActionViews(View parent, Runnable focusCallback){
         wrappedActions.clear();
 
@@ -85,6 +78,12 @@ public class KeyboardController {
         setupClickAction(parent, R.id.keyboard__action_home, KeycodeCommand.VK_HOME, focusCallback);
         setupClickAction(parent, R.id.keyboard__action_end, KeycodeCommand.VK_END, focusCallback);
         setupClickAction(parent, R.id.keyboard__action_escape, KeycodeCommand.VK_ESCAPE, focusCallback);
+
+        parent.findViewById(R.id.keyboard__action_enter)
+                .setOnClickListener(v ->
+                        sendCommand(KeyboardCommand.KEY__ENTER,
+                                parent,
+                                focusCallback));
     }
 
     private void setupWrappedAction(View parent, int id, String keyValue, Runnable focusCallback){
@@ -110,14 +109,25 @@ public class KeyboardController {
 
     private void setupClickAction(View parent, int id, int keycode, Runnable focusCallback){
         parent.findViewById(id)
-                .setOnClickListener(v -> {
-                    commandCallback.onCalled(new KeycodeCommand(keycode, wrappedActions));
+                .setOnClickListener(v ->
+                        sendCommand(new KeycodeCommand(keycode, wrappedActions),
+                                parent,
+                                focusCallback));
+    }
 
-                    if(0 < wrappedActions.size())
-                        setupActionViews(parent, focusCallback);
+    private void sendCommand(String command, View parent, Runnable focusCallback){
+        sendCommand(new KeyboardCommand(command, wrappedActions),
+                parent,
+                focusCallback);
+    }
 
-                    focusCallback.run();
-                });
+    private void sendCommand(Command command, View parent, Runnable focusCallback){
+        commandCallback.onCalled(command);
+
+        if(0 < wrappedActions.size())
+            setupActionViews(parent, focusCallback);
+
+        focusCallback.run();
     }
 
     public void dismiss(){
