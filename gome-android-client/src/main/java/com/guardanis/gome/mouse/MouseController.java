@@ -12,8 +12,7 @@ import com.guardanis.gome.tools.Callback;
 
 public class MouseController {
 
-    private static final int ACTION__SCROLL = 1;
-    private static final int ACTION__DRAG = 2;
+    private static final int ACTION__DRAG = 1;
 
     public static final String ACTION_LEFT_SINGLE_CLICK = "left_single_click";
     public static final String ACTION_LEFT_DOUBLE_CLICK = "left_double_click";
@@ -23,10 +22,10 @@ public class MouseController {
 
     private Callback<Command> commandCallback;
 
-    private TrackpadView trackpad;
+    private TrackpadView moveTrackpad;
+    private TrackpadView scrollTrackpad;
 
     private TextView dragActionView;
-    private TextView scrollActionView;
 
     private int protectedAction = 0;
 
@@ -35,9 +34,10 @@ public class MouseController {
     }
 
     public MouseController attach(Activity activity){
-        attach((TrackpadView) activity.findViewById(R.id.main__move_view));
+        attach((TrackpadView) activity.findViewById(R.id.main__move_view),
+                (TrackpadView) activity.findViewById(R.id.main__scroll_view));
+
         attachDragAction((TextView) activity.findViewById(R.id.main__mouse_action_drag));
-        attachScrollAction((TextView) activity.findViewById(R.id.main__mouse_action_scroll));
 
         activity.findViewById(R.id.main__mouse_action_left_single_click)
                 .setOnClickListener(v ->
@@ -58,12 +58,16 @@ public class MouseController {
         return this;
     }
 
-    public MouseController attach(TrackpadView trackpad){
-        this.trackpad = trackpad;
-
-        trackpad.setCommandCallback(commandCallback)
+    public MouseController attach(TrackpadView moveTrackpad, TrackpadView scrollTrackpad){
+        this.moveTrackpad = moveTrackpad
+                .setMouseMode(MouseMoveCommand.MouseMode.MOVE)
+                .setCommandCallback(commandCallback)
                 .setClickCallback(() ->
                         protectAction(ACTION_LEFT_SINGLE_CLICK));
+
+        this.scrollTrackpad = scrollTrackpad
+                .setMouseMode(MouseMoveCommand.MouseMode.SCROLL)
+                .setCommandCallback(commandCallback);
 
         return this;
     }
@@ -87,9 +91,6 @@ public class MouseController {
     }
 
     private void toggleDrag(){
-        if(protectedAction == ACTION__SCROLL)
-            toggleScroll();
-
         protectedAction = protectedAction == 0
                 ? ACTION__DRAG
                 : 0;
@@ -97,39 +98,6 @@ public class MouseController {
         commandCallback.onCalled(new MouseClickCommand(ACTION_DRAG));
 
         setupDragActionView();
-    }
-
-    public MouseController attachScrollAction(TextView scrollActionView){
-        this.scrollActionView = scrollActionView;
-
-        setupScrollActionView();
-
-        return this;
-    }
-
-    private void setupScrollActionView(){
-        scrollActionView.setText(scrollActionView.getResources()
-                .getString(protectedAction == ACTION__SCROLL
-                        ? R.string.mouse__action_scroll_stop
-                        : R.string.mouse__action_scroll_start));
-
-        scrollActionView.setOnClickListener(v ->
-                toggleScroll());
-    }
-
-    private void toggleScroll(){
-        if(protectedAction == ACTION__DRAG)
-            toggleDrag();
-
-        protectedAction = protectedAction == 0
-                ? ACTION__SCROLL
-                : 0;
-
-        trackpad.setMouseMode(protectedAction == ACTION__SCROLL
-                ? MouseMoveCommand.MouseMode.SCROLL
-                : MouseMoveCommand.MouseMode.MOVE);
-
-        setupScrollActionView();
     }
 
     private void protectAction(String action){
@@ -141,8 +109,6 @@ public class MouseController {
     public void stopProtectedActions(){
         if(protectedAction == ACTION__DRAG)
             toggleDrag();
-        else if(protectedAction == ACTION__SCROLL)
-            toggleScroll();
     }
 
 }

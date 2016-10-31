@@ -70,4 +70,7 @@
     <dimen name="keyboard__action">12dip</dimen>
 
 
+    <dimen name="scroll__trackpad_width">40dip</dimen>
+
+
 </resources>

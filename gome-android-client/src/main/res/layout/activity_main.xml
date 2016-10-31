@@ -24,49 +24,63 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.guardanis.gome.TrackpadView
+            android:id="@+id/main__scroll_view"
+            android:layout_width="@dimen/scroll__trackpad_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:background="@color/base__primary"/>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_weight="1"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="75dip">
+            android:layout_gravity="right"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="75dip">
+
+                <TextView
+                    android:id="@+id/main__mouse_action_drag"
+                    style="@style/main__action_item"
+                    android:text="@string/mouse__action_drag_start"/>
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/main__mouse_action_drag"
+                android:id="@+id/main__mouse_action_left_single_click"
                 style="@style/main__action_item"
-                android:text="@string/mouse__action_drag_start"/>
+                android:text="@string/mouse__action_left_single_click"/>
 
             <TextView
-                android:id="@+id/main__mouse_action_scroll"
+                android:id="@+id/main__mouse_action_left_double_click"
                 style="@style/main__action_item"
-                android:text="@string/mouse__action_scroll_start"/>
+                android:text="@string/mouse__action_left_double_click"/>
+
+            <TextView
+                android:id="@+id/main__mouse_action_wheel_click"
+                style="@style/main__action_item"
+                android:text="@string/mouse__action_wheel_click"/>
+
+            <TextView
+                android:id="@+id/main__mouse_action_right_click"
+                style="@style/main__action_item"
+                android:text="@string/mouse__action_right_click"/>
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/main__mouse_action_left_single_click"
-            style="@style/main__action_item"
-            android:text="@string/mouse__action_left_single_click"/>
-
-        <TextView
-            android:id="@+id/main__mouse_action_left_double_click"
-            style="@style/main__action_item"
-            android:text="@string/mouse__action_left_double_click"/>
-
-        <TextView
-            android:id="@+id/main__mouse_action_wheel_click"
-            style="@style/main__action_item"
-            android:text="@string/mouse__action_wheel_click"/>
-
-        <TextView
-            android:id="@+id/main__mouse_action_right_click"
-            style="@style/main__action_item"
-            android:text="@string/mouse__action_right_click"/>
-
     </LinearLayout>
 </RelativeLayout>

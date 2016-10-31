@@ -20,6 +20,7 @@ public class TrackpadView extends View implements View.OnTouchListener {
 
     protected Callback<Command> commandCallback;
     protected MouseMode mouseMode = MouseMode.MOVE;
+    protected String mouseSensitivityKey = Settings.KEY__MOVE_SPEED;
 
     protected Runnable clickCallback;
 
@@ -45,6 +46,16 @@ public class TrackpadView extends View implements View.OnTouchListener {
 
     public TrackpadView setMouseMode(MouseMode mouseMode) {
         this.mouseMode = mouseMode;
+
+        this.mouseSensitivityKey = mouseMode == MouseMode.MOVE
+                ? Settings.KEY__MOVE_SPEED
+                : Settings.KEY__SCROLL_SPEED;
+
+        return this;
+    }
+
+    public TrackpadView setCommandCallback(Callback<Command> commandCallback){
+        this.commandCallback = commandCallback;
         return this;
     }
 
@@ -62,14 +73,11 @@ public class TrackpadView extends View implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN:
                 lastTouch = new float[]{ event.getX(), event.getY() };
                 touchDownMs = System.currentTimeMillis();
+
                 return true;
             case MotionEvent.ACTION_MOVE:
-                String key = mouseMode == MouseMode.MOVE
-                        ? Settings.KEY__MOVE_SPEED
-                        : Settings.KEY__SCROLL_SPEED;
-
                 float mouseSpeed = 11f - Settings.getInstance(getContext())
-                        .get(key, 5);
+                        .get(mouseSensitivityKey, 5);
 
                 commandCallback.onCalled(new MouseMoveCommand(mouseMode,
                         (event.getX() - lastTouch[0]) / mouseSpeed,
@@ -88,8 +96,4 @@ public class TrackpadView extends View implements View.OnTouchListener {
         return false;
     }
 
-    public TrackpadView setCommandCallback(Callback<Command> commandCallback){
-        this.commandCallback = commandCallback;
-        return this;
-    }
 }
