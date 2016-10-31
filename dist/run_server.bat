@@ -1,0 +1,1 @@
+javaw -jar gome-server.jar
