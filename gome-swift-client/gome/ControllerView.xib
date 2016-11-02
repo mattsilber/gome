@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ControllerViewController" customModule="gome" customModuleProvider="target">
+            <connections>
+                <outlet property="ipHeaderLabel" destination="UJY-h7-VUd" id="gad-iM-dwz"/>
+                <outlet property="view" destination="iN0-l3-epB" id="nf3-cG-3da"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qCO-iE-6NS">
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UZR-Qh-UCP">
+                            <constraints>
+                                <constraint firstAttribute="width" constant="46" id="7G9-HK-zAZ"/>
+                            </constraints>
+                            <state key="normal" title="Back">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="onBackClicked:" destination="-2" eventType="touchUpInside" id="XjL-vf-MBK"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000.000.000.000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJY-h7-VUd">
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.20392156862745098" green="0.28627450980392155" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="bottom" secondItem="UJY-h7-VUd" secondAttribute="bottom" id="4Za-om-asb"/>
+                        <constraint firstItem="UJY-h7-VUd" firstAttribute="leading" secondItem="UZR-Qh-UCP" secondAttribute="trailing" constant="47" id="6io-Eh-Usv"/>
+                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="leading" secondItem="qCO-iE-6NS" secondAttribute="leadingMargin" id="QcT-v3-6Qi"/>
+                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="top" secondItem="qCO-iE-6NS" secondAttribute="top" constant="42" id="RbS-Wp-WqL"/>
+                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="top" secondItem="UJY-h7-VUd" secondAttribute="top" id="RpT-ib-tnO"/>
+                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="bottom" secondItem="qCO-iE-6NS" secondAttribute="bottomMargin" id="bl8-tM-nnR"/>
+                        <constraint firstItem="UJY-h7-VUd" firstAttribute="centerX" secondItem="qCO-iE-6NS" secondAttribute="centerX" id="mRO-1f-uhU"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.92549019607843142" green="0.94117647058823528" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="qCO-iE-6NS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6bL-sQ-KXU"/>
+                <constraint firstItem="qCO-iE-6NS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ZG8-4o-RFG"/>
+                <constraint firstAttribute="trailing" secondItem="qCO-iE-6NS" secondAttribute="trailing" id="eDB-mQ-xK2"/>
+            </constraints>
+            <point key="canvasLocation" x="34.5" y="54.5"/>
+        </view>
+    </objects>
+</document>
