@@ -24,3 +24,6 @@ Thumbs.db
 
 logs/
 dist/logs/
+
+# Mac
+.DS_Store
