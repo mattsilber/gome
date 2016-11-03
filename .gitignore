@@ -27,3 +27,4 @@ dist/logs/
 
 # Mac
 .DS_Store
+gome-swift-client/gome.xcworkspace/xcuserdata/

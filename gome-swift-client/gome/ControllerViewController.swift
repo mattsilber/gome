@@ -24,9 +24,14 @@ class ControllerViewController: UIViewController , Navigable {
         super.viewDidLoad()
         
         ipHeaderLabel.text = ipAddress
-        
-        SocketManager.instance.connect(ipAddress, port: "1337")
-        SocketManager.instance.write("{}")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        SocketManager.instance.connect(ipAddress!, port: "13337")
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        SocketManager.instance.disconnect()
     }
     
     override func didReceiveMemoryWarning() {
