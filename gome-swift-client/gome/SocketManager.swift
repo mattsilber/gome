@@ -45,6 +45,10 @@ class SocketManager {
         write(JSON.convert(fromDictionary: data)!)
     }
     
+    func write(_ command: Command){
+        write(command.getActionId(), data: command.getData())
+    }
+    
     func write(_ command: String, data: [String: Any]){
         write(command + ":" + JSON.convert(fromDictionary: data)!)
     }

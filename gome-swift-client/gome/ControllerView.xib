@@ -10,6 +10,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ControllerViewController" customModule="gome" customModuleProvider="target">
             <connections>
                 <outlet property="ipHeaderLabel" destination="UJY-h7-VUd" id="gad-iM-dwz"/>
+                <outlet property="moveTrackpad" destination="y0v-Yh-7eD" id="1hJ-l8-MK2"/>
                 <outlet property="view" destination="iN0-l3-epB" id="nf3-cG-3da"/>
             </connections>
         </placeholder>
@@ -22,7 +23,7 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UZR-Qh-UCP">
                             <constraints>
-                                <constraint firstAttribute="width" constant="46" id="7G9-HK-zAZ"/>
+                                <constraint firstAttribute="width" constant="46" id="d7G-vx-CC6"/>
                             </constraints>
                             <state key="normal" title="Back">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
@@ -39,21 +40,28 @@
                     </subviews>
                     <color key="backgroundColor" red="0.20392156862745098" green="0.28627450980392155" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="bottom" secondItem="UJY-h7-VUd" secondAttribute="bottom" id="4Za-om-asb"/>
-                        <constraint firstItem="UJY-h7-VUd" firstAttribute="leading" secondItem="UZR-Qh-UCP" secondAttribute="trailing" constant="47" id="6io-Eh-Usv"/>
-                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="leading" secondItem="qCO-iE-6NS" secondAttribute="leadingMargin" id="QcT-v3-6Qi"/>
-                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="top" secondItem="qCO-iE-6NS" secondAttribute="top" constant="42" id="RbS-Wp-WqL"/>
-                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="top" secondItem="UJY-h7-VUd" secondAttribute="top" id="RpT-ib-tnO"/>
-                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="bottom" secondItem="qCO-iE-6NS" secondAttribute="bottomMargin" id="bl8-tM-nnR"/>
-                        <constraint firstItem="UJY-h7-VUd" firstAttribute="centerX" secondItem="qCO-iE-6NS" secondAttribute="centerX" id="mRO-1f-uhU"/>
+                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="leading" secondItem="qCO-iE-6NS" secondAttribute="leadingMargin" id="0LL-1c-byp"/>
+                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="bottom" secondItem="qCO-iE-6NS" secondAttribute="bottomMargin" id="4ck-z3-QmV"/>
+                        <constraint firstItem="UJY-h7-VUd" firstAttribute="leading" secondItem="UZR-Qh-UCP" secondAttribute="trailing" constant="47" id="LlB-nk-PfJ"/>
+                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="bottom" secondItem="UJY-h7-VUd" secondAttribute="bottom" id="PUm-Uf-8Tt"/>
+                        <constraint firstItem="UJY-h7-VUd" firstAttribute="centerX" secondItem="qCO-iE-6NS" secondAttribute="centerX" id="XZ5-ir-oIN"/>
+                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="top" secondItem="UJY-h7-VUd" secondAttribute="top" id="cAe-U5-4zI"/>
+                        <constraint firstItem="UZR-Qh-UCP" firstAttribute="top" secondItem="qCO-iE-6NS" secondAttribute="top" constant="42" id="dmu-16-Omy"/>
                     </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y0v-Yh-7eD" customClass="TrackpadView" customModule="gome" customModuleProvider="target">
+                    <color key="backgroundColor" red="0.77647058823529413" green="0.77647058823529413" blue="0.77647058823529413" alpha="0.41999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
             </subviews>
             <color key="backgroundColor" red="0.92549019607843142" green="0.94117647058823528" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="qCO-iE-6NS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6bL-sQ-KXU"/>
-                <constraint firstItem="qCO-iE-6NS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ZG8-4o-RFG"/>
-                <constraint firstAttribute="trailing" secondItem="qCO-iE-6NS" secondAttribute="trailing" id="eDB-mQ-xK2"/>
+                <constraint firstItem="qCO-iE-6NS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="4Qb-t4-aUs"/>
+                <constraint firstItem="qCO-iE-6NS" firstAttribute="leading" secondItem="y0v-Yh-7eD" secondAttribute="leading" id="Cqu-0J-UaH"/>
+                <constraint firstItem="qCO-iE-6NS" firstAttribute="trailing" secondItem="y0v-Yh-7eD" secondAttribute="trailing" id="Lys-I9-dHo"/>
+                <constraint firstItem="qCO-iE-6NS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="XFz-SR-cFH"/>
+                <constraint firstItem="y0v-Yh-7eD" firstAttribute="top" secondItem="qCO-iE-6NS" secondAttribute="bottom" id="XUE-7O-7Ab"/>
+                <constraint firstAttribute="trailing" secondItem="qCO-iE-6NS" secondAttribute="trailing" id="dFv-nj-zvy"/>
+                <constraint firstAttribute="bottom" secondItem="y0v-Yh-7eD" secondAttribute="bottom" id="u38-Bf-DR1"/>
             </constraints>
             <point key="canvasLocation" x="34.5" y="54.5"/>
         </view>

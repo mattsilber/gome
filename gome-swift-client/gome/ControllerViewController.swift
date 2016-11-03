@@ -6,6 +6,8 @@ class ControllerViewController: UIViewController , Navigable {
     
     @IBOutlet weak var ipHeaderLabel: UILabel!
     
+    @IBOutlet weak var moveTrackpad: TrackpadView!
+    
     private var ipAddress: String!
     
     func onControllerOpened(_ from: Nav.Route, params: [String: Any]?) {
@@ -24,6 +26,8 @@ class ControllerViewController: UIViewController , Navigable {
         super.viewDidLoad()
         
         ipHeaderLabel.text = ipAddress
+        
+        moveTrackpad.movementCallback = { SocketManager.instance.write(MouseMoveCommand("move", dx: $0, dy: $1)) }
     }
     
     override func viewDidAppear(_ animated: Bool) {
