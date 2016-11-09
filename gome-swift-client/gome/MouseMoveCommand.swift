@@ -3,13 +3,13 @@ import UIKit
 class MouseMoveCommand: Command {
     
     private var type: String!
-    private var dx: CGFloat!
-    private var dy: CGFloat!
+    private var dx: Int!
+    private var dy: Int!
     
     init(_ type: String, dx: CGFloat, dy: CGFloat){
         self.type = type
-        self.dx = dx
-        self.dy = dy
+        self.dx = Int(dx)
+        self.dy = Int(dy)
     }
     
     func getActionId() -> String {
