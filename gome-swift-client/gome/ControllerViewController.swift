@@ -29,6 +29,8 @@ class ControllerViewController: UIViewController , Navigable {
         ipHeaderLabel.text = ipAddress
         
         moveTrackpad.movementCallback = { SocketManager.instance.write(MouseMoveCommand("move", dx: $0, dy: $1)) }
+        moveTrackpad.clickCallback = { SocketManager.instance.write(MouseClickCommand("left_single_click")) }
+        
         scrollTrackpad.movementCallback = { SocketManager.instance.write(MouseMoveCommand("scroll", dx: $0, dy: $1)) }
     }
     
