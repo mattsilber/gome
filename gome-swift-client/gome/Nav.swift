@@ -9,6 +9,7 @@ class Nav {
         case HOME = "/"
         case ALERT = "/alert"
         case CONTROLLER = "/controller"
+        case KEYBOARD = "/controller/keyboard"
     }
     
     static let RESULT_CANCELED = 0;
@@ -103,6 +104,8 @@ class Nav {
         switch route {
         case .CONTROLLER:
             return ControllerViewController(nibName: "ControllerView", bundle: nil)
+        case .KEYBOARD:
+            return KeyboardViewController(nibName: "KeyboardView", bundle: nil)
 //        case .EDUCATION:
 //            return buildStoryboard("Education", controllerName: "EducationViewController")
         default:

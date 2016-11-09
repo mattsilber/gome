@@ -11,6 +11,8 @@
 		61C22A97E4DC4788D19F57B6 /* Pods_gomeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D53FF1E44F32EBEA48689FC /* Pods_gomeTests.framework */; };
 		C541ADC51DD3D90200EB66D6 /* KeyboardCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C541ADC41DD3D90200EB66D6 /* KeyboardCommand.swift */; };
 		C541ADC71DD3DD3C00EB66D6 /* MouseClickCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C541ADC61DD3DD3C00EB66D6 /* MouseClickCommand.swift */; };
+		C541ADCA1DD3E28900EB66D6 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C541ADC91DD3E28900EB66D6 /* KeyboardViewController.swift */; };
+		C541ADCC1DD3E29300EB66D6 /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C541ADCB1DD3E29300EB66D6 /* KeyboardView.xib */; };
 		C54419871DCABF9100E01DEC /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54419861DCABF9100E01DEC /* JSON.swift */; };
 		C544198A1DCAC8F200E01DEC /* TrackpadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54419891DCAC8F200E01DEC /* TrackpadView.swift */; };
 		C544198D1DCACD2F00E01DEC /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C544198C1DCACD2F00E01DEC /* Command.swift */; };
@@ -59,6 +61,8 @@
 		ACE14C763E8A20A29D4C1A0D /* Pods-gomeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gomeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-gomeTests/Pods-gomeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C541ADC41DD3D90200EB66D6 /* KeyboardCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardCommand.swift; sourceTree = "<group>"; };
 		C541ADC61DD3DD3C00EB66D6 /* MouseClickCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MouseClickCommand.swift; sourceTree = "<group>"; };
+		C541ADC91DD3E28900EB66D6 /* KeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
+		C541ADCB1DD3E29300EB66D6 /* KeyboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KeyboardView.xib; sourceTree = "<group>"; };
 		C54419861DCABF9100E01DEC /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		C54419891DCAC8F200E01DEC /* TrackpadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackpadView.swift; sourceTree = "<group>"; };
 		C544198C1DCACD2F00E01DEC /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
@@ -126,6 +130,15 @@
 				3A185923166DA0DD4A7ACF4E /* Pods-gomeUITests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C541ADC81DD3E27300EB66D6 /* keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				C541ADC91DD3E28900EB66D6 /* KeyboardViewController.swift */,
+				C541ADCB1DD3E29300EB66D6 /* KeyboardView.xib */,
+			);
+			name = keyboard;
 			sourceTree = "<group>";
 		};
 		C54419881DCAC8DA00E01DEC /* views */ = {
@@ -235,6 +248,7 @@
 		C554B0CF1DC97D1500358C77 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				C541ADC81DD3E27300EB66D6 /* keyboard */,
 				C544198B1DCACD2700E01DEC /* command */,
 				C554B0D01DC97E4900358C77 /* ControllerViewController.swift */,
 				C554B0D21DC980B100358C77 /* ControllerView.xib */,
@@ -374,6 +388,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C541ADCC1DD3E29300EB66D6 /* KeyboardView.xib in Resources */,
 				C554B0A11DC977B500358C77 /* LaunchScreen.storyboard in Resources */,
 				C554B09E1DC977B500358C77 /* Assets.xcassets in Resources */,
 				C554B0D31DC980B100358C77 /* ControllerView.xib in Resources */,
@@ -526,6 +541,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C554B0991DC977B500358C77 /* ConnectViewController.swift in Sources */,
+				C541ADCA1DD3E28900EB66D6 /* KeyboardViewController.swift in Sources */,
 				C554B0CC1DC97A6200358C77 /* Resolvable.swift in Sources */,
 				C544198A1DCAC8F200E01DEC /* TrackpadView.swift in Sources */,
 				C554B0D61DC98FF600358C77 /* SocketManager.swift in Sources */,

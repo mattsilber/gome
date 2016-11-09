@@ -1,6 +1,6 @@
 import UIKit
 
-class ControllerViewController: UIViewController , Navigable {
+class ControllerViewController: UIViewController, Navigable {
     
     public static let PARAM__IP_ADDRESS = "ip_address"
     
@@ -63,5 +63,8 @@ class ControllerViewController: UIViewController , Navigable {
         SocketManager.instance.write(MouseClickCommand("right_single_click"))
     }
     
+    @IBAction func onKeyboardClicked(_ sender: Any){
+        Nav.instance.open(.KEYBOARD, params: nil, onLoad: nil)
+    }
     
 }
