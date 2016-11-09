@@ -11,6 +11,7 @@
             <connections>
                 <outlet property="ipHeaderLabel" destination="UJY-h7-VUd" id="gad-iM-dwz"/>
                 <outlet property="moveTrackpad" destination="y0v-Yh-7eD" id="1hJ-l8-MK2"/>
+                <outlet property="scrollTrackpad" destination="r0t-hT-nsb" id="S2h-ur-Ti2"/>
                 <outlet property="view" destination="iN0-l3-epB" id="nf3-cG-3da"/>
             </connections>
         </placeholder>
@@ -50,6 +51,13 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y0v-Yh-7eD" customClass="TrackpadView" customModule="gome" customModuleProvider="target">
+                    <subviews>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r0t-hT-nsb" customClass="TrackpadView" customModule="gome" customModuleProvider="target">
+                            <frame key="frameInset" minY="103" width="49" height="381"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.20392156859999999" green="0.28627450980000002" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </view>
+                    </subviews>
                     <color key="backgroundColor" red="0.77647058823529413" green="0.77647058823529413" blue="0.77647058823529413" alpha="0.41999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
             </subviews>

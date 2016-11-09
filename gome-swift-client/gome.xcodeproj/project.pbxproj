@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3D9F9BFC025A2B91F544A695 /* Pods_gome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD8F7DB1092204BC9D54A9F /* Pods_gome.framework */; };
 		61C22A97E4DC4788D19F57B6 /* Pods_gomeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D53FF1E44F32EBEA48689FC /* Pods_gomeTests.framework */; };
+		C541ADC51DD3D90200EB66D6 /* KeyboardCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C541ADC41DD3D90200EB66D6 /* KeyboardCommand.swift */; };
 		C54419871DCABF9100E01DEC /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54419861DCABF9100E01DEC /* JSON.swift */; };
 		C544198A1DCAC8F200E01DEC /* TrackpadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54419891DCAC8F200E01DEC /* TrackpadView.swift */; };
 		C544198D1DCACD2F00E01DEC /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C544198C1DCACD2F00E01DEC /* Command.swift */; };
@@ -55,6 +56,7 @@
 		8AD8F7DB1092204BC9D54A9F /* Pods_gome.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gome.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F183C62A64B63DC5F0E764A /* Pods_gomeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gomeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACE14C763E8A20A29D4C1A0D /* Pods-gomeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gomeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-gomeTests/Pods-gomeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C541ADC41DD3D90200EB66D6 /* KeyboardCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardCommand.swift; sourceTree = "<group>"; };
 		C54419861DCABF9100E01DEC /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		C54419891DCAC8F200E01DEC /* TrackpadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackpadView.swift; sourceTree = "<group>"; };
 		C544198C1DCACD2F00E01DEC /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			children = (
 				C544198C1DCACD2F00E01DEC /* Command.swift */,
 				C544198E1DCACD7D00E01DEC /* MouseMoveCommand.swift */,
+				C541ADC41DD3D90200EB66D6 /* KeyboardCommand.swift */,
 			);
 			name = command;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				C554B0C71DC9794300358C77 /* Navigable.swift in Sources */,
 				C544198F1DCACD7D00E01DEC /* MouseMoveCommand.swift in Sources */,
 				C54419871DCABF9100E01DEC /* JSON.swift in Sources */,
+				C541ADC51DD3D90200EB66D6 /* KeyboardCommand.swift in Sources */,
 				C544198D1DCACD2F00E01DEC /* Command.swift in Sources */,
 				C554B0CE1DC97A7D00358C77 /* ActionResolver.swift in Sources */,
 			);
