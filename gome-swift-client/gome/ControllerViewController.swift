@@ -49,5 +49,17 @@ class ControllerViewController: UIViewController , Navigable {
         Nav.instance.back(Nav.RESULT_CANCELED, with: nil)
     }
     
+    @IBAction func onKeyActionLeftClicked(_ sender: Any){
+        SocketManager.instance.write(MouseClickCommand("left_single_click"))
+    }
+    
+    @IBAction func onKeyActionWheelClicked(_ sender: Any){
+        SocketManager.instance.write(MouseClickCommand("wheel_click"))
+    }
+    
+    @IBAction func onKeyActionRightClicked(_ sender: Any){
+        SocketManager.instance.write(MouseClickCommand("right_single_click"))
+    }
+    
     
 }
