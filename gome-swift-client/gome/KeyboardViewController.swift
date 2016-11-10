@@ -9,7 +9,7 @@ class KeyboardViewController: UIViewController, Navigable {
     private var wrappedValues = [String]()
 
     func onControllerOpened(_ from: Nav.Route, params: [String: Any]?) {
-        
+        self.modalPresentationStyle = .overCurrentContext
     }
     
     func onControllerResult(_ from: Nav.Route, result: Int, with: [String: Any]?) {

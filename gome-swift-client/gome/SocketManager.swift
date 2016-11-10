@@ -59,7 +59,7 @@ class SocketManager {
             
             let bytesWritten = formattedData.withUnsafeBytes { outputStream.write($0, maxLength: formattedData.count) }
             
-            print("Wrote \(data)")
+            //print("Wrote \(data)")
         }
     }
     
