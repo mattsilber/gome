@@ -25,19 +25,44 @@ class KeyboardViewController: UIViewController, Navigable {
     }
     
     @IBAction func onKeyEnterClicked(_ sender: Any){
-        sendKey("\n")
+        sendValue(text: "\n")
     }
     
     @IBAction func onKeyDeleteClicked(_ sender: Any){
-        sendKey("\\b")
+        sendValue(text: "\\b")
     }
     
     @IBAction func onKeyTabClicked(_ sender: Any){
-        sendKey("\t")
+        sendValue(text: "\t")
     }
     
-    private func sendKey(_ key: String){
-        SocketManager.instance.write(KeyboardCommand(key, wrappedValues: wrappedValues))
+    @IBAction func onKeyEscapeClicked(_ sender: Any){
+        sendValue(number: KeycodeCommand.VK_ESCAPE)
+    }
+    
+    @IBAction func onKeyHomeClicked(_ sender: Any){
+        sendValue(number: KeycodeCommand.VK_HOME)
+    }
+    
+    @IBAction func onKeyEndClicked(_ sender: Any){
+        sendValue(number: KeycodeCommand.VK_END)
+    }
+    
+    @IBAction func onKeyInsertClicked(_ sender: Any){
+        sendValue(number: KeycodeCommand.VK_INSERT)
+    }
+    
+    private func sendValue(text: String){
+        SocketManager.instance.write(KeyboardCommand(text, wrappedValues: wrappedValues))
+        unwrapActions()
+    }
+    
+    private func sendValue(number: Int){
+        SocketManager.instance.write(KeycodeCommand(number, wrappedValues: wrappedValues))
+        unwrapActions()
+    }
+    
+    private func unwrapActions(){
         wrappedValues = [String]()
         
         keyAlt.backgroundColor = nil
