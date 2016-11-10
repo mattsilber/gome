@@ -9,6 +9,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KeyboardViewController" customModule="gome" customModuleProvider="target">
             <connections>
+                <outlet property="keyAlt" destination="AOB-PJ-BHJ" id="rCz-Pm-VDB"/>
+                <outlet property="keyControl" destination="pMb-zE-pLL" id="2U5-I8-Ry7"/>
+                <outlet property="keyShift" destination="4KI-Rc-OhL" id="XfE-62-Gsu"/>
                 <outlet property="view" destination="iN0-l3-epB" id="SQK-as-aI0"/>
             </connections>
         </placeholder>
