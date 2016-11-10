@@ -32,6 +32,7 @@
 		C554B0D61DC98FF600358C77 /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C554B0D51DC98FF600358C77 /* SocketManager.swift */; };
 		C58A4A251DD40EA1006025C5 /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58A4A241DD40EA1006025C5 /* KeyboardView.xib */; };
 		C58A4A271DD413CD006025C5 /* KeycodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58A4A261DD413CD006025C5 /* KeycodeCommand.swift */; };
+		C58A4A291DD4184D006025C5 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58A4A281DD4184D006025C5 /* Debouncer.swift */; };
 		E3D37E15E08C462D8B84D3E0 /* Pods_gomeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F183C62A64B63DC5F0E764A /* Pods_gomeUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +90,7 @@
 		C554B0D51DC98FF600358C77 /* SocketManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketManager.swift; sourceTree = "<group>"; };
 		C58A4A241DD40EA1006025C5 /* KeyboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KeyboardView.xib; sourceTree = "<group>"; };
 		C58A4A261DD413CD006025C5 /* KeycodeCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeycodeCommand.swift; sourceTree = "<group>"; };
+		C58A4A281DD4184D006025C5 /* Debouncer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		D8075B398779755FF5AFF879 /* Pods-gomeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gomeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-gomeUITests/Pods-gomeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E52A844CC0E6E75A6964A823 /* Pods-gomeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gomeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-gomeTests/Pods-gomeTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -226,6 +228,7 @@
 				C554B0CA1DC97A3700358C77 /* resolver */,
 				C554B0C51DC9790C00358C77 /* navigation */,
 				C54419861DCABF9100E01DEC /* JSON.swift */,
+				C58A4A281DD4184D006025C5 /* Debouncer.swift */,
 			);
 			name = base;
 			sourceTree = "<group>";
@@ -548,6 +551,7 @@
 				C58A4A271DD413CD006025C5 /* KeycodeCommand.swift in Sources */,
 				C554B0CC1DC97A6200358C77 /* Resolvable.swift in Sources */,
 				C544198A1DCAC8F200E01DEC /* TrackpadView.swift in Sources */,
+				C58A4A291DD4184D006025C5 /* Debouncer.swift in Sources */,
 				C554B0D61DC98FF600358C77 /* SocketManager.swift in Sources */,
 				C554B0C91DC979D900358C77 /* Nav.swift in Sources */,
 				C554B0971DC977B500358C77 /* AppDelegate.swift in Sources */,
