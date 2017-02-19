@@ -53,7 +53,8 @@ public class SocketClient implements Runnable {
 
     private boolean canceled = false;
 
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private Handler socketThreadHandler;
+    private Handler meainThreadHandler = new Handler(Looper.getMainLooper());
 
     public static SocketClient open(String ip, int port, ConnectionCallbacks connectionCallbacks){
         return new SocketClient(ip, port, connectionCallbacks);
@@ -65,7 +66,7 @@ public class SocketClient implements Runnable {
         this.connectionCallbacks = connectionCallbacks;
 
         new Thread(this)
-                .start();
+            .start();
     }
 
     @Override
@@ -99,22 +100,25 @@ public class SocketClient implements Runnable {
 
             Log.i(TAG, "Received host name: " + hostName);
 
-            handler.post(() ->
+            meainThreadHandler.post(() ->
                     connectionCallbacks.onIdentified(ip, hostName));
 
-            while(!canceled)
-                Thread.sleep(1000);
+            Looper.prepare();
+
+            socketThreadHandler = new Handler();
+
+            Looper.loop();
         }
         catch (Throwable e) {
             e.printStackTrace();
 
-            handler.post(() ->
+            meainThreadHandler.post(() ->
                     connectionCallbacks.onConnectionException(
                             new RuntimeException("Couldn't connect to host!!!")));
         }
         finally { onDestroyed(); }
 
-        handler.post(() ->
+        meainThreadHandler.post(() ->
                 connectionCallbacks.onConnectionClosed());
     }
 
@@ -133,7 +137,12 @@ public class SocketClient implements Runnable {
 
 //            Log.i(TAG, "Writing command: " + commandData);
 
-            write(commandData);
+            socketThreadHandler.post(() -> {
+                try{
+                    write(commandData);
+                }
+                catch(Exception e){ e.printStackTrace(); }
+            });
         }
         catch(Exception e){ e.printStackTrace(); }
     }
