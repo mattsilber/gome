@@ -1,23 +1,13 @@
 buildscript {
-	repositories {
-    	jcenter()
-	}
+    repositories {
+        jcenter()
+    }
     dependencies {
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.1"
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
-
-allprojects {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-    
-    repositories {
-    	jcenter()
-    }
-}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -28,23 +18,3 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-def libraryGroupId = 'com.guardanis'
-def libraryArtifactId = 'gtools'
-def libraryVersion = '1.0.6'
-
-jar {
-    archiveName = JAR_NAME
-    
-    from {
-        configurations.runtime.collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-    }
-    
-    manifest {
-        attributes 'Main-Class': MAIN_CLASS,
-                   'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')
-    }
-
-    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
-}

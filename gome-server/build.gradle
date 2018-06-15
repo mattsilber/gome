@@ -1,11 +1,23 @@
+buildscript {
+    ext.kotlin_version = '1.2.41'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies { classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" }
+}
+
 apply plugin: 'application'
-//apply plugin: 'java-library-distribution'
+apply plugin: 'kotlin'
 
 mainClassName = MAIN_CLASS
 
 dependencies {
     compile fileTree(dir: 'lib', include: ['*.jar'])
-    
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile(project(':gome-lib'))
 
     testCompile 'junit:junit:4.12'
@@ -15,10 +27,7 @@ jar {
     archiveName = JAR_NAME
     
     from {
-        configurations.runtime.collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-    }
+        configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }}
     
     manifest {
         attributes 'Main-Class': MAIN_CLASS,
