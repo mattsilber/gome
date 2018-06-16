@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.guardanis.fontutils.EditText;
 import com.guardanis.gome.R;
 import com.guardanis.gome.tools.adapter.MultiSelectAdapter;
@@ -39,13 +38,13 @@ public class DialogBuilder {
         setPrimaryButton(R.string.alert_action_ok, (dialog1, which) -> dismissDialog());
     }
 
-    public DialogBuilder setTitle(int messageResId){
+    public DialogBuilder setTitle(int messageResId) {
         return setTitle(messageResId < 1
                 ? ""
                 : view.getResources().getString(messageResId));
     }
 
-    public DialogBuilder setTitle(String message){
+    public DialogBuilder setTitle(String message) {
         ((TextView) view.findViewById(R.id.base__dialog_title))
                 .setText(message);
 
@@ -72,12 +71,12 @@ public class DialogBuilder {
         return this;
     }
 
-    public DialogBuilder setTitleImage(String svgAsset, final DialogInterface.OnClickListener eventListener){
+    public DialogBuilder setTitleImage(String svgAsset, final DialogInterface.OnClickListener eventListener) {
         SVGImageView image = (SVGImageView) view.findViewById(R.id.base__dialog_title_image);
         image.setVisibility(View.VISIBLE);
         image.setImageAsset(svgAsset);
         image.setOnClickListener(v -> {
-            if(eventListener != null)
+            if (eventListener != null)
                 eventListener.onClick(dialog, 1);
 
             dismissDialog();
@@ -86,11 +85,11 @@ public class DialogBuilder {
         return this;
     }
 
-    public DialogBuilder setTitleImage(ImageRequest request, final DialogInterface.OnClickListener eventListener){
+    public DialogBuilder setTitleImage(ImageRequest request, final DialogInterface.OnClickListener eventListener) {
         SVGImageView image = (SVGImageView) view.findViewById(R.id.base__dialog_title_image);
         image.setVisibility(View.VISIBLE);
         image.setOnClickListener(v -> {
-            if(eventListener != null)
+            if (eventListener != null)
                 eventListener.onClick(dialog, 1);
 
             dismissDialog();
@@ -102,11 +101,11 @@ public class DialogBuilder {
         return this;
     }
 
-    public DialogBuilder setSecondaryTitleImage(ImageRequest request, final DialogInterface.OnClickListener eventListener){
+    public DialogBuilder setSecondaryTitleImage(ImageRequest request, final DialogInterface.OnClickListener eventListener) {
         SVGImageView image = (SVGImageView) view.findViewById(R.id.base__dialog_title_image2);
         image.setVisibility(View.VISIBLE);
         image.setOnClickListener(v -> {
-            if(eventListener != null)
+            if (eventListener != null)
                 eventListener.onClick(dialog, 1);
 
             dismissDialog();
@@ -126,7 +125,7 @@ public class DialogBuilder {
         TextView buttonPrimary = (TextView) view.findViewById(R.id.base__dialog_action_positive);
         buttonPrimary.setText(buttonText);
         buttonPrimary.setOnClickListener(v -> {
-            if(eventListener != null)
+            if (eventListener != null)
                 eventListener.onClick(dialog, 1);
 
             dismissDialog();
@@ -135,7 +134,7 @@ public class DialogBuilder {
         return this;
     }
 
-    public DialogBuilder hidePrimaryButton(){
+    public DialogBuilder hidePrimaryButton() {
         view.findViewById(R.id.base__dialog_action_positive)
                 .setVisibility(View.GONE);
 
@@ -151,7 +150,7 @@ public class DialogBuilder {
         buttonSecondary.setText(buttonText);
         buttonSecondary.setVisibility(View.VISIBLE);
         buttonSecondary.setOnClickListener(v -> {
-            if(eventListener != null)
+            if (eventListener != null)
                 eventListener.onClick(dialog, 0);
 
             dismissDialog();
@@ -160,7 +159,7 @@ public class DialogBuilder {
         return this;
     }
 
-    public <T> DialogBuilder setSingleSelectItems(SingleSelectAdapter<T> adapter, @NonNull Callback<T> callback){
+    public <T> DialogBuilder setSingleSelectItems(SingleSelectAdapter<T> adapter, @NonNull Callback<T> callback) {
         ListView list = (ListView) LayoutInflater.from(view.getContext())
                 .inflate(R.layout.base__dialog_list, view, false);
 
@@ -178,7 +177,7 @@ public class DialogBuilder {
         return addContentView(list);
     }
 
-    public <T> DialogBuilder setMultiSelectItems(MultiSelectAdapter<T> adapter, @NonNull Callback<List<T>> callback){
+    public <T> DialogBuilder setMultiSelectItems(MultiSelectAdapter<T> adapter, @NonNull Callback<List<T>> callback) {
         ListView list = (ListView) LayoutInflater.from(view.getContext())
                 .inflate(R.layout.base__dialog_list, view, false);
 
@@ -191,7 +190,7 @@ public class DialogBuilder {
         return addContentView(list);
     }
 
-    public DialogBuilder setInputModeString(String initialText, Callback<String> callback){
+    public DialogBuilder setInputModeString(String initialText, Callback<String> callback) {
         final EditText input = (EditText) LayoutInflater.from(view.getContext())
                 .inflate(R.layout.base__dialog_input, view, false);
 
@@ -214,26 +213,26 @@ public class DialogBuilder {
         return addContentView(input);
     }
 
-    public DialogBuilder hideSecondaryButton(){
+    public DialogBuilder hideSecondaryButton() {
         view.findViewById(R.id.base__dialog_action_negative)
                 .setVisibility(View.GONE);
 
         return this;
     }
 
-    public DialogBuilder addContentView(int resId){
+    public DialogBuilder addContentView(int resId) {
         return addContentView(LayoutInflater.from(view.getContext())
                 .inflate(resId, view, false));
     }
 
-    public DialogBuilder addContentView(View content){
+    public DialogBuilder addContentView(View content) {
         ((LinearLayout) view.findViewById(R.id.base__dialog_content_parent))
                 .addView(content);
 
         return this;
     }
 
-    public DialogBuilder addScrollingContentView(View content){
+    public DialogBuilder addScrollingContentView(View content) {
         ((LinearLayout) view.findViewById(R.id.base__dialog_scrolling_content_parent))
                 .addView(content);
 
@@ -245,7 +244,7 @@ public class DialogBuilder {
         return this;
     }
 
-    public View findViewById(int id){
+    public View findViewById(int id) {
         return view.findViewById(id);
     }
 
@@ -254,7 +253,7 @@ public class DialogBuilder {
                 .setView(view)
                 .show();
 
-        if(cancelListener == null)
+        if (cancelListener == null)
             dialog.setCancelable(false);
         else dialog.setOnCancelListener(cancelListener);
 
@@ -267,14 +266,14 @@ public class DialogBuilder {
         safelyDismiss(dialog);
     }
 
-    public static void safelyDismiss(Dialog dialog){
-        try{
+    public static void safelyDismiss(Dialog dialog) {
+        try {
             // Attempt to prevent stupid fucking uncatchable system error "View not Attached to Window" when dialog dismissed
             Context context = ((ContextWrapper) dialog.getContext()).getBaseContext();
-            if(context instanceof Activity) {
-                if(!((Activity) context).isFinishing()){
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                        if(!((Activity) context).isDestroyed())
+            if (context instanceof Activity) {
+                if (!((Activity) context).isFinishing()) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        if (!((Activity) context).isDestroyed())
                             dialog.dismiss();
                     }
                     else dialog.dismiss();
@@ -282,17 +281,17 @@ public class DialogBuilder {
             }
             else dialog.dismiss();
         }
-        catch(IllegalArgumentException e){ }
-        catch(Throwable e){ }
+        catch (IllegalArgumentException e) { }
+        catch (Throwable e) { }
     }
 
-    public static Dialog displayConfirmation(Context context, String message, @NonNull Runnable onConfirm, @Nullable Runnable onCancel){
+    public static Dialog displayConfirmation(Context context, String message, @NonNull Runnable onConfirm, @Nullable Runnable onCancel) {
         return new DialogBuilder(context)
                 .setTitle(R.string.alert_title_confirm)
                 .setMessage(message)
                 .setPrimaryButton(R.string.alert_action_confirm, (d, v) -> onConfirm.run())
                 .setSecondaryButton(R.string.alert_action_cancel, (d, v) -> {
-                    if(onCancel != null)
+                    if (onCancel != null)
                         onCancel.run();
                 })
                 .show();
@@ -301,7 +300,7 @@ public class DialogBuilder {
     /**
      * Show a loading dialog that will not die until explicitly canceled
      */
-    public static Dialog displayLoadingDialog(Context context, @Nullable Runnable cancel){
+    public static Dialog displayLoadingDialog(Context context, @Nullable Runnable cancel) {
         return displayLoadingDialog(context,
                 context.getString(R.string.alert_title_loading),
                 context.getString(R.string.alert_message_please_wait),
@@ -311,16 +310,15 @@ public class DialogBuilder {
     /**
      * Show a loading dialog that will not die until explicitly canceled
      */
-    public static Dialog displayLoadingDialog(Context context, String title, String message, @Nullable Runnable cancel){
+    public static Dialog displayLoadingDialog(Context context, String title, String message, @Nullable Runnable cancel) {
         DialogBuilder builder = new DialogBuilder(context)
                 .setTitle(title)
                 .setMessage(message)
                 .hidePrimaryButton();
 
-        if(cancel != null)
+        if (cancel != null)
             builder.setCancelListener(c -> cancel.run());
 
         return builder.show();
     }
-
 }

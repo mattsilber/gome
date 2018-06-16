@@ -16,7 +16,7 @@ public class KeycodeCommand implements Command {
     private int value;
     private List<String> wrappedValues;
 
-    public KeycodeCommand(int value, List<String> wrappedValues){
+    public KeycodeCommand(int value, List<String> wrappedValues) {
         this.value = value;
         this.wrappedValues = wrappedValues;
     }
@@ -32,10 +32,10 @@ public class KeycodeCommand implements Command {
                 .put("type", "action")
                 .put("value", value);
 
-        if(wrappedValues != null){
+        if (wrappedValues != null) {
             JSONArray wrapped = new JSONArray();
 
-            for(String s : wrappedValues)
+            for (String s : wrappedValues)
                 wrapped.put(s);
 
             json.put("wrapped", wrapped);
@@ -43,5 +43,4 @@ public class KeycodeCommand implements Command {
 
         return json;
     }
-
 }

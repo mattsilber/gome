@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import com.guardanis.gome.socket.Host;
 import com.guardanis.gome.tools.PendingEvents;
 import com.guardanis.gome.tools.views.ToolbarLayoutBuilder;
@@ -24,41 +23,41 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstance);
     }
 
-    protected void setupToolbar(){
+    protected void setupToolbar() {
         setupToolbar(R.id.base__toolbar, R.layout.base__toolbar);
     }
 
-    protected void setupToolbar(int toolbarId){
+    protected void setupToolbar(int toolbarId) {
         setupToolbar(toolbarId, R.layout.base__toolbar);
     }
 
-    protected void setupToolbar(int toolbarId, int inflatedResId){
+    protected void setupToolbar(int toolbarId, int inflatedResId) {
         setup(new ToolbarLayoutBuilder((Toolbar) findViewById(toolbarId), inflatedResId));
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if(requestCode == RC__PERMISSIONS)
+        if (requestCode == RC__PERMISSIONS)
             PendingEvents.getInstance()
                     .trigger(PendingEvents.PE__PERMISSION_RETURN);
     }
 
     protected abstract void setup(ToolbarLayoutBuilder builder);
 
-    protected Host getHost(){
+    protected Host getHost() {
         return new Host(this);
     }
 
-    protected void setHost(Host host){
+    protected void setHost(Host host) {
         host.save(this);
     }
 
-    protected void exit(int resultCode, Intent data){
-        if(data != null)
+    protected void exit(int resultCode, Intent data) {
+        if (data != null)
             setResult(resultCode, data);
-        else setResult(resultCode);
+        else
+            setResult(resultCode);
 
         finish();
     }
-
 }

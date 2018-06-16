@@ -7,9 +7,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.guardanis.gome.socket.DiscoveryAgent;
 import com.guardanis.gome.socket.Host;
 import com.guardanis.gome.tools.Callback;
@@ -26,7 +24,7 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
     private IPSelectionAdapter ipAdapter;
 
     @Override
-    public void onCreate(Bundle savedInstance){
+    public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_connect);
         setupToolbar();
@@ -43,9 +41,9 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
         handleSharing();
     }
 
-    private void handleSharing(){
-        if(getIntent().getData() != null){
-            if(getHost().isIpAddressEmpty())
+    private void handleSharing() {
+        if (getIntent().getData() != null) {
+            if (getHost().isIpAddressEmpty())
                 new DialogBuilder(this)
                         .setTitle(R.string.alert_title_oops)
                         .setMessage(R.string.alert_message_connection_required)
@@ -62,25 +60,24 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
 
     @Override
     protected void setup(ToolbarLayoutBuilder builder) {
-        builder.addTitle(R.string.connect__title, v -> { })
-                .addOptionSvg(Svgs.IC__SEARCH, v ->
-                        requestDevicesForSelection());
+        builder.addTitle(R.string.connect__title, null);
+        builder.addOptionSvg(Svgs.IC__SEARCH, v -> requestDevicesForSelection());
     }
 
-    private void setupIpAddressViews(){
+    private void setupIpAddressViews() {
         final TextView ipTextView = (TextView) findViewById(R.id.connect__ip);
         ipTextView.setText(getHost().getIpAddress());
 
         findViewById(R.id.connect__ip_action_set)
                 .setOnClickListener(v ->
                         connect(new Host(ipTextView.getText()
-                                    .toString()
-                                    .trim(),
+                                .toString()
+                                .trim(),
                                 "Unknown")));
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         DiscoveryAgent.getInstance(this)
                 .cancel();
 
@@ -90,11 +87,11 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
         super.onPause();
     }
 
-    protected void requestDevicesForSelection(){
+    protected void requestDevicesForSelection() {
         findViewById(R.id.connect__ip_searching_parent)
                 .setVisibility(View.VISIBLE);
 
-        if(ipAdapter == null){
+        if (ipAdapter == null) {
             ipAdapter = (IPSelectionAdapter) new IPSelectionAdapter(this, new ArrayList<Host>())
                     .setClickCallback(host -> {
                         ((TextView) findViewById(R.id.connect__ip))
@@ -120,7 +117,7 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
         ipAdapter.notifyDataSetChanged();
     }
 
-    private void connect(Host host){
+    private void connect(Host host) {
         Log.i(TAG__BASE, "Connecting to: " + host.getIpAddress());
 
         setHost(host);
@@ -152,5 +149,4 @@ public class ConnectActivity extends BaseActivity implements Callback<Host> {
             return true;
         }
     }
-
 }

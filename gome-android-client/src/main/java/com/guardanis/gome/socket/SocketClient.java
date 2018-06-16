@@ -3,17 +3,12 @@ package com.guardanis.gome.socket;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-
 import com.guardanis.gome.commands.Command;
 import com.guardanis.gome.tools.NetworkDeviceUtils;
-
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import javax.net.ssl.*;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -23,12 +18,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 public class SocketClient implements Runnable {
 
@@ -56,21 +45,21 @@ public class SocketClient implements Runnable {
     private Handler socketThreadHandler;
     private Handler meainThreadHandler = new Handler(Looper.getMainLooper());
 
-    public static SocketClient open(String ip, int port, ConnectionCallbacks connectionCallbacks){
+    public static SocketClient open(String ip, int port, ConnectionCallbacks connectionCallbacks) {
         return new SocketClient(ip, port, connectionCallbacks);
     }
 
-    private SocketClient(String ip, int port, ConnectionCallbacks connectionCallbacks){
+    private SocketClient(String ip, int port, ConnectionCallbacks connectionCallbacks) {
         this.ip = ip;
         this.port = port;
         this.connectionCallbacks = connectionCallbacks;
 
         new Thread(this)
-            .start();
+                .start();
     }
 
     @Override
-    public void run(){
+    public void run() {
         try {
             Log.i(TAG, "Attempting connection...");
 
@@ -100,8 +89,7 @@ public class SocketClient implements Runnable {
 
             Log.i(TAG, "Received host name: " + hostName);
 
-            meainThreadHandler.post(() ->
-                    connectionCallbacks.onIdentified(ip, hostName));
+            meainThreadHandler.post(() -> connectionCallbacks.onIdentified(ip, hostName));
 
             Looper.prepare();
 
@@ -113,8 +101,7 @@ public class SocketClient implements Runnable {
             e.printStackTrace();
 
             meainThreadHandler.post(() ->
-                    connectionCallbacks.onConnectionException(
-                            new RuntimeException("Couldn't connect to host!!!")));
+                    connectionCallbacks.onConnectionException(new RuntimeException("Couldn't connect to host!!!")));
         }
         finally { onDestroyed(); }
 
@@ -131,20 +118,20 @@ public class SocketClient implements Runnable {
         write(obj.toString());
     }
 
-    public void send(Command command){
-        try{
+    public void send(Command command) {
+        try {
             String commandData = command.getActionIdentifier() + ":" + command.toJson().toString();
 
 //            Log.i(TAG, "Writing command: " + commandData);
 
             socketThreadHandler.post(() -> {
-                try{
+                try {
                     write(commandData);
                 }
-                catch(Exception e){ e.printStackTrace(); }
+                catch (Exception e) { e.printStackTrace(); }
             });
         }
-        catch(Exception e){ e.printStackTrace(); }
+        catch (Exception e) { e.printStackTrace(); }
     }
 
     private void write(String data) throws Exception {
@@ -153,22 +140,21 @@ public class SocketClient implements Runnable {
         writer.flush();
     }
 
-    public void onDestroyed(){
+    public void onDestroyed() {
         Log.i(TAG, "Socket Client Destroyed...");
 
         canceled = true;
 
-        try{
+        try {
             writer.close();
         }
-        catch(Exception e){ e.printStackTrace(); }
+        catch (Exception e) { e.printStackTrace(); }
 
-        try{
+        try {
             reader.close();
         }
-        catch(Exception e){ e.printStackTrace(); }
+        catch (Exception e) { e.printStackTrace(); }
     }
-
 
     public class v3SocketFactory extends SSLSocketFactory {
         SSLContext sslContext = SSLContext.getInstance("TLSv1");
@@ -177,8 +163,11 @@ public class SocketClient implements Runnable {
             super();
 
             TrustManager tm = new X509TrustManager() {
-                public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
-                public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
+                public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                }
+
+                public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                }
 
                 @Override
                 public X509Certificate[] getAcceptedIssuers() {
@@ -186,7 +175,7 @@ public class SocketClient implements Runnable {
                 }
             };
 
-            sslContext.init(null, new TrustManager[] { tm }, null);
+            sslContext.init(null, new TrustManager[]{tm}, null);
         }
 
         @Override
@@ -202,21 +191,21 @@ public class SocketClient implements Runnable {
         @Override
         public Socket createSocket(Socket socket, String host, int port, boolean autoClose) throws IOException, UnknownHostException {
             SSLSocket S = (SSLSocket) sslContext.getSocketFactory().createSocket(socket, host, port, autoClose);
-            S.setEnabledProtocols(new String[] {"TLSv1"});
+            S.setEnabledProtocols(new String[]{"TLSv1"});
             return S;
         }
 
         @Override
         public Socket createSocket() throws IOException {
             SSLSocket S = (SSLSocket) sslContext.getSocketFactory().createSocket();
-            S.setEnabledProtocols(new String[] {"TLSv1"});
+            S.setEnabledProtocols(new String[]{"TLSv1"});
             return S;
         }
 
         @Override
         public Socket createSocket(String host, int port) throws IOException, UnknownHostException {
             SSLSocket S = (SSLSocket) sslContext.getSocketFactory().createSocket(host, port);
-            S.setEnabledProtocols(new String[] {"TLSv1"});
+            S.setEnabledProtocols(new String[]{"TLSv1"});
             return S;
         }
 
@@ -235,5 +224,4 @@ public class SocketClient implements Runnable {
             return null;
         }
     }
-
 }

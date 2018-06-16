@@ -6,7 +6,6 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.guardanis.fontutils.TextView;
 import com.guardanis.gome.R;
 
@@ -21,7 +20,7 @@ public abstract class MultiSelectAdapter<T> extends FilterableArrayAdapter<T> {
         super(context, R.layout.base__multi_select_item, data);
     }
 
-    public MultiSelectAdapter setSelectedItems(List<T> selectedItems){
+    public MultiSelectAdapter setSelectedItems(List<T> selectedItems) {
         this.selectedItems = selectedItems;
         notifyDataSetChanged();
 
@@ -29,26 +28,25 @@ public abstract class MultiSelectAdapter<T> extends FilterableArrayAdapter<T> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
-        if(convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext())
                     .inflate(R.layout.base__multi_select_item, parent, false);
 
             holder = new ViewHolder(convertView);
 
             convertView.setTag(holder);
-        }
-        else holder = (ViewHolder) convertView.getTag();
+        } else holder = (ViewHolder) convertView.getTag();
 
         final T item = getItem(position);
 
         holder.value.setText(getValue(item));
 
         String subText = getSubValue(item);
-        if(subText.length() < 1)
+        if (subText.length() < 1)
             holder.sub.setVisibility(View.GONE);
-        else{
+        else {
             holder.sub.setVisibility(View.VISIBLE);
             holder.sub.setText(subText);
         }
@@ -56,7 +54,7 @@ public abstract class MultiSelectAdapter<T> extends FilterableArrayAdapter<T> {
         holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setChecked(selectedItems.contains(item));
         holder.checkBox.setOnCheckedChangeListener((v, checked) -> {
-            if(checked)
+            if (checked)
                 selectedItems.add(item);
             else selectedItems.remove(item);
 
@@ -67,6 +65,7 @@ public abstract class MultiSelectAdapter<T> extends FilterableArrayAdapter<T> {
     }
 
     protected abstract String getValue(T item);
+
     protected abstract String getSubValue(T item);
 
     protected static class ViewHolder {
@@ -74,7 +73,7 @@ public abstract class MultiSelectAdapter<T> extends FilterableArrayAdapter<T> {
         TextView value;
         TextView sub;
 
-        ViewHolder(View convertView){
+        ViewHolder(View convertView) {
             this.checkBox = (AppCompatCheckBox) convertView.findViewById(R.id.base__dialog_selection_list_item_checkbox);
             this.value = (TextView) convertView.findViewById(R.id.base__dialog_selection_list_item_value);
             this.sub = (TextView) convertView.findViewById(R.id.base__dialog_selection_list_item_value_sub);
@@ -82,7 +81,7 @@ public abstract class MultiSelectAdapter<T> extends FilterableArrayAdapter<T> {
 
     }
 
-    public List<T> getSelectedItems(){
+    public List<T> getSelectedItems() {
         return selectedItems;
     }
 

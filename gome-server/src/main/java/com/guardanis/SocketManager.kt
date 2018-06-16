@@ -1,14 +1,8 @@
 package com.guardanis
 
-import java.awt.EventQueue.invokeLater
-import java.net.InetAddress
-import java.net.ServerSocket
-import java.net.Socket
-
-import javax.net.ssl.SSLServerSocket
-import javax.net.ssl.SSLServerSocketFactory
-
 import com.guardanis.commands.Command
+import java.awt.EventQueue.invokeLater
+import java.net.ServerSocket
 
 class SocketManager(private val connectionPort: Int, eventsCallback: ConnectionEvents) : Thread() {
 
@@ -25,7 +19,7 @@ class SocketManager(private val connectionPort: Int, eventsCallback: ConnectionE
     }
 
     init {
-        this.eventsCallback = object: ConnectionEvents {
+        this.eventsCallback = object : ConnectionEvents {
 
             override fun onAwaitingNextConnection() {
                 invokeLater({ eventsCallback.onAwaitingNextConnection() })

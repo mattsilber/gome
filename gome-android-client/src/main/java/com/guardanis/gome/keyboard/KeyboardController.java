@@ -6,7 +6,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-
 import com.guardanis.gome.R;
 import com.guardanis.gome.commands.Command;
 import com.guardanis.gome.commands.KeyboardCommand;
@@ -25,11 +24,11 @@ public class KeyboardController {
 
     private List<String> wrappedActions = new ArrayList<String>();
 
-    public KeyboardController(Callback<Command> commandCallback){
+    public KeyboardController(Callback<Command> commandCallback) {
         this.commandCallback = commandCallback;
     }
 
-    public void show(Activity activity){
+    public void show(Activity activity) {
         View parent = activity.getLayoutInflater()
                 .inflate(R.layout.keyboard, null, false);
 
@@ -42,7 +41,7 @@ public class KeyboardController {
                 sendCommand(text, parent, focusCallback));
 
         cheating.setOnKeyListener((v, keyCode, event) -> {
-            if(event.getAction() == KeyEvent.ACTION_DOWN
+            if (event.getAction() == KeyEvent.ACTION_DOWN
                     && keyCode == KeyEvent.KEYCODE_DEL)
                 sendCommand(KeyboardCommand.KEY__DELETE, parent, focusCallback);
 
@@ -63,7 +62,7 @@ public class KeyboardController {
         ViewHelper.openSoftInputKeyboardOnLayout(cheating);
     }
 
-    private void setupActionViews(View parent, Runnable focusCallback){
+    private void setupActionViews(View parent, Runnable focusCallback) {
         wrappedActions.clear();
 
         setupWrappedAction(parent, R.id.keyboard__action_alt, KeyboardCommand.ACTION__ALT, focusCallback);
@@ -71,8 +70,7 @@ public class KeyboardController {
         setupWrappedAction(parent, R.id.keyboard__action_shift, KeyboardCommand.ACTION__SHIFT, focusCallback);
 
         parent.findViewById(R.id.keyboard__action_tab)
-                .setOnClickListener(v ->
-                        sendCommand(KeyboardCommand.KEY__TAB, parent, focusCallback));
+                .setOnClickListener(v -> sendCommand(KeyboardCommand.KEY__TAB, parent, focusCallback));
 
         setupClickAction(parent, R.id.keyboard__action_insert, KeycodeCommand.VK_INSERT, focusCallback);
         setupClickAction(parent, R.id.keyboard__action_home, KeycodeCommand.VK_HOME, focusCallback);
@@ -81,12 +79,10 @@ public class KeyboardController {
 
         parent.findViewById(R.id.keyboard__action_enter)
                 .setOnClickListener(v ->
-                        sendCommand(KeyboardCommand.KEY__ENTER,
-                                parent,
-                                focusCallback));
+                        sendCommand(KeyboardCommand.KEY__ENTER, parent, focusCallback));
     }
 
-    private void setupWrappedAction(View parent, int id, String keyValue, Runnable focusCallback){
+    private void setupWrappedAction(View parent, int id, String keyValue, Runnable focusCallback) {
         View action = parent.findViewById(id);
 
         int bgColorResource = wrappedActions.contains(keyValue)
@@ -97,9 +93,10 @@ public class KeyboardController {
                 .getColor(bgColorResource));
 
         action.setOnClickListener(v -> {
-            if(wrappedActions.contains(keyValue))
+            if (wrappedActions.contains(keyValue))
                 wrappedActions.remove(keyValue);
-            else wrappedActions.add(keyValue);
+            else
+                wrappedActions.add(keyValue);
 
             setupWrappedAction(parent, id, keyValue, focusCallback);
 
@@ -107,37 +104,32 @@ public class KeyboardController {
         });
     }
 
-    private void setupClickAction(View parent, int id, int keycode, Runnable focusCallback){
+    private void setupClickAction(View parent, int id, int keycode, Runnable focusCallback) {
         parent.findViewById(id)
                 .setOnClickListener(v ->
-                        sendCommand(new KeycodeCommand(keycode, wrappedActions),
-                                parent,
-                                focusCallback));
+                        sendCommand(new KeycodeCommand(keycode, wrappedActions), parent, focusCallback));
     }
 
-    private void sendCommand(String command, View parent, Runnable focusCallback){
-        sendCommand(new KeyboardCommand(command, wrappedActions),
-                parent,
-                focusCallback);
+    private void sendCommand(String command, View parent, Runnable focusCallback) {
+        sendCommand(new KeyboardCommand(command, wrappedActions), parent, focusCallback);
     }
 
-    private void sendCommand(Command command, View parent, Runnable focusCallback){
+    private void sendCommand(Command command, View parent, Runnable focusCallback) {
         commandCallback.onCalled(command);
 
-        if(0 < wrappedActions.size())
+        if (0 < wrappedActions.size())
             setupActionViews(parent, focusCallback);
 
         focusCallback.run();
     }
 
-    public void dismiss(){
-        if(activeKeyboardDialog != null){
-            if(activeKeyboardDialog.getCurrentFocus() != null)
+    public void dismiss() {
+        if (activeKeyboardDialog != null) {
+            if (activeKeyboardDialog.getCurrentFocus() != null)
                 ViewHelper.closeSoftInputKeyboard(activeKeyboardDialog.getCurrentFocus());
 
             activeKeyboardDialog.dismiss();
             activeKeyboardDialog = null;
         }
     }
-
 }

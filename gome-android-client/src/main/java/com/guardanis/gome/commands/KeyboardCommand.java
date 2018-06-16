@@ -19,11 +19,11 @@ public class KeyboardCommand implements Command {
     private String values;
     private List<String> wrappedValues;
 
-    public KeyboardCommand(String values){
+    public KeyboardCommand(String values) {
         this.values = values;
     }
 
-    public KeyboardCommand(String values, List<String> wrappedValues){
+    public KeyboardCommand(String values, List<String> wrappedValues) {
         this.values = values;
         this.wrappedValues = wrappedValues;
     }
@@ -44,10 +44,10 @@ public class KeyboardCommand implements Command {
                 .put("type", "string")
                 .put("value", values);
 
-        if(wrappedValues != null){
+        if (wrappedValues != null) {
             JSONArray wrapped = new JSONArray();
 
-            for(String s : wrappedValues)
+            for (String s : wrappedValues)
                 wrapped.put(s);
 
             json.put("wrapped", wrapped);
@@ -55,5 +55,4 @@ public class KeyboardCommand implements Command {
 
         return json;
     }
-
 }

@@ -5,8 +5,9 @@ import java.util.HashMap;
 public class PendingEvents {
 
     private static PendingEvents instance;
+
     public static PendingEvents getInstance() {
-        if(instance == null)
+        if (instance == null)
             instance = new PendingEvents();
 
         return instance;
@@ -29,7 +30,7 @@ public class PendingEvents {
     public void trigger(String key) {
         Runnable event = pendingEvents.get(key);
 
-        if(event != null){
+        if (event != null) {
             event.run();
             unregister(key);
         }

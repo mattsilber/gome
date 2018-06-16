@@ -7,20 +7,19 @@ import rx.functions.Action1;
 
 public class ObservableHelper {
 
-    public static void safelyUnsubscribe(Subscription subscription){
-        try{
+    public static void safelyUnsubscribe(Subscription subscription) {
+        try {
             subscription.unsubscribe();
         }
-        catch(Throwable e){ e.printStackTrace(); }
+        catch (Throwable e) { e.printStackTrace(); }
     }
 
-    public static Subscription safelySubscribe(Observable observable, Action1 action){
-        try{
+    public static Subscription safelySubscribe(Observable observable, Action1 action) {
+        try {
             return observable.subscribe(action);
         }
-        catch(Throwable e){ e.printStackTrace(); }
+        catch (Throwable e) { e.printStackTrace(); }
 
         return null;
     }
-
 }

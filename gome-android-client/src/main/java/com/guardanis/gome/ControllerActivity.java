@@ -4,8 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.guardanis.gome.commands.Command;
 import com.guardanis.gome.commands.WebsiteCommand;
 import com.guardanis.gome.keyboard.KeyboardController;
@@ -33,7 +31,7 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
     private TextView titleView;
 
     @Override
-    public void onCreate(Bundle savedInstance){
+    public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_main);
         setupToolbar();
@@ -55,8 +53,7 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
         titleView.setText(host.isNameKnown()
                 ? host.getName()
                 : host.getIpAddress());
-        titleView.setOnClickListener(v ->
-                finish());
+        titleView.setOnClickListener(v -> finish());
 
         builder.addTitle(titleView);
 
@@ -77,7 +74,7 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         paused = true;
 
         killSocketClient();
@@ -90,7 +87,7 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         paused = false;
 
@@ -99,19 +96,19 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
 
     @Override
     public void onCalled(Command command) {
-        if(socketClient != null)
+        if (socketClient != null)
             socketClient.send(command);
     }
 
-    protected void connectSocketClient(){
-        if(connected)
+    protected void connectSocketClient() {
+        if (connected)
             return;
 
         connected = true;
 
         host = getHost();
 
-        if(socketClient != null)
+        if (socketClient != null)
             killSocketClient();
 
         activeLoadingDialog = new DialogBuilder(this)
@@ -138,7 +135,7 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
 
         dismissActiveDialog();
 
-        if(getIntent().getData() != null){
+        if (getIntent().getData() != null) {
             onCalled(new WebsiteCommand(getIntent()
                     .getData()
                     .toString()));
@@ -149,7 +146,7 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
 
     @Override
     public void onConnectionException(Throwable throwable) {
-        if(paused)
+        if (paused)
             return;
 
         paused = true;
@@ -168,7 +165,7 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
     public void onConnectionClosed() {
         connected = false;
 
-        if(paused)
+        if (paused)
             return;
 
         dismissActiveDialog();
@@ -181,15 +178,15 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
                 .show();
     }
 
-    protected void killSocketClient(){
-        if(socketClient != null)
+    protected void killSocketClient() {
+        if (socketClient != null)
             socketClient.onDestroyed();
 
         socketClient = null;
     }
 
-    private void validateConnected(Runnable onConnected){
-        if(connected)
+    private void validateConnected(Runnable onConnected) {
+        if (connected)
             onConnected.run();
         else
             activeLoadingDialog = new DialogBuilder(this)
@@ -198,11 +195,10 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
                     .show();
     }
 
-    private void dismissActiveDialog(){
-        if(activeLoadingDialog != null){
+    private void dismissActiveDialog() {
+        if (activeLoadingDialog != null) {
             activeLoadingDialog.dismiss();
             activeLoadingDialog = null;
         }
     }
-
 }

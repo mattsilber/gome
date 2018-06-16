@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.guardanis.fontutils.TextView;
 import com.guardanis.gome.R;
 import com.guardanis.gome.tools.Callback;
@@ -21,20 +20,20 @@ public abstract class SingleSelectAdapter<T> extends FilterableArrayAdapter<T> {
         super(context, R.layout.base__single_select_item, data);
     }
 
-    public SingleSelectAdapter<T> setClickCallback(Callback<T> selectCallback){
+    public SingleSelectAdapter<T> setClickCallback(Callback<T> selectCallback) {
         this.selectCallback = selectCallback;
         return this;
     }
 
-    public SingleSelectAdapter<T> setLongClickCallback(Callback<T> longClickCallback){
+    public SingleSelectAdapter<T> setLongClickCallback(Callback<T> longClickCallback) {
         this.longClickCallback = longClickCallback;
         return this;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
-        if(convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext())
                     .inflate(R.layout.base__single_select_item, parent, false);
 
@@ -49,18 +48,18 @@ public abstract class SingleSelectAdapter<T> extends FilterableArrayAdapter<T> {
         holder.value.setText(getValue(item));
 
         String subText = getSubValue(item);
-        if(subText.length() < 1)
+        if (subText.length() < 1)
             holder.sub.setVisibility(View.GONE);
-        else{
+        else {
             holder.sub.setVisibility(View.VISIBLE);
             holder.sub.setText(subText);
         }
 
-        if(selectCallback != null)
+        if (selectCallback != null)
             convertView.setOnClickListener(
-                v -> selectCallback.onCalled(item));
+                    v -> selectCallback.onCalled(item));
 
-        if(longClickCallback != null)
+        if (longClickCallback != null)
             convertView.setOnLongClickListener(v -> {
                 longClickCallback.onCalled(item);
 
@@ -71,17 +70,17 @@ public abstract class SingleSelectAdapter<T> extends FilterableArrayAdapter<T> {
     }
 
     protected abstract String getValue(T item);
+
     protected abstract String getSubValue(T item);
 
     protected static class ViewHolder {
         TextView value;
         TextView sub;
 
-        ViewHolder(View convertView){
+        ViewHolder(View convertView) {
             this.value = (TextView) convertView.findViewById(R.id.base__dialog_selection_list_item_value);
             this.sub = (TextView) convertView.findViewById(R.id.base__dialog_selection_list_item_value_sub);
         }
 
     }
-
 }

@@ -4,20 +4,10 @@ import com.guardanis.Device
 import com.guardanis.Logger
 import java.awt.BorderLayout
 import java.awt.Dimension
-import java.awt.FlowLayout
 import java.awt.Insets
 import java.awt.Toolkit
-import java.io.PrintStream
-import java.util.ArrayList
-
-import javax.swing.DefaultListModel
-import javax.swing.JFrame
-import javax.swing.JList
-import javax.swing.JScrollPane
-import javax.swing.JTextArea
-import javax.swing.ListModel
-import javax.swing.ListSelectionModel
-import javax.swing.WindowConstants
+import java.util.*
+import javax.swing.*
 
 class DisplayController(private val ipAddresses: List<String>) {
 

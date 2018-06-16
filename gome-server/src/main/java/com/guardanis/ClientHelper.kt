@@ -1,21 +1,17 @@
 package com.guardanis
 
+import com.guardanis.SocketManager.ConnectionEvents
+import com.guardanis.commands.Command
+import org.json.simple.JSONObject
+import org.json.simple.parser.JSONParser
 import java.io.BufferedReader
-import java.io.BufferedWriter
 import java.io.InputStreamReader
-import java.io.OutputStreamWriter
 import java.net.InetAddress
 import java.net.Socket
 
-import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
-
-import com.guardanis.SocketManager.ConnectionEvents
-import com.guardanis.commands.Command
-
 class ClientHelper(
         private val socket: Socket,
-        private val eventsCallback: ConnectionEvents): Thread() {
+        private val eventsCallback: ConnectionEvents) : Thread() {
 
     lateinit var device: Device
         private set

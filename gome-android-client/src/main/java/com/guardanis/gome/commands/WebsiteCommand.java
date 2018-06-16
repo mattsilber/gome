@@ -7,7 +7,7 @@ public class WebsiteCommand implements Command {
 
     private String url;
 
-    public WebsiteCommand(String url){
+    public WebsiteCommand(String url) {
         this.url = url;
     }
 
@@ -21,5 +21,4 @@ public class WebsiteCommand implements Command {
         return new JSONObject()
                 .put("url", url);
     }
-
 }

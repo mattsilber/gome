@@ -10,7 +10,8 @@ public class MouseMoveCommand implements Command {
         SCROLL("scroll");
 
         private String type;
-        MouseMode(String type){
+
+        MouseMode(String type) {
             this.type = type;
         }
     }
@@ -19,11 +20,11 @@ public class MouseMoveCommand implements Command {
     private int x;
     private int y;
 
-    public MouseMoveCommand(float x, float y){
+    public MouseMoveCommand(float x, float y) {
         this(MouseMode.MOVE, x, y);
     }
 
-    public MouseMoveCommand(MouseMode mouseMode, float x, float y){
+    public MouseMoveCommand(MouseMode mouseMode, float x, float y) {
         this.mouseMode = mouseMode;
         this.x = (int) x;
         this.y = (int) y;
@@ -41,5 +42,4 @@ public class MouseMoveCommand implements Command {
                 .put("mouse_x", x)
                 .put("mouse_y", y);
     }
-
 }

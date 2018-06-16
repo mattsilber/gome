@@ -5,7 +5,6 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-
 import com.guardanis.gome.BaseActivity;
 import com.guardanis.gome.tools.Callback;
 
@@ -20,8 +19,9 @@ import java.nio.ByteOrder;
 public class DiscoveryAgent implements Runnable {
 
     private static DiscoveryAgent instance;
-    public static DiscoveryAgent getInstance(Context context){
-        if(instance == null)
+
+    public static DiscoveryAgent getInstance(Context context) {
+        if (instance == null)
             instance = new DiscoveryAgent(context);
 
         return instance;
@@ -31,11 +31,11 @@ public class DiscoveryAgent implements Runnable {
     private Callback<Host> devicesCallback;
     private long requestStartMs;
 
-    protected DiscoveryAgent(Context context){
+    protected DiscoveryAgent(Context context) {
         this.context = context.getApplicationContext();
     }
 
-    public DiscoveryAgent search(Callback<Host> devicesCallback){
+    public DiscoveryAgent search(Callback<Host> devicesCallback) {
         this.requestStartMs = System.currentTimeMillis();
         this.devicesCallback = devicesCallback;
 
@@ -51,23 +51,23 @@ public class DiscoveryAgent implements Runnable {
 
         String baseIpAddress = getWifiIpAddress();
 
-        if(baseIpAddress != null){
+        if (baseIpAddress != null) {
             try {
                 Log.i(BaseActivity.TAG__BASE, "WIFI IP: " + baseIpAddress);
 
                 String gateway = baseIpAddress.substring(0, baseIpAddress.lastIndexOf(".") + 1);
 
-                for(int i = 0; i < 32; i++){
+                for (int i = 0; i < 32; i++) {
                     IpRangeTester tester = new IpRangeTester(gateway,
-                            new int[]{
+                            new int[] {
                                     i * 8,
                                     (i * 8) + 8
                             },
                             currentRequest,
-                            host ->
-                                    new Handler(Looper.getMainLooper())
-                                            .post(() ->
-                                                    devicesCallback.onCalled(host)));
+                            host -> {
+                                new Handler(Looper.getMainLooper())
+                                        .post(() -> devicesCallback.onCalled(host));
+                            });
 
                     new Thread(tester)
                             .start();
@@ -97,7 +97,7 @@ public class DiscoveryAgent implements Runnable {
         return null;
     }
 
-    public void cancel(){
+    public void cancel() {
         requestStartMs = -1;
     }
 
@@ -117,7 +117,7 @@ public class DiscoveryAgent implements Runnable {
         @Override
         public void run() {
             for (int i = ipRange[0]; i <= ipRange[1]; i++) {
-                if(currentRequest != requestStartMs)
+                if (currentRequest != requestStartMs)
                     return;
 
                 String ipValue = gateway + i;
@@ -127,13 +127,12 @@ public class DiscoveryAgent implements Runnable {
 
                     BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                    if(currentRequest != requestStartMs)
+                    if (currentRequest != requestStartMs)
                         return;
 
                     String hostName = reader.readLine();
 
-                    Log.i(BaseActivity.TAG__BASE,
-                            "Writer connected to " + hostName + " [" + ipValue + "]");
+                    Log.i(BaseActivity.TAG__BASE, "Writer connected to " + hostName + " [" + ipValue + "]");
 
                     ipCallback.onCalled(new Host(ipValue, hostName));
                 }
@@ -142,6 +141,5 @@ public class DiscoveryAgent implements Runnable {
                 }
             }
         }
-
     }
 }

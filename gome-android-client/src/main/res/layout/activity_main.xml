@@ -14,7 +14,7 @@
             android:id="@+id/base__toolbar"
             style="@style/Base.Toolbar"/>
 
-        <com.guardanis.gome.TrackpadView
+        <com.guardanis.gome.tools.views.TrackpadView
             android:id="@+id/main__move_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -30,7 +30,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.guardanis.gome.TrackpadView
+        <com.guardanis.gome.tools.views.TrackpadView
             android:id="@+id/main__scroll_view"
             android:layout_width="@dimen/scroll__trackpad_width"
             android:layout_height="match_parent"

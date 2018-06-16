@@ -1,25 +1,16 @@
 package com.guardanis
 
+import com.guardanis.SocketManager.ConnectionEvents
+import com.guardanis.commands.*
+import com.guardanis.display.DisplayController
 import java.net.Inet4Address
-import java.net.Inet6Address
-import java.net.InetAddress
 import java.net.NetworkInterface
 import java.net.SocketException
-import java.util.ArrayList
-import java.util.Enumeration
-import java.util.HashMap
+import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
-import com.guardanis.SocketManager.ConnectionEvents
-import com.guardanis.commands.Command
-import com.guardanis.commands.CommandController
-import com.guardanis.commands.KeyboardCommandController
-import com.guardanis.commands.MouseCommandController
-import com.guardanis.commands.WebCommandController
-import com.guardanis.display.DisplayController
-
 class Server @Throws(Exception::class)
-protected constructor(): ConnectionEvents {
+protected constructor() : ConnectionEvents {
 
     private val ipAddresses: List<String>
 
@@ -29,7 +20,6 @@ protected constructor(): ConnectionEvents {
     private val connectedDevices = CopyOnWriteArrayList<Device>()
 
     private val commandControllers = HashMap<String, CommandController>()
-
     private val displayController: DisplayController
 
     init {
@@ -48,13 +38,8 @@ protected constructor(): ConnectionEvents {
         pingManager.start()
     }
 
-    override fun onAwaitingNextConnection() {
-
-    }
-
-    override fun onConnected(ip: String, port: Int) {
-
-    }
+    override fun onAwaitingNextConnection() {}
+    override fun onConnected(ip: String, port: Int) {}
 
     override fun onDeviceIdentified(client: ClientHelper, device: Device, ipAddress: String) {
         Logger.info("%1\$s connected from %2\$s", device.getName(), ipAddress)
@@ -77,17 +62,14 @@ protected constructor(): ConnectionEvents {
                     ?.process(command)
         }
         catch (e: Exception) { e.printStackTrace() }
-
     }
 
     override fun onClientDisconnected(client: ClientHelper) {
-        val device = client.device ?: return
-
-        Logger.info("%1\$s disconnected", device.getName())
+        Logger.info("%1\$s disconnected", client.device.getName())
 
         withDeviceOrForget(client, { connectedDevices.remove(it) })
 
-        displayController.onDeviceRemoved(device)
+        displayController.onDeviceRemoved(client.device)
     }
 
     private fun withDeviceOrForget(client: ClientHelper, callback: (Device) -> Unit) {

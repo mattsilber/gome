@@ -7,7 +7,7 @@ public class MouseClickCommand implements Command {
 
     private String type;
 
-    public MouseClickCommand(String type){
+    public MouseClickCommand(String type) {
         this.type = type;
     }
 
@@ -21,5 +21,4 @@ public class MouseClickCommand implements Command {
         return new JSONObject()
                 .put("type", type);
     }
-
 }
