@@ -1,1 +1,0 @@
-java -jar gome-server.jar

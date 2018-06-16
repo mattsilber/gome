@@ -19,5 +19,4 @@ public class Command {
 	public JSONObject getData() {
 		return data;
 	}
-
 }

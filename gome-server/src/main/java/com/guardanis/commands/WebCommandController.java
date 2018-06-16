@@ -1,10 +1,10 @@
 package com.guardanis.commands;
 
+import com.guardanis.JsonHelper;
+import com.guardanis.Logger;
+
 import java.awt.Desktop;
 import java.net.URI;
-
-import com.guardanis.gtools.Logger;
-import com.guardanis.gtools.net.JsonHelper;
 
 public class WebCommandController implements CommandController {
 		
@@ -15,7 +15,7 @@ public class WebCommandController implements CommandController {
 		if(Desktop.isDesktopSupported()) 
 			  Desktop.getDesktop()
 			  		.browse(new URI(url));
-		else Logger.error("Desktop URL Browsing is not supported. " + url + " failed.");
+		else
+			Logger.INSTANCE.log("Desktop URL Browsing is not supported. " + url + " failed.");
 	}
-
 }

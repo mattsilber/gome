@@ -14,20 +14,25 @@ apply plugin: 'kotlin'
 
 mainClassName = MAIN_CLASS
 
+repositories {
+    jcenter()
+    maven { url 'https://maven.google.com' }
+}
+
 dependencies {
-    compile fileTree(dir: 'lib', include: ['*.jar'])
+    implementation fileTree(dir: 'lib', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'org.slf4j:slf4j-log4j12:1.7.5'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'com.owtelse.codec:base64:1.0.6'
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile(project(':gome-lib'))
-
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
 
 jar {
     archiveName = JAR_NAME
     
-    from {
-        configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }}
+    from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }}
     
     manifest {
         attributes 'Main-Class': MAIN_CLASS,
@@ -36,8 +41,5 @@ jar {
 
     exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
 }
-
-//distZip.dependsOn('jar')
-//distZip.duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
 

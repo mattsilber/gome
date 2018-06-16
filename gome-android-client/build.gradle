@@ -27,12 +27,7 @@ android {
         targetSdkVersion 27
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+    sourceSets.main.assets.srcDirs = ['assets']
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -40,36 +35,32 @@ android {
     }
 }
 
-allprojects {
-    repositories {
-        mavenCentral()
-        jcenter()
-        maven { url 'https://maven.google.com/' }
-
-        flatDir { dirs 'libs' }
-    }
+repositories {
+    jcenter()
+    maven { url 'https://maven.google.com/' }
+    flatDir { dirs 'libs' }
 }
 
 ext.support_library_version = '27.1.1'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    compile "com.android.support:appcompat-v7:$support_library_version"
-    compile "com.android.support:support-v4:$support_library_version"
-    compile "com.android.support:design:$support_library_version"
+    implementation "com.android.support:appcompat-v7:$support_library_version"
+    implementation "com.android.support:support-v4:$support_library_version"
+    implementation "com.android.support:design:$support_library_version"
 
-    compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'io.reactivex:rxjava:1.0.14'
+    implementation 'io.reactivex:rxandroid:1.0.1'
+    implementation 'io.reactivex:rxjava:1.0.14'
 
-    compile('com.guardanis:collection-utils:2.5.0')
-    compile('com.guardanis:applock:1.0.7')
-    compile('com.guardanis:imageloader:1.4.1')
-    compile('com.guardanis:netclient:1.3.0')
-    compile('com.guardanis:modular-views:1.0.7')
-    compile('com.guardanis:steps:1.1.3')
-    compile('com.guardanis:font-utils:1.0.2')
+    implementation('com.guardanis:collection-utils:2.5.0')
+    implementation('com.guardanis:applock:1.0.7')
+    implementation('com.guardanis:imageloader:1.4.1')
+    implementation('com.guardanis:netclient:1.3.0')
+    implementation('com.guardanis:modular-views:1.0.7')
+    implementation('com.guardanis:steps:1.1.3')
+    implementation('com.guardanis:font-utils:1.0.2')
 }
 

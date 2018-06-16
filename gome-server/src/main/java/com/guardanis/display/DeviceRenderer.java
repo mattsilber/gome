@@ -1,5 +1,7 @@
 package com.guardanis.display;
 
+import com.guardanis.Device;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -11,9 +13,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
-
-import com.guardanis.gtools.gome.Device;
-import com.guardanis.gtools.views.fonts.FontHelper;
 
 public class DeviceRenderer extends JPanel implements ListCellRenderer {
 
@@ -27,17 +26,11 @@ public class DeviceRenderer extends JPanel implements ListCellRenderer {
 		
 		nameLabel.setOpaque(true);
 		nameLabel.setMargin(new Insets(10, 12, 2, 12));
-
-		nameLabel.setFont(FontHelper.getInstance()
-				.get(FontHelper.FONT_ROBOTO, 14));
 		
 		add(nameLabel, BorderLayout.PAGE_START);
 		
 		ipLabel.setOpaque(true);
 		ipLabel.setMargin(new Insets(0, 12, 10, 12));
-
-		ipLabel.setFont(FontHelper.getInstance()
-				.get(FontHelper.FONT_ROBOTO, 10));
 		
 		add(ipLabel, BorderLayout.PAGE_END);
 	}

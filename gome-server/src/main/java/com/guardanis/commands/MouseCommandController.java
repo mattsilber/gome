@@ -1,5 +1,7 @@
 package com.guardanis.commands;
 
+import com.guardanis.JsonHelper;
+
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Robot;
@@ -9,9 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.guardanis.gtools.Logger;
-import com.guardanis.gtools.net.JsonHelper;
 
 public class MouseCommandController implements CommandController {
 	

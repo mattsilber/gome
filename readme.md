@@ -1,26 +1,29 @@
 ## gome
 
-gome turns your mobile device into a wireless mouse and keyboard for any computer that can run Java 8.
+gome turns your mobile device into a wireless mouse and keyboard for any computer.
+
+##### Requirements
+* Java 8
+* Android or iOS Device
 
 ### gome-server
 
 The gome-server runs on the computer you want to control and receives commands from the clients.
 
-To run the server:
+Run the server: `./gradlew run` or use the latest distribution files: `dist/server/bin/gome-server`
 
-```
-javaw -jar dist/gome-server.jar
-```
+### gome-android-client
 
-### gome-android
+The Android client.
 
-The Android version of the client that sends commands to the gome-server.
+Install via  `./gradlew installDebug`
 
-To install the client:
+### gome-swift-client
 
-```
-adb install dist/gome-android-client-debug.apk
-```
+The iOS client.
+
+Open `gome-swift-client/gome.xcworkspace` to build to your devices.
+
 
 ### Manually connecting to the Server
 
@@ -132,5 +135,4 @@ Command Key: web
 
 ### ToDo
 * Fix the SSLSocketServer connection issue between the clients and server.
-* Implement actual release variants. I'm being lazy.
-* Implement more efficient Command method than using Json. Again, being super lazy.
+* Bluetooth support

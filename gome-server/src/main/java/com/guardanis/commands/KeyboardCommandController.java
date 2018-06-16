@@ -6,9 +6,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import com.guardanis.JsonHelper;
 import org.json.simple.JSONArray;
-
-import com.guardanis.gtools.net.JsonHelper;
 
 public class KeyboardCommandController implements CommandController {
 	

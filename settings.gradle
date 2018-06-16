@@ -1,1 +1,1 @@
-include 'gome-server', 'gome-lib'
+include 'gome-server', 'gome-android-client'
