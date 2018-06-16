@@ -2,6 +2,8 @@
 
 gome turns your mobile device into a wireless mouse and keyboard for any computer.
 
+![gome example](https://github.com/mattsilber/gome/raw/master/android.png)
+
 ##### Requirements
 * Java 8
 * Android or iOS Device
