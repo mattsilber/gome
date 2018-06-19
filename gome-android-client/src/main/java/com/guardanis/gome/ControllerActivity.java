@@ -33,23 +33,25 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
+
         setContentView(R.layout.activity_main);
         setupToolbar();
 
-        mouseController.attach(this);
+        this.mouseController.attach(this);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+
         setIntent(intent);
     }
 
     @Override
     protected void setup(ToolbarLayoutBuilder builder) {
-        host = getHost();
+        this.host = getHost();
 
-        titleView = builder.inflateTitleText();
+        this.titleView = builder.inflateTitleText();
         titleView.setText(host.isNameKnown()
                 ? host.getName()
                 : host.getIpAddress());
@@ -75,13 +77,12 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
 
     @Override
     public void onPause() {
-        paused = true;
+        this.paused = true;
 
         killSocketClient();
-
         dismissActiveDialog();
 
-        keyboardController.dismiss();
+        this.keyboardController.dismiss();
 
         super.onPause();
     }
@@ -89,7 +90,8 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
     @Override
     public void onResume() {
         super.onResume();
-        paused = false;
+
+        this.paused = false;
 
         connectSocketClient();
     }
@@ -101,31 +103,25 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
     }
 
     protected void connectSocketClient() {
-        if (connected)
+        if (connected || paused)
             return;
 
-        connected = true;
+        killSocketClient();
 
-        host = getHost();
+        this.connected = true;
+        this.host = getHost();
 
-        if (socketClient != null)
-            killSocketClient();
-
-        activeLoadingDialog = new DialogBuilder(this)
-                .setMessage(String.format(getString(R.string.controller__alert_connecting),
-                        host.getIpAddress()))
-                .setPrimaryButton(R.string.alert_action_cancel, (d, v) ->
-                        exit(RESULT_CANCELED, null))
+        this.activeLoadingDialog = new DialogBuilder(this)
+                .setMessage(String.format(getString(R.string.controller__alert_connecting), host.getIpAddress()))
+                .setPrimaryButton(R.string.alert_action_cancel, (d, v) -> exit(RESULT_CANCELED, null))
                 .show();
 
-        socketClient = SocketClient.open(host.getIpAddress(),
-                SocketClient.DEFAULT_PORT,
-                this);
+        this.socketClient = SocketClient.open(host.getIpAddress(), SocketClient.DEFAULT_PORT, this);
     }
 
     @Override
     public void onIdentified(String ip, String hostName) {
-        host = new Host(ip, hostName);
+        this.host = new Host(ip, hostName);
 
         setHost(host);
 
@@ -136,9 +132,11 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
         dismissActiveDialog();
 
         if (getIntent().getData() != null) {
-            onCalled(new WebsiteCommand(getIntent()
+            Command webCommand = new WebsiteCommand(getIntent()
                     .getData()
-                    .toString()));
+                    .toString());
+
+            onCalled(webCommand);
 
             getIntent().setData(null);
         }
@@ -149,32 +147,30 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
         if (paused)
             return;
 
-        paused = true;
+        this.paused = true;
 
         dismissActiveDialog();
 
-        activeLoadingDialog = new DialogBuilder(this)
+        this.activeLoadingDialog = new DialogBuilder(this)
                 .setTitle(R.string.alert_title_oops)
                 .setMessage(throwable.getMessage())
-                .setPrimaryButton(R.string.alert_action_ok, (d, v) ->
-                        exit(RESULT_CANCELED, null))
+                .setPrimaryButton(R.string.alert_action_ok, (d, v) -> exit(RESULT_CANCELED, null))
                 .show();
     }
 
     @Override
     public void onConnectionClosed() {
-        connected = false;
+        this.connected = false;
 
         if (paused)
             return;
 
         dismissActiveDialog();
 
-        activeLoadingDialog = new DialogBuilder(this)
+        this.activeLoadingDialog = new DialogBuilder(this)
                 .setTitle(R.string.alert_title_oops)
                 .setMessage(R.string.alert_message_connection_closed)
-                .setPrimaryButton(R.string.alert_action_ok, (d, v) ->
-                        exit(RESULT_CANCELED, null))
+                .setPrimaryButton(R.string.alert_action_ok, (d, v) -> exit(RESULT_CANCELED, null))
                 .show();
     }
 
@@ -182,14 +178,15 @@ public class ControllerActivity extends BaseActivity implements Callback<Command
         if (socketClient != null)
             socketClient.onDestroyed();
 
-        socketClient = null;
+        this.socketClient = null;
+        this.connected = false;
     }
 
     private void validateConnected(Runnable onConnected) {
         if (connected)
             onConnected.run();
         else
-            activeLoadingDialog = new DialogBuilder(this)
+            this.activeLoadingDialog = new DialogBuilder(this)
                     .setTitle(R.string.alert_title_oops)
                     .setMessage(R.string.alert_message_connection_required)
                     .show();
