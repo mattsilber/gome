@@ -32,3 +32,4 @@ gome-swift-client/gome.xcworkspace/xcuserdata/
 *.iml
 .idea/
 
+*.log

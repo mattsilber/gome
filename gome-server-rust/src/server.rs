@@ -1,0 +1,74 @@
+use std::net::{TcpListener, TcpStream};
+use std::io::{Result, BufReader, BufWriter, Write, BufRead};
+
+#[path = "./client.rs"] mod client;
+use client::{Client, ClientConnectible};
+
+extern crate serde_json;
+
+pub trait Connectible {
+    fn connect(&self, ip: &str, port: &str) -> Result<()>;
+    fn client_connected(&self, stream: TcpStream);
+    fn write_identity(&self, client: &Client);
+    fn await_commands(&self, client: &Client);
+    fn process_command(&self, client: &Client, response: String);
+    fn disconnect(&self);
+}
+
+pub struct Server();
+
+impl Connectible for Server {
+
+    fn connect(&self, ip: &str, port: &str) -> Result<()> {
+        let ip_port = format!("{}:{}", ip, port);
+        let listener = TcpListener::bind(&ip_port)?;
+
+        println!("Bound server to {}", ip_port);
+
+        for stream in listener.incoming() {
+            match stream {
+                Ok(ok_streak) => {
+                    self.client_connected(ok_streak);
+                }
+                Err(error) => {
+                    println!("Client connection error {}", error);
+                }
+            }
+        }
+
+        Ok(())
+    }
+
+    fn client_connected(&self, stream: TcpStream) {
+        let client = Client {
+            stream: stream
+        };
+
+        let request = client.read();
+
+        println!("Client connected with name: {}", request.to_string());
+
+        self.write_identity(&client);
+        self.await_commands(&client);
+    }
+
+    fn write_identity(&self, client: &Client) {
+        let data = r#"gome-server"#;
+
+        client.write(data.to_string())
+    }
+
+    fn await_commands(&self, client: &Client) {
+        let request = client.read();
+
+        self.process_command(client, request)
+    }
+
+    fn process_command(&self, client: &Client, response: String) {
+
+    }
+
+    fn disconnect(&self) {
+
+    }
+}
