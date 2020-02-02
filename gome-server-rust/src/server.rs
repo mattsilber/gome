@@ -3,6 +3,11 @@ use std::io::{Result, BufReader, BufWriter, Write, BufRead};
 
 #[path = "./client.rs"] mod client;
 use client::{Client, ClientConnectible};
+use std::thread::sleep;
+use std::time::Duration;
+
+#[path = "./mouse_commands.rs"] mod mouse_commands;
+#[path = "./keyboard_commands.rs"] mod keyboard_commands;
 
 extern crate serde_json;
 
@@ -61,11 +66,30 @@ impl Connectible for Server {
     fn await_commands(&self, client: &Client) {
         let request = client.read();
 
-        self.process_command(client, request)
+        self.process_command(client, request);
+        self.await_commands(client);
     }
 
     fn process_command(&self, client: &Client, response: String) {
+        let command_index = response.find(":");
 
+        if command_index.is_none() {
+            println!("Command empty...");
+
+            sleep(Duration::from_secs(1));
+
+            return
+        }
+
+        let command_group = response.split_at(command_index.unwrap());
+        let command_json_string = command_group.1.trim_start_matches(":");
+        let command_json = serde_json::from_str(command_json_string).unwrap();
+
+        match command_group.0 {
+            "mouse" => mouse_commands::handle_mouse_command(command_json),
+            "key" => keyboard_commands::handle_keyboard_command(command_json),
+            _ => println!("Unknown command: {}", command_group.0)
+        }
     }
 
     fn disconnect(&self) {

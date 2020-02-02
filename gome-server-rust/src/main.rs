@@ -16,7 +16,7 @@ fn main() {
     let ui_thread = thread::spawn(spawn_interface_instance);
 
     device::print_local_ip_addresses();
-    test_service::run_test_connection();
+//    test_service::run_test_connection();
 
     server_thread
         .join()
