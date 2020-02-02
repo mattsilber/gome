@@ -2,34 +2,29 @@ mod client;
 mod device;
 mod server;
 mod test_service;
+mod thread_pool;
+mod web;
 
 use server::{Server, Connectible};
-
-use std::thread;
-use std::thread::sleep;
-use std::time::Duration;
-
-extern crate serde_json;
+use web::{WebService, WebConnectible};
+use thread_pool::ThreadPool;
 
 fn main() {
-    let server_thread = thread::spawn(spawn_server_instance);
-    let ui_thread = thread::spawn(spawn_interface_instance);
+    let pool = ThreadPool::new(2);
+    pool.execute(spawn_server_instance);
+    pool.execute(spawn_interface_instance);
 
     device::print_local_ip_addresses();
 //    test_service::run_test_connection();
-
-    server_thread
-        .join()
-        .unwrap();
 }
 
 fn spawn_server_instance() {
-    let server_instance = Server();
+    let server_instance = server::Server();
     let result = server_instance.connect("0.0.0.0", "13337");
 
     match result {
         Ok(_success) => {
-            println!("Finished gracefully.");
+            println!("gome controller service finished gracefully.");
         }
         Err(error) => {
             println!("I clearly fucked up somewhere: {}.", error);
@@ -38,5 +33,15 @@ fn spawn_server_instance() {
 }
 
 fn spawn_interface_instance() {
-    println!("Pretending that I'm actually starting a Thread for later...");
+    let server_instance = WebService();
+    let result = server_instance.connect("0.0.0.0", "13338");
+
+    match result {
+        Ok(_success) => {
+            println!("Web service finished gracefully.");
+        }
+        Err(error) => {
+            println!("I clearly fucked up somewhere: {}.", error);
+        }
+    }
 }

@@ -1,5 +1,5 @@
 use std::net::TcpStream;
-use std::io::{Result, BufReader, BufWriter, Write, BufRead};
+use std::io::{BufReader, BufWriter, Write, BufRead};
 
 extern crate serde_json;
 
