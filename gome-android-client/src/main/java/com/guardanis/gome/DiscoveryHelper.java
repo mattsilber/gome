@@ -3,7 +3,7 @@ package com.guardanis.gome;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.guardanis.gome.socket.DiscoveryAgent;
 import com.guardanis.gome.socket.Host;
 import com.guardanis.gome.tools.Callback;

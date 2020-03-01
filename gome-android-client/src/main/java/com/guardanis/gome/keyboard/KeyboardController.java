@@ -2,7 +2,9 @@ package com.guardanis.gome.keyboard;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
+
+import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -32,7 +34,7 @@ public class KeyboardController {
         View parent = activity.getLayoutInflater()
                 .inflate(R.layout.keyboard, null, false);
 
-        EditText cheating = (EditText) parent.findViewById(R.id.keyboard__input);
+        final EditText cheating = (EditText) parent.findViewById(R.id.keyboard__input);
 
         Runnable focusCallback = () ->
                 cheating.requestFocus();
@@ -41,9 +43,14 @@ public class KeyboardController {
                 sendCommand(text, parent, focusCallback));
 
         cheating.setOnKeyListener((v, keyCode, event) -> {
+            Editable text = cheating.getText();
+
             if (event.getAction() == KeyEvent.ACTION_DOWN
-                    && keyCode == KeyEvent.KEYCODE_DEL)
+                    && keyCode == KeyEvent.KEYCODE_DEL
+                    && (text == null || text.length() < 1)) {
+
                 sendCommand(KeyboardCommand.KEY__DELETE, parent, focusCallback);
+            }
 
             return false;
         });

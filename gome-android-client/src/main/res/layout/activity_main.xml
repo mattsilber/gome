@@ -10,7 +10,7 @@
         android:background="@color/base__primary"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/base__toolbar"
             style="@style/Base.Toolbar"/>
 

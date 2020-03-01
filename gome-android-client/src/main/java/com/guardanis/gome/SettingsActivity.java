@@ -1,7 +1,7 @@
 package com.guardanis.gome;
 
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatSeekBar;
+import androidx.appcompat.widget.AppCompatSeekBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.guardanis.gome.tools.views.ToolbarLayoutBuilder;

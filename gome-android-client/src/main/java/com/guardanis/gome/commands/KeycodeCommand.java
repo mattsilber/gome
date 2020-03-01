@@ -29,7 +29,7 @@ public class KeycodeCommand implements Command {
     @Override
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject()
-                .put("type", "action")
+                .put("type", "key_code_action")
                 .put("value", value);
 
         if (wrappedValues != null) {
