@@ -55,7 +55,7 @@ defmodule GomeServer do
 
     case command_key do
       "mouse" ->
-        Logger.info "Mouse Command"
+        MouseController.handle(command_data)
       _ ->
         Logger.info "Unknown command name"
     end
