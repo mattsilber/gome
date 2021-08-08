@@ -30,42 +30,37 @@ defmodule MouseController do
     #    {family, name} = :os.type()
     command = "#{@nir_cmd} movecursor #{dx} #{dy}"
 
-    run_carelessly(command)
+    GomeServer.run_carelessly(command)
   end
 
   def left_click() do
     command = "#{@nir_cmd} sendmouse left click"
 
-    run_carelessly(command)
+    GomeServer.run_carelessly(command)
   end
 
   def left_double_click() do
     command = "#{@nir_cmd} sendmouse left dblclick"
 
-    run_carelessly(command)
+    GomeServer.run_carelessly(command)
   end
 
   def right_click() do
     command = "#{@nir_cmd} sendmouse right click"
 
-    run_carelessly(command)
+    GomeServer.run_carelessly(command)
   end
 
   def wheel_click() do
     command = "#{@nir_cmd} sendmouse middle click"
 
-    run_carelessly(command)
+    GomeServer.run_carelessly(command)
   end
 
   def scroll(value) do
     command = "#{@nir_cmd} sendmouse wheel #{value}"
 
-    run_carelessly(command)
-  end
-
-  defp run_carelessly(command) do
-    port = Port.open({:spawn, command}, [:binary])
-    {_, :close} = send(port, {self(), :close})
+    GomeServer.run_carelessly(command)
   end
 
 end

@@ -56,6 +56,8 @@ defmodule GomeServer do
     case command_key do
       "mouse" ->
         MouseController.handle(command_data)
+      "key" ->
+        KeyboardController.handle(command_data)
       _ ->
         Logger.info "Unknown command name"
     end
@@ -114,5 +116,10 @@ defmodule GomeServer do
         "127.0.0.1" != ip
       end)
     end)
+  end
+
+  def run_carelessly(command) do
+    port = Port.open({:spawn, command}, [:binary])
+    {_, :close} = send(port, {self(), :close})
   end
 end
